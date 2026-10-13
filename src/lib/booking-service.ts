@@ -3,11 +3,11 @@
 // L'anti-sovrapposizione è garantita dall'indice univoco su Occupancy(fieldId, quarterStart).
 import { Prisma, type Booking, type Field } from '@prisma/client'
 import { prisma } from '@/lib/db'
+import { getSettings } from '@/lib/settings'
 import {
   canChangeOrCancel,
   checkAdminRules,
   checkMemberRules,
-  DEFAULT_SETTINGS,
   isBlocked,
   quarterStarts,
   VIOLATIONS,
@@ -40,10 +40,7 @@ type Tx = Prisma.TransactionClient
 
 const MINUTE = 60_000
 
-async function loadSettings(tx: Tx): Promise<Settings> {
-  const row = await tx.settings.findUnique({ where: { id: 1 } })
-  return row ?? DEFAULT_SETTINGS
-}
+const loadSettings = (tx: Tx): Promise<Settings> => getSettings(tx)
 
 /** Una violazione dell'indice univoco di Occupancy significa che il campo è già occupato. */
 async function guardOverlap<T>(run: () => Promise<T>): Promise<T> {

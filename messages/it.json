@@ -16,6 +16,66 @@
     "login": "Accedi",
     "logout": "Esci"
   },
+  "admin": {
+    "nav": {
+      "members": "Soci e tessere",
+      "bookings": "Prenotazioni"
+    },
+    "members": {
+      "title": "Soci e tessere",
+      "search": "Cerca per nome, email o tessera",
+      "searchButton": "Cerca",
+      "new": "Nuovo socio",
+      "empty": "Nessun socio trovato.",
+      "col": {
+        "name": "Socio",
+        "card": "Tessera",
+        "expires": "Scadenza",
+        "status": "Accesso",
+        "actions": "Azioni"
+      },
+      "status": {
+        "active": "Attivo",
+        "pending": "Da attivare"
+      },
+      "badge": {
+        "admin": "Admin",
+        "expired": "Scaduta",
+        "noCard": "Senza tessera",
+        "expiresIn": "Scade tra {days, plural, one {# giorno} other {# giorni}}"
+      },
+      "action": {
+        "edit": "Modifica",
+        "renew": "Rinnova",
+        "resetAccess": "Reimposta accesso",
+        "makeAdmin": "Rendi admin",
+        "removeAdmin": "Togli admin",
+        "confirmRenew": "Rinnovare la tessera?",
+        "confirmReset": "Il socio dovrà riattivare l'account con numero tessera ed email. Continuare?"
+      },
+      "form": {
+        "titleNew": "Nuovo socio",
+        "titleEdit": "Modifica socio",
+        "firstName": "Nome",
+        "lastName": "Cognome",
+        "birthDate": "Data di nascita",
+        "email": "Email",
+        "phone": "Telefono",
+        "membershipNumber": "Numero tessera",
+        "issuedAt": "Data di emissione",
+        "expiresAt": "Data di scadenza",
+        "expiresAtHint": "Lascia vuoto per emissione + 1 anno.",
+        "noCardHint": "Questo utente non ha una tessera."
+      },
+      "errors": {
+        "DUPLICATE_EMAIL": "Esiste già un socio con questa email.",
+        "DUPLICATE_MEMBERSHIP_NUMBER": "Esiste già una tessera con questo numero.",
+        "LAST_ADMIN": "Deve restare almeno un admin.",
+        "INVALID_INPUT": "Controlla i campi: alcuni dati non sono validi.",
+        "NOT_FOUND": "Socio non trovato."
+      }
+    }
+  },
   "auth": {
     "loginTitle": "Accedi",
     "email": "Email",

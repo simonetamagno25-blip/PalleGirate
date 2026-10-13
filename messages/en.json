@@ -16,6 +16,66 @@
     "login": "Log in",
     "logout": "Log out"
   },
+  "admin": {
+    "nav": {
+      "members": "Members & cards",
+      "bookings": "Bookings"
+    },
+    "members": {
+      "title": "Members & cards",
+      "search": "Search by name, email or card",
+      "searchButton": "Search",
+      "new": "New member",
+      "empty": "No members found.",
+      "col": {
+        "name": "Member",
+        "card": "Card",
+        "expires": "Expires",
+        "status": "Access",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Active",
+        "pending": "To activate"
+      },
+      "badge": {
+        "admin": "Admin",
+        "expired": "Expired",
+        "noCard": "No card",
+        "expiresIn": "Expires in {days, plural, one {# day} other {# days}}"
+      },
+      "action": {
+        "edit": "Edit",
+        "renew": "Renew",
+        "resetAccess": "Reset access",
+        "makeAdmin": "Make admin",
+        "removeAdmin": "Remove admin",
+        "confirmRenew": "Renew the membership?",
+        "confirmReset": "The member will have to reactivate the account with card number and email. Continue?"
+      },
+      "form": {
+        "titleNew": "New member",
+        "titleEdit": "Edit member",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "birthDate": "Date of birth",
+        "email": "Email",
+        "phone": "Phone",
+        "membershipNumber": "Card number",
+        "issuedAt": "Issue date",
+        "expiresAt": "Expiry date",
+        "expiresAtHint": "Leave empty for issue date + 1 year.",
+        "noCardHint": "This user has no membership card."
+      },
+      "errors": {
+        "DUPLICATE_EMAIL": "A member with this email already exists.",
+        "DUPLICATE_MEMBERSHIP_NUMBER": "A card with this number already exists.",
+        "LAST_ADMIN": "At least one admin must remain.",
+        "INVALID_INPUT": "Check the fields: some values are not valid.",
+        "NOT_FOUND": "Member not found."
+      }
+    }
+  },
   "auth": {
     "loginTitle": "Log in",
     "email": "Email",
