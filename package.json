@@ -9,7 +9,7 @@
         "lint": "eslint",
         "test": "vitest run",
         "db:push": "prisma db push",
-        "db:seed": "tsx prisma/seed.ts"
+        "db:seed": "tsx --env-file=.env prisma/seed.ts"
     },
     "dependencies": {
         "@base-ui/react": "^1.9.0",
