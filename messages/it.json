@@ -16,6 +16,18 @@
     "login": "Accedi",
     "logout": "Esci"
   },
+  "calendar": {
+    "title": "Disponibilità",
+    "today": "Oggi",
+    "prevDay": "Giorno precedente",
+    "nextDay": "Giorno successivo",
+    "selectField": "Campo",
+    "free": "Libero",
+    "busy": "Occupato",
+    "past": "Orario passato",
+    "bookSlot": "Prenota {field} alle {time}",
+    "hint": "Tocca un orario libero per prenotare."
+  },
   "admin": {
     "nav": {
       "members": "Soci e tessere",

@@ -20,6 +20,11 @@ export function fromRome(day: string, hhmm: string): Date {
   return t.toJSDate()
 }
 
+/** Giorno YYYY-MM-DD spostato di n giorni di calendario. */
+export function addDays(day: string, n: number): string {
+  return DateTime.fromISO(day, { zone: ROME }).plus({ days: n }).toFormat('yyyy-MM-dd')
+}
+
 /** Giorni di calendario tra due giorni YYYY-MM-DD (to - from). */
 export function daysBetween(fromDay: string, toDay: string): number {
   const a = DateTime.fromISO(fromDay, { zone: ROME }).startOf('day')

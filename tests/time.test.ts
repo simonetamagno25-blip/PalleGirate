@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { daysBetween, fromRome, romeDay, romeMinutesOfDay } from '@/lib/time'
+import { addDays, daysBetween, fromRome, romeDay, romeMinutesOfDay } from '@/lib/time'
 
 describe('time (Europe/Rome)', () => {
   test('romeDay usa il giorno di calendario locale, non UTC', () => {
@@ -15,6 +15,12 @@ describe('time (Europe/Rome)', () => {
   test('romeMinutesOfDay restituisce i minuti dalla mezzanotte locale', () => {
     expect(romeMinutesOfDay(fromRome('2026-10-25', '08:15'))).toBe(8 * 60 + 15)
     expect(romeMinutesOfDay(fromRome('2026-07-01', '23:00'))).toBe(23 * 60)
+  })
+
+  test('addDays somma giorni di calendario, anche a cavallo di mese e anno', () => {
+    expect(addDays('2026-10-31', 1)).toBe('2026-11-01')
+    expect(addDays('2026-12-31', 1)).toBe('2027-01-01')
+    expect(addDays('2026-10-13', -13)).toBe('2026-09-30')
   })
 
   test('daysBetween conta i giorni di calendario', () => {

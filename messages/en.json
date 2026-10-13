@@ -16,6 +16,18 @@
     "login": "Log in",
     "logout": "Log out"
   },
+  "calendar": {
+    "title": "Availability",
+    "today": "Today",
+    "prevDay": "Previous day",
+    "nextDay": "Next day",
+    "selectField": "Field",
+    "free": "Free",
+    "busy": "Booked",
+    "past": "Time has passed",
+    "bookSlot": "Book {field} at {time}",
+    "hint": "Tap a free time to book."
+  },
   "admin": {
     "nav": {
       "members": "Members & cards",
