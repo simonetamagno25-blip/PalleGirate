@@ -1,0 +1,59 @@
+{
+  "common": {
+    "appName": "Palle Girate",
+    "language": "Lingua",
+    "loading": "Caricamento…",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "back": "Indietro"
+  },
+  "nav": {
+    "calendar": "Calendario",
+    "newBooking": "Prenota",
+    "myBookings": "Le mie prenotazioni",
+    "profile": "Profilo",
+    "admin": "Area admin",
+    "login": "Accedi",
+    "logout": "Esci"
+  },
+  "auth": {
+    "loginTitle": "Accedi",
+    "email": "Email",
+    "password": "Password",
+    "loginButton": "Accedi",
+    "loginError": "Email o password non corrette.",
+    "firstTime": "Prima volta? Attiva il tuo account",
+    "activateTitle": "Attiva il tuo account",
+    "activateIntro": "Inserisci il numero della tua tessera e l'email che hai dato al centro, poi scegli una password.",
+    "membershipNumber": "Numero tessera",
+    "newPassword": "Scegli una password (almeno 8 caratteri)",
+    "activateButton": "Attiva account",
+    "activateSuccess": "Account attivato. Ora puoi accedere.",
+    "alreadyActive": "Hai già un account? Accedi",
+    "errors": {
+      "ACTIVATION_FAILED": "Non riusciamo ad attivare l'account con questi dati. Controlla numero tessera ed email, oppure chiedi al centro di reimpostare il tuo accesso.",
+      "WEAK_PASSWORD": "La password deve avere almeno 8 caratteri."
+    }
+  },
+  "errors": {
+    "generic": "Qualcosa è andato storto. Riprova.",
+    "forbidden": "Non hai i permessi per questa azione.",
+    "booking": {
+      "NOT_ON_STEP": "L'orario di inizio deve essere un multiplo di 15 minuti.",
+      "BEFORE_OPENING": "Il centro apre alle 08:00: scegli un orario successivo.",
+      "AFTER_CLOSING": "La prenotazione deve finire entro la chiusura del centro (23:00).",
+      "BAD_DURATION": "La durata deve essere di 1 o 2 slot consecutivi.",
+      "IN_PAST": "Non puoi prenotare un orario già passato.",
+      "TOO_FAR_AHEAD": "Puoi prenotare al massimo 14 giorni prima.",
+      "MEMBERSHIP_EXPIRED": "La tua tessera non è valida per quel giorno: è scaduta o non c'è.",
+      "MAX_ACTIVE_REACHED": "Hai già il numero massimo di prenotazioni attive.",
+      "BLOCKED": "Il tuo account è bloccato per pagamenti non saldati. Rivolgiti al centro.",
+      "OVERLAP": "Quel campo è già occupato in quell'orario.",
+      "NOT_FOUND": "Prenotazione o campo non trovato.",
+      "FORBIDDEN": "Non puoi eseguire questa azione.",
+      "ALREADY_CANCELLED": "Questa prenotazione è già stata cancellata.",
+      "WINDOW_CLOSED": "Mancano meno di 2 ore all'inizio: non è più possibile modificarla o cancellarla.",
+      "FIELD_INACTIVE": "Questo campo al momento non è prenotabile."
+    }
+  }
+}

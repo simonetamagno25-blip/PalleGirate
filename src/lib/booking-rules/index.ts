@@ -13,17 +13,20 @@ export type Settings = {
 }
 
 /** Ordine dell'unione = ordine in cui `checkMemberRules` restituisce le violazioni. */
-export type Violation =
-  | 'NOT_ON_STEP'
-  | 'BEFORE_OPENING'
-  | 'AFTER_CLOSING'
-  | 'BAD_DURATION'
-  | 'IN_PAST'
-  | 'TOO_FAR_AHEAD'
-  | 'MEMBERSHIP_EXPIRED'
-  | 'MAX_ACTIVE_REACHED'
-  | 'BLOCKED'
-  | 'OVERLAP'
+export const VIOLATIONS = [
+  'NOT_ON_STEP',
+  'BEFORE_OPENING',
+  'AFTER_CLOSING',
+  'BAD_DURATION',
+  'IN_PAST',
+  'TOO_FAR_AHEAD',
+  'MEMBERSHIP_EXPIRED',
+  'MAX_ACTIVE_REACHED',
+  'BLOCKED',
+  'OVERLAP',
+] as const
+
+export type Violation = (typeof VIOLATIONS)[number]
 
 export type RuleContext = {
   start: Date

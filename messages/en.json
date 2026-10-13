@@ -1,0 +1,59 @@
+{
+  "common": {
+    "appName": "Palle Girate",
+    "language": "Language",
+    "loading": "Loading…",
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back"
+  },
+  "nav": {
+    "calendar": "Calendar",
+    "newBooking": "Book",
+    "myBookings": "My bookings",
+    "profile": "Profile",
+    "admin": "Admin area",
+    "login": "Log in",
+    "logout": "Log out"
+  },
+  "auth": {
+    "loginTitle": "Log in",
+    "email": "Email",
+    "password": "Password",
+    "loginButton": "Log in",
+    "loginError": "Incorrect email or password.",
+    "firstTime": "First time? Activate your account",
+    "activateTitle": "Activate your account",
+    "activateIntro": "Enter your membership card number and the email you gave the club, then choose a password.",
+    "membershipNumber": "Membership number",
+    "newPassword": "Choose a password (at least 8 characters)",
+    "activateButton": "Activate account",
+    "activateSuccess": "Account activated. You can now log in.",
+    "alreadyActive": "Already have an account? Log in",
+    "errors": {
+      "ACTIVATION_FAILED": "We couldn't activate the account with these details. Check the card number and email, or ask the club to reset your access.",
+      "WEAK_PASSWORD": "The password must be at least 8 characters long."
+    }
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "forbidden": "You don't have permission to do this.",
+    "booking": {
+      "NOT_ON_STEP": "The start time must be a multiple of 15 minutes.",
+      "BEFORE_OPENING": "The club opens at 08:00: pick a later time.",
+      "AFTER_CLOSING": "The booking must end by closing time (23:00).",
+      "BAD_DURATION": "The duration must be 1 or 2 consecutive slots.",
+      "IN_PAST": "You can't book a time that has already passed.",
+      "TOO_FAR_AHEAD": "You can book at most 14 days ahead.",
+      "MEMBERSHIP_EXPIRED": "Your membership isn't valid for that day: it has expired or is missing.",
+      "MAX_ACTIVE_REACHED": "You already have the maximum number of active bookings.",
+      "BLOCKED": "Your account is blocked because of unpaid bookings. Please contact the club.",
+      "OVERLAP": "That field is already booked at that time.",
+      "NOT_FOUND": "Booking or field not found.",
+      "FORBIDDEN": "You can't perform this action.",
+      "ALREADY_CANCELLED": "This booking has already been cancelled.",
+      "WINDOW_CLOSED": "Less than 2 hours to the start: it can no longer be changed or cancelled.",
+      "FIELD_INACTIVE": "This field can't be booked at the moment."
+    }
+  }
+}

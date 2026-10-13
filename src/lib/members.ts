@@ -12,6 +12,14 @@ const activationSchema = z.object({
   password: z.string().min(MIN_PASSWORD_LENGTH),
 })
 
+const SUPPORTED_LOCALES = ['it', 'en']
+
+/** Salva la lingua preferita sul profilo dell'utente. */
+export async function setUserLocale(userId: string, locale: string): Promise<void> {
+  if (!SUPPORTED_LOCALES.includes(locale)) throw new Error('INVALID_LOCALE')
+  await prisma.user.update({ where: { id: userId }, data: { locale } })
+}
+
 export type SessionIdentity = { id: string; isAdmin: boolean; name: string; email: string }
 
 /** Login con email + password. Restituisce null per qualunque causa di rifiuto (anche account non attivato). */

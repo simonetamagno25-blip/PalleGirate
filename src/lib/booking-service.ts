@@ -10,19 +10,22 @@ import {
   DEFAULT_SETTINGS,
   isBlocked,
   quarterStarts,
+  VIOLATIONS,
   type Settings,
-  type Violation,
 } from '@/lib/booking-rules'
 
 export type Actor = { id: string; isAdmin: boolean }
 
-export type BookingErrorCode =
-  | Violation
-  | 'NOT_FOUND'
-  | 'FORBIDDEN'
-  | 'ALREADY_CANCELLED'
-  | 'WINDOW_CLOSED'
-  | 'FIELD_INACTIVE'
+export const BOOKING_ERROR_CODES = [
+  ...VIOLATIONS,
+  'NOT_FOUND',
+  'FORBIDDEN',
+  'ALREADY_CANCELLED',
+  'WINDOW_CLOSED',
+  'FIELD_INACTIVE',
+] as const
+
+export type BookingErrorCode = (typeof BOOKING_ERROR_CODES)[number]
 
 export class BookingError extends Error {
   violations: BookingErrorCode[]
