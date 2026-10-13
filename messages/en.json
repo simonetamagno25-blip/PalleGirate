@@ -166,7 +166,9 @@
         "DUPLICATE_MEMBERSHIP_NUMBER": "A card with this number already exists.",
         "LAST_ADMIN": "At least one admin must remain.",
         "INVALID_INPUT": "Check the fields: some values are not valid.",
-        "NOT_FOUND": "Member not found."
+        "NOT_FOUND": "Member not found.",
+        "SELF_RESET": "You can't reset your own access: ask another admin.",
+        "NO_MEMBERSHIP": "This user has no membership card, so they couldn't reactivate the account."
       }
     }
   },

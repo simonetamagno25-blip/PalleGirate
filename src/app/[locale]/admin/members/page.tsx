@@ -97,12 +97,14 @@ export default async function MembersPage({ searchParams }: PageProps<'/[locale]
                           </ConfirmSubmitButton>
                         </form>
                       )}
-                      <form action={resetAccessAction}>
-                        <input type="hidden" name="id" value={m.id} />
-                        <ConfirmSubmitButton size="sm" variant="outline" message={t('action.confirmReset')}>
-                          {t('action.resetAccess')}
-                        </ConfirmSubmitButton>
-                      </form>
+                      {m.membership && m.id !== admin.id && (
+                        <form action={resetAccessAction}>
+                          <input type="hidden" name="id" value={m.id} />
+                          <ConfirmSubmitButton size="sm" variant="outline" message={t('action.confirmReset')}>
+                            {t('action.resetAccess')}
+                          </ConfirmSubmitButton>
+                        </form>
+                      )}
                       <form action={toggleAdminAction}>
                         <input type="hidden" name="id" value={m.id} />
                         <input type="hidden" name="makeAdmin" value={String(!m.isAdmin)} />

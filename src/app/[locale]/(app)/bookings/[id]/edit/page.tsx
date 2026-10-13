@@ -21,7 +21,9 @@ export default async function EditBookingPage({ params }: PageProps<'/[locale]/b
     getTranslations('booking'),
     getTranslations('bookings'),
   ])
-  const editable = user.isAdmin || canChangeOrCancel(booking.start, new Date(), settings)
+  // L'admin ha poteri solo sulle prenotazioni altrui; sulle proprie vale la finestra del socio.
+  const asAdmin = user.isAdmin && booking.userId !== user.id
+  const editable = asAdmin || canChangeOrCancel(booking.start, new Date(), settings)
 
   return (
     <div className="flex flex-col gap-4">
@@ -29,17 +31,18 @@ export default async function EditBookingPage({ params }: PageProps<'/[locale]/b
       {editable ? (
         <BookingForm
           bookingId={booking.id}
+          asAdmin={asAdmin}
           fields={data.fields}
           settings={data.settings}
           minDay={data.today}
-          maxDay={user.isAdmin ? undefined : data.maxDay}
+          maxDay={asAdmin ? undefined : data.maxDay}
           initial={{
             fieldId: booking.fieldId,
             day: romeDay(booking.start),
             time: hhmm(romeMinutesOfDay(booking.start)),
             slots: booking.slots,
           }}
-          doneHref={user.isAdmin && booking.userId !== user.id ? '/admin/bookings' : '/bookings'}
+          doneHref={asAdmin ? '/admin/bookings' : '/bookings'}
         />
       ) : (
         <p role="alert" className="text-destructive">

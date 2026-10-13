@@ -44,30 +44,49 @@ async function guarded<T extends ActionResult | CreateResult>(run: () => Promise
   }
 }
 
-export async function createBookingAction(form: SlotForm): Promise<CreateResult> {
+/**
+ * Le azioni del socio agiscono sempre "come socio", anche se l'utente è anche admin: le regole del socio
+ * valgono per ciò che fa come socio, i poteri admin passano solo dalle azioni `admin*` (spec §6).
+ */
+async function asMember() {
   const user = await requireMember()
+  return { id: user.id, isAdmin: false }
+}
+
+export async function createBookingAction(form: SlotForm): Promise<CreateResult> {
+  const actor = await asMember()
   const f = parseSlot(slotForm, form) // lo schema scarta ogni memberId: si prenota sempre per sé
   if (!f) return INVALID
   return guarded(async () => {
-    const b = await createBooking(user, { memberId: user.id, fieldId: f.fieldId, start: f.start, slots: f.slots })
+    const b = await createBooking(actor, { memberId: actor.id, fieldId: f.fieldId, start: f.start, slots: f.slots })
     return { ok: true, id: b.id }
   })
 }
 
 export async function updateBookingAction(id: string, form: SlotForm): Promise<ActionResult> {
-  const user = await requireMember()
+  const actor = await asMember()
   const f = parseSlot(slotForm, form)
   if (!f) return INVALID
   return guarded(async () => {
-    await updateBooking(user, id, { fieldId: f.fieldId, start: f.start, slots: f.slots })
+    await updateBooking(actor, id, { fieldId: f.fieldId, start: f.start, slots: f.slots })
     return { ok: true }
   })
 }
 
 export async function cancelBookingAction(id: string, reason?: string): Promise<ActionResult> {
-  const user = await requireMember()
+  const actor = await asMember()
   return guarded(async () => {
-    await cancelBooking(user, id, reason)
+    await cancelBooking(actor, id, reason)
+    return { ok: true }
+  })
+}
+
+export async function adminUpdateBookingAction(id: string, form: SlotForm): Promise<ActionResult> {
+  const admin = await requireAdmin()
+  const f = parseSlot(slotForm, form)
+  if (!f) return INVALID
+  return guarded(async () => {
+    await updateBooking(admin, id, { fieldId: f.fieldId, start: f.start, slots: f.slots })
     return { ok: true }
   })
 }

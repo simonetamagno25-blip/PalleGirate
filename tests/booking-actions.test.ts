@@ -10,6 +10,7 @@ vi.mock('next-auth/providers/credentials', () => ({ default: () => ({}) }))
 import {
   adminCancelBookingAction,
   adminCreateBookingAction,
+  adminUpdateBookingAction,
   cancelBookingAction,
   createBookingAction,
   previewPriceAction,
@@ -117,6 +118,56 @@ describe('azioni del socio', () => {
     loginAs(me)
     expect(await previewPriceAction(f.id, 2)).toBe(3600)
     expect(await previewPriceAction('nessuno', 1)).toBe(0)
+  })
+})
+
+describe('un admin che è anche socio', () => {
+  test('quando prenota per sé dalla pagina del socio valgono le regole del socio (spec §6)', async () => {
+    const admin = await prisma.user.update({
+      where: { id: (await activeMember(true)).id },
+      data: { membership: { update: { expiresAt: new Date(Date.now() - 86400000) } } }, // tessera scaduta
+    })
+    const f = await makeField()
+    loginAs(admin)
+    expect(await createBookingAction({ fieldId: f.id, day: day(3), time: '10:00', slots: 1 })).toEqual({
+      ok: false,
+      violations: ['MEMBERSHIP_EXPIRED'],
+    })
+    expect(await prisma.booking.count()).toBe(0)
+  })
+
+  test('non può cancellare la propria prenotazione a meno di 2 ore dall\'inizio con l\'azione del socio', async () => {
+    const admin = await activeMember(true)
+    const f = await makeField()
+    const soon = await prisma.booking.create({
+      data: {
+        userId: admin.id,
+        fieldId: f.id,
+        start: new Date(Date.now() + 30 * 60000),
+        end: new Date(Date.now() + 90 * 60000),
+        slots: 1,
+        priceCents: 1800,
+      },
+    })
+    loginAs(admin)
+    expect(await cancelBookingAction(soon.id)).toEqual({ ok: false, violations: ['WINDOW_CLOSED'] })
+  })
+})
+
+describe('adminUpdateBookingAction', () => {
+  test('l\'admin sposta la prenotazione di un socio senza vincoli; un socio riceve FORBIDDEN', async () => {
+    const admin = await activeMember(true)
+    const member = await activeMember()
+    const f = await makeField()
+    loginAs(admin)
+    const r = await adminCreateBookingAction({ memberId: member.id, fieldId: f.id, day: day(60), time: '10:00', slots: 1 })
+    if (!r.ok) throw new Error('prenotazione di prova non creata')
+
+    expect(await adminUpdateBookingAction(r.id, { fieldId: f.id, day: day(61), time: '11:00', slots: 2 })).toEqual({ ok: true })
+    expect((await prisma.booking.findUniqueOrThrow({ where: { id: r.id } })).slots).toBe(2)
+
+    loginAs(member)
+    await expect(adminUpdateBookingAction(r.id, { fieldId: f.id, day: day(61), time: '12:00', slots: 1 })).rejects.toThrow('FORBIDDEN')
   })
 })
 

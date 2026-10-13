@@ -166,7 +166,9 @@
         "DUPLICATE_MEMBERSHIP_NUMBER": "Esiste già una tessera con questo numero.",
         "LAST_ADMIN": "Deve restare almeno un admin.",
         "INVALID_INPUT": "Controlla i campi: alcuni dati non sono validi.",
-        "NOT_FOUND": "Socio non trovato."
+        "NOT_FOUND": "Socio non trovato.",
+        "SELF_RESET": "Non puoi reimpostare il tuo stesso accesso: chiedi a un altro admin.",
+        "NO_MEMBERSHIP": "Questo utente non ha una tessera, quindi non potrebbe riattivare l'account."
       }
     }
   },

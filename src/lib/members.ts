@@ -169,9 +169,15 @@ export async function renewMembership(
   })
 }
 
-/** "Reimposta accesso": l'account torna da attivare (numero tessera + email + nuova password). */
+/**
+ * "Reimposta accesso": l'account torna da attivare (numero tessera + email + nuova password).
+ * Rifiutato per chi non ha tessera (non potrebbe riattivarsi: es. l'admin del seed) e per il reset di sé
+ * stessi: sarebbe un modo per restare tutti fuori.
+ */
 export async function resetAccess(admin: Actor, userId: string): Promise<void> {
   assertAdmin(admin)
+  if (admin.id === userId) throw new Error('SELF_RESET')
+  if (!(await prisma.membership.findUnique({ where: { userId } }))) throw new Error('NO_MEMBERSHIP')
   await prisma.user.update({ where: { id: userId }, data: { passwordHash: null, activatedAt: null } })
 }
 

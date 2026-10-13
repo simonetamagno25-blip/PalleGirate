@@ -127,6 +127,18 @@ describe('resetAccess e setAdmin', () => {
     ).resolves.toBeUndefined()
   })
 
+  test('resetAccess rifiuta utenti senza tessera (non potrebbero riattivarsi) e il reset di sé stessi', async () => {
+    const a = await admin() // come l'admin del seed: nessuna tessera
+    const m = await createMember(a, newMember())
+    await expect(resetAccess(a, a.id)).rejects.toThrow('SELF_RESET')
+    const noCard = await makeMember({ expiresAt: null })
+    await prisma.user.update({ where: { id: noCard.id }, data: { passwordHash: 'x', activatedAt: new Date() } })
+    await expect(resetAccess(a, noCard.id)).rejects.toThrow('NO_MEMBERSHIP')
+    expect((await prisma.user.findUniqueOrThrow({ where: { id: noCard.id } })).passwordHash).toBe('x')
+    // un altro admin con tessera può invece essere reimpostato da un collega
+    await expect(resetAccess(a, m.id)).resolves.toBeUndefined()
+  })
+
   test('si può promuovere a admin e togliere i diritti, ma non all\'ultimo admin', async () => {
     const a = await admin()
     const m = await plain()

@@ -17,7 +17,14 @@ import { fromRome } from '@/lib/time'
 
 export type MemberFormState = { error?: string }
 
-const KNOWN_ERRORS = ['DUPLICATE_EMAIL', 'DUPLICATE_MEMBERSHIP_NUMBER', 'LAST_ADMIN', 'NOT_FOUND']
+const KNOWN_ERRORS = [
+  'DUPLICATE_EMAIL',
+  'DUPLICATE_MEMBERSHIP_NUMBER',
+  'LAST_ADMIN',
+  'NOT_FOUND',
+  'SELF_RESET',
+  'NO_MEMBERSHIP',
+]
 
 const day = z.string().regex(/^\d{4}-\d{2}-\d{2}$/)
 const optionalDay = z.preprocess((v) => (v === '' ? undefined : v), day.optional())

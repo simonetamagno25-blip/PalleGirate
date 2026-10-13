@@ -6,7 +6,7 @@ import { getBookingFormData } from '@/lib/booking-form-data'
 const text = (v: string | string[] | undefined) => (typeof v === 'string' ? v : undefined)
 
 export default async function NewBookingPage({ searchParams }: PageProps<'/[locale]/booking/new'>) {
-  const user = await requireMember()
+  await requireMember()
   const sp = await searchParams
   const [data, t] = await Promise.all([getBookingFormData(), getTranslations('booking')])
   if (data.fields.length === 0) return null
@@ -23,7 +23,7 @@ export default async function NewBookingPage({ searchParams }: PageProps<'/[loca
         fields={data.fields}
         settings={data.settings}
         minDay={data.today}
-        maxDay={user.isAdmin ? undefined : data.maxDay}
+        maxDay={data.maxDay}
         initial={{ fieldId, day, time, slots: 1 }}
         doneHref="/bookings"
       />

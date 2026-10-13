@@ -4,6 +4,7 @@ import { useFormatter, useTranslations } from 'next-intl'
 import { useEffect, useState, useTransition } from 'react'
 import {
   adminCreateBookingAction,
+  adminUpdateBookingAction,
   createBookingAction,
   previewPriceAction,
   updateBookingAction,
@@ -28,13 +29,15 @@ type Props = {
   members?: { id: string; label: string }[]
   /** Se presente: si modifica questa prenotazione invece di crearne una nuova. */
   bookingId?: string
+  /** L'admin modifica la prenotazione di un altro socio (azione con poteri admin). */
+  asAdmin?: boolean
   doneHref: string
 }
 
 const toMinutes = (time: string) => Number(time.slice(0, 2)) * 60 + Number(time.slice(3, 5))
 
 /** Prenotazione guidata: campo → giorno → orario → durata → riepilogo con prezzo → conferma. */
-export function BookingForm({ fields, settings, minDay, maxDay, initial, members, bookingId, doneHref }: Props) {
+export function BookingForm({ fields, settings, minDay, maxDay, initial, members, bookingId, asAdmin, doneHref }: Props) {
   const t = useTranslations('booking')
   const te = useTranslations('errors.booking')
   const format = useFormatter()
@@ -75,7 +78,9 @@ export function BookingForm({ fields, settings, minDay, maxDay, initial, members
     startTransition(async () => {
       const form = { fieldId, day, time: effectiveTime, slots }
       const result = bookingId
-        ? await updateBookingAction(bookingId, form)
+        ? asAdmin
+          ? await adminUpdateBookingAction(bookingId, form)
+          : await updateBookingAction(bookingId, form)
         : members
           ? await adminCreateBookingAction({ ...form, memberId })
           : await createBookingAction(form)
