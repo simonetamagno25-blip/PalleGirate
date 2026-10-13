@@ -21,10 +21,11 @@ export async function AppShell({ user, children }: { user: SessionUser; children
     <div className="flex flex-1 flex-col">
       <header className="border-b">
         <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
-          <span className="font-semibold tracking-tight">Palle Girate</span>
-          <nav className="flex flex-1 flex-wrap gap-1 text-sm">
+          <span className="mr-auto font-semibold tracking-tight md:mr-0">Palle Girate</span>
+          {/* Su telefono la navigazione va su una riga a parte, scorrevole in orizzontale. */}
+          <nav className="order-last flex basis-full gap-1 overflow-x-auto text-sm md:order-none md:basis-auto md:flex-1">
             {links.map((l) => (
-              <Link key={l.href} href={l.href} className="rounded-md px-2.5 py-1.5 hover:bg-muted">
+              <Link key={l.href} href={l.href} className="whitespace-nowrap rounded-md px-2.5 py-1.5 hover:bg-muted">
                 {l.label}
               </Link>
             ))}

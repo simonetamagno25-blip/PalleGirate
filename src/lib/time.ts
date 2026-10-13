@@ -13,6 +13,11 @@ export function romeMinutesOfDay(d: Date): number {
   return t.hour * 60 + t.minute
 }
 
+/** Minuti dalla mezzanotte → "HH:MM". */
+export function hhmm(minutes: number): string {
+  return `${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`
+}
+
 /** Istante (Date, UTC) corrispondente a un giorno e un'ora locali di Roma. */
 export function fromRome(day: string, hhmm: string): Date {
   const t = DateTime.fromISO(`${day}T${hhmm}`, { zone: ROME })

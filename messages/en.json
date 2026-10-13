@@ -16,6 +16,67 @@
     "login": "Log in",
     "logout": "Log out"
   },
+  "booking": {
+    "newTitle": "New booking",
+    "editTitle": "Edit booking",
+    "adminNewTitle": "New booking for a member",
+    "member": "Member",
+    "pickMember": "Choose the member",
+    "field": "Field",
+    "day": "Day",
+    "time": "Start time",
+    "duration": "Duration",
+    "minutes": "{minutes} minutes",
+    "summary": "Summary",
+    "summaryText": "{field}, from {start} to {end}",
+    "price": "Price",
+    "payAtCenter": "Payment is in cash, in person at the club.",
+    "confirm": "Confirm booking",
+    "saveChanges": "Save changes",
+    "slotPrice": "{price} per slot"
+  },
+  "bookings": {
+    "title": "My bookings",
+    "upcoming": "Upcoming",
+    "history": "History",
+    "emptyUpcoming": "You have no upcoming bookings.",
+    "emptyHistory": "No past bookings.",
+    "newBooking": "New booking",
+    "edit": "Edit",
+    "cancel": "Cancel",
+    "cancelReasonLabel": "Reason (optional)",
+    "cancelConfirm": "Confirm cancellation",
+    "cancelKeep": "Keep it",
+    "windowClosed": "Less than 2 hours to go: it can no longer be changed or cancelled and must be paid.",
+    "when": "{date}, {start}–{end}",
+    "reason": "Reason: {reason}",
+    "chargeableHint": "Cancelled, but payable",
+    "status": {
+      "CONFIRMED": "Confirmed",
+      "CANCELLED": "Cancelled"
+    },
+    "payment": {
+      "PENDING": "To pay",
+      "PAID": "Paid",
+      "UNPAID": "Unpaid",
+      "EXEMPT": "Exempt"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "personal": "Personal details",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "birthDate": "Date of birth",
+    "membership": "Membership card",
+    "number": "Number",
+    "issued": "Issued on",
+    "expires": "Expires on",
+    "noMembership": "No membership card on file.",
+    "expired": "Expired",
+    "daysLeft": "{days, plural, =0 {Expires today} one {# day left} other {# days left}}"
+  },
   "calendar": {
     "title": "Availability",
     "today": "Today",
@@ -32,6 +93,27 @@
     "nav": {
       "members": "Members & cards",
       "bookings": "Bookings"
+    },
+    "bookings": {
+      "title": "Bookings",
+      "filterField": "Field",
+      "allFields": "All fields",
+      "filterDay": "Day",
+      "filterMember": "Member",
+      "filter": "Filter",
+      "reset": "Reset",
+      "new": "New booking",
+      "empty": "No bookings found.",
+      "cancelReasonDefault": "Cancelled by the club",
+      "col": {
+        "when": "When",
+        "field": "Field",
+        "member": "Member",
+        "status": "Status",
+        "payment": "Payment",
+        "price": "Price",
+        "actions": "Actions"
+      }
     },
     "members": {
       "title": "Members & cards",
@@ -125,7 +207,8 @@
       "FORBIDDEN": "You can't perform this action.",
       "ALREADY_CANCELLED": "This booking has already been cancelled.",
       "WINDOW_CLOSED": "Less than 2 hours to the start: it can no longer be changed or cancelled.",
-      "FIELD_INACTIVE": "This field can't be booked at the moment."
+      "FIELD_INACTIVE": "This field can't be booked at the moment.",
+      "INVALID_INPUT": "Check your input: the day, time or duration is not valid."
     }
   }
 }

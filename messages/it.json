@@ -16,6 +16,67 @@
     "login": "Accedi",
     "logout": "Esci"
   },
+  "booking": {
+    "newTitle": "Nuova prenotazione",
+    "editTitle": "Modifica prenotazione",
+    "adminNewTitle": "Nuova prenotazione per un socio",
+    "member": "Socio",
+    "pickMember": "Scegli il socio",
+    "field": "Campo",
+    "day": "Giorno",
+    "time": "Orario di inizio",
+    "duration": "Durata",
+    "minutes": "{minutes} minuti",
+    "summary": "Riepilogo",
+    "summaryText": "{field}, dalle {start} alle {end}",
+    "price": "Prezzo",
+    "payAtCenter": "Il pagamento si fa in contanti, di persona al centro.",
+    "confirm": "Conferma prenotazione",
+    "saveChanges": "Salva modifiche",
+    "slotPrice": "{price} a slot"
+  },
+  "bookings": {
+    "title": "Le mie prenotazioni",
+    "upcoming": "Prossime",
+    "history": "Storico",
+    "emptyUpcoming": "Non hai prenotazioni in programma.",
+    "emptyHistory": "Nessuna prenotazione passata.",
+    "newBooking": "Nuova prenotazione",
+    "edit": "Modifica",
+    "cancel": "Cancella",
+    "cancelReasonLabel": "Motivo (facoltativo)",
+    "cancelConfirm": "Conferma cancellazione",
+    "cancelKeep": "Mantieni",
+    "windowClosed": "Mancano meno di 2 ore: non si può più modificare né cancellare e la prenotazione va pagata.",
+    "when": "{date}, {start}–{end}",
+    "reason": "Motivo: {reason}",
+    "chargeableHint": "Cancellata, ma da pagare",
+    "status": {
+      "CONFIRMED": "Confermata",
+      "CANCELLED": "Cancellata"
+    },
+    "payment": {
+      "PENDING": "Da pagare",
+      "PAID": "Pagata",
+      "UNPAID": "Non pagata",
+      "EXEMPT": "Esente"
+    }
+  },
+  "profile": {
+    "title": "Profilo",
+    "personal": "Dati personali",
+    "name": "Nome",
+    "email": "Email",
+    "phone": "Telefono",
+    "birthDate": "Data di nascita",
+    "membership": "Tessera",
+    "number": "Numero",
+    "issued": "Emessa il",
+    "expires": "Scade il",
+    "noMembership": "Nessuna tessera registrata.",
+    "expired": "Scaduta",
+    "daysLeft": "{days, plural, =0 {Scade oggi} one {# giorno rimasto} other {# giorni rimasti}}"
+  },
   "calendar": {
     "title": "Disponibilità",
     "today": "Oggi",
@@ -32,6 +93,27 @@
     "nav": {
       "members": "Soci e tessere",
       "bookings": "Prenotazioni"
+    },
+    "bookings": {
+      "title": "Prenotazioni",
+      "filterField": "Campo",
+      "allFields": "Tutti i campi",
+      "filterDay": "Giorno",
+      "filterMember": "Socio",
+      "filter": "Filtra",
+      "reset": "Azzera",
+      "new": "Nuova prenotazione",
+      "empty": "Nessuna prenotazione trovata.",
+      "cancelReasonDefault": "Cancellata dal centro",
+      "col": {
+        "when": "Quando",
+        "field": "Campo",
+        "member": "Socio",
+        "status": "Stato",
+        "payment": "Pagamento",
+        "price": "Prezzo",
+        "actions": "Azioni"
+      }
     },
     "members": {
       "title": "Soci e tessere",
@@ -125,7 +207,8 @@
       "FORBIDDEN": "Non puoi eseguire questa azione.",
       "ALREADY_CANCELLED": "Questa prenotazione è già stata cancellata.",
       "WINDOW_CLOSED": "Mancano meno di 2 ore all'inizio: non è più possibile modificarla o cancellarla.",
-      "FIELD_INACTIVE": "Questo campo al momento non è prenotabile."
+      "FIELD_INACTIVE": "Questo campo al momento non è prenotabile.",
+      "INVALID_INPUT": "Controlla i dati inseriti: giorno, orario o durata non sono validi."
     }
   }
 }

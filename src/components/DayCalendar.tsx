@@ -2,15 +2,12 @@ import { getTranslations } from 'next-intl/server'
 import { Link } from '@/i18n/routing'
 import type { FieldInfo, PublicSlot } from '@/lib/availability'
 import type { Settings } from '@/lib/booking-rules'
-import { fromRome, romeMinutesOfDay } from '@/lib/time'
+import { fromRome, hhmm, romeMinutesOfDay } from '@/lib/time'
 import { cn } from '@/lib/utils'
 
 const ROW_PX = 20 // altezza di un quarto d'ora
 
 type Busy = PublicSlot & { memberName?: string }
-
-const hhmm = (minutes: number) =>
-  `${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`
 
 /**
  * Griglia giornaliera: una colonna per campo, una riga per quarto d'ora.
