@@ -3,10 +3,12 @@ import { getTranslations } from 'next-intl/server'
 import { AppShell } from '@/components/AppShell'
 import { Link } from '@/i18n/routing'
 import { requireMember } from '@/lib/auth'
+import { runLazyNotifications } from '@/lib/lazy-notifications'
 
 export default async function AdminLayout({ children }: LayoutProps<'/[locale]/admin'>) {
   const user = await requireMember()
   if (!user.isAdmin) notFound() // l'area admin non rivela la propria esistenza ai soci
+  await runLazyNotifications(user.id)
   const t = await getTranslations('admin.nav')
 
   return (
