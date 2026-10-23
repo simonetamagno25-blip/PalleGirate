@@ -52,7 +52,10 @@
     "ALREADY_ACTIVE": "Questo account è già attivo. Accedi con la tua password.",
     "PASSWORD_TOO_SHORT": "La password deve avere almeno {min} caratteri.",
     "PASSWORD_TOO_LONG": "La password può avere al massimo {max} caratteri.",
-    "INVALID_CREDENTIALS": "Email o password non corretti."
+    "INVALID_CREDENTIALS": "Email o password non corretti.",
+    "EMAIL_TAKEN": "Esiste già un utente con questa email.",
+    "CARD_TAKEN": "Questo numero di tessera è già assegnato.",
+    "CANNOT_DEMOTE_SELF": "Non puoi togliere a te stesso i permessi di amministratore."
   },
   "auth": {
     "loginTitle": "Accedi",
@@ -67,5 +70,37 @@
     "activate": "Attiva",
     "forgot": "Password dimenticata? Chiedi all'amministratore di reimpostare l'accesso.",
     "haveAccount": "Hai già un account? Accedi"
+  },
+  "members": {
+    "title": "Soci",
+    "new": "Nuovo socio",
+    "searchPlaceholder": "Cerca per nome, email o tessera",
+    "firstName": "Nome",
+    "lastName": "Cognome",
+    "birthDate": "Data di nascita",
+    "email": "Email",
+    "phone": "Telefono",
+    "cardNumber": "Numero tessera",
+    "issueDate": "Emissione",
+    "expiryDate": "Scadenza",
+    "status": "Stato",
+    "active": "Attivo",
+    "toActivate": "Da attivare",
+    "expired": "Tessera scaduta",
+    "blocked": "Bloccato",
+    "admin": "Admin",
+    "renew": "Rinnova tessera",
+    "renewHint": "Nuova scadenza proposta: {date}. Puoi modificarla.",
+    "resetAccess": "Reimposta accesso",
+    "resetConfirm": "Il socio dovrà riattivare l'account con tessera ed email. Continuare?",
+    "makeAdmin": "Rendi amministratore",
+    "removeAdmin": "Togli amministratore",
+    "saved": "Salvato",
+    "strikes": "Strike",
+    "unpaid": "Insoluti",
+    "debt": "Debito",
+    "history": "Storico prenotazioni",
+    "renewals": "Storico rinnovi",
+    "none": "Nessun socio trovato"
   }
 }

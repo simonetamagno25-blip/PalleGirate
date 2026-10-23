@@ -52,7 +52,10 @@
     "ALREADY_ACTIVE": "This account is already active. Log in with your password.",
     "PASSWORD_TOO_SHORT": "The password must be at least {min} characters long.",
     "PASSWORD_TOO_LONG": "The password can be at most {max} characters long.",
-    "INVALID_CREDENTIALS": "Wrong email or password."
+    "INVALID_CREDENTIALS": "Wrong email or password.",
+    "EMAIL_TAKEN": "A user with this email already exists.",
+    "CARD_TAKEN": "This card number is already assigned.",
+    "CANNOT_DEMOTE_SELF": "You cannot remove your own administrator rights."
   },
   "auth": {
     "loginTitle": "Log in",
@@ -67,5 +70,37 @@
     "activate": "Activate",
     "forgot": "Forgot your password? Ask the administrator to reset your access.",
     "haveAccount": "Already have an account? Log in"
+  },
+  "members": {
+    "title": "Members",
+    "new": "New member",
+    "searchPlaceholder": "Search by name, email or card",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "birthDate": "Date of birth",
+    "email": "Email",
+    "phone": "Phone",
+    "cardNumber": "Card number",
+    "issueDate": "Issued",
+    "expiryDate": "Expires",
+    "status": "Status",
+    "active": "Active",
+    "toActivate": "To activate",
+    "expired": "Card expired",
+    "blocked": "Blocked",
+    "admin": "Admin",
+    "renew": "Renew card",
+    "renewHint": "Proposed new expiry: {date}. You can change it.",
+    "resetAccess": "Reset access",
+    "resetConfirm": "The member will have to activate the account again with card and email. Continue?",
+    "makeAdmin": "Make administrator",
+    "removeAdmin": "Remove administrator",
+    "saved": "Saved",
+    "strikes": "Strikes",
+    "unpaid": "Unpaid",
+    "debt": "Debt",
+    "history": "Booking history",
+    "renewals": "Renewal history",
+    "none": "No members found"
   }
 }

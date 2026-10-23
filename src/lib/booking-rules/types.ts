@@ -42,6 +42,9 @@ export type ViolationCode =
   | "ALREADY_ACTIVE"
   | "PASSWORD_TOO_SHORT"
   | "INVALID_CREDENTIALS"
-  | "PASSWORD_TOO_LONG";
+  | "PASSWORD_TOO_LONG"
+  | "EMAIL_TAKEN"
+  | "CARD_TAKEN"
+  | "CANNOT_DEMOTE_SELF";
 
 export type Violation = { code: ViolationCode; params?: Record<string, string | number> };
