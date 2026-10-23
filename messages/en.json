@@ -102,5 +102,17 @@
     "history": "Booking history",
     "renewals": "Renewal history",
     "none": "No members found"
+  },
+  "calendar": {
+    "title": "Availability",
+    "free": "Free",
+    "busy": "Taken",
+    "mine": "Yours",
+    "today": "Today",
+    "prev": "Previous day",
+    "next": "Next day",
+    "field": "Court",
+    "time": "Time",
+    "legend": "Tap a free slot to book it."
   }
 }

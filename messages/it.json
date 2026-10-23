@@ -102,5 +102,17 @@
     "history": "Storico prenotazioni",
     "renewals": "Storico rinnovi",
     "none": "Nessun socio trovato"
+  },
+  "calendar": {
+    "title": "Disponibilità",
+    "free": "Libero",
+    "busy": "Occupato",
+    "mine": "Tua",
+    "today": "Oggi",
+    "prev": "Giorno precedente",
+    "next": "Giorno successivo",
+    "field": "Campo",
+    "time": "Ora",
+    "legend": "Tocca uno slot libero per prenotare."
   }
 }
