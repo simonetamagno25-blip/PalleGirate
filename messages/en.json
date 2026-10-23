@@ -216,5 +216,25 @@
   "reasons": {
     "AUTO_BLOCK": "Blocked for unpaid bookings",
     "FIELD_DEACTIVATED": "Field no longer available"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "bell": "Notifications",
+    "bellUnread": "Notifications ({count} unread)",
+    "markRead": "Mark as read",
+    "markAll": "Mark all as read",
+    "empty": "No notifications.",
+    "reason": "Reason: {reason}",
+    "types": {
+      "BOOKING_CREATED": "Booking confirmed: {field}, {date} at {time}.{by, select, admin { Created by the club.} other {}}",
+      "BOOKING_UPDATED": "Booking changed: {field}, now {date} at {time}.{by, select, admin { Changed by the club.} other {}}",
+      "BOOKING_CANCELLED": "Booking cancelled: {field}, {date} at {time}.{by, select, admin { Cancelled by the club.} system { Cancelled by the system.} other {}}",
+      "STRIKE_WARNING": "Warning: one of your bookings was not paid. At the next missed payment your account will be blocked.",
+      "ACCOUNT_BLOCKED": "Account blocked for unpaid bookings: your future bookings were cancelled. Settle what you owe to book again.",
+      "ACCOUNT_UNBLOCKED": "Account unblocked: you can book again.",
+      "BOOKING_REMINDER": "Reminder: {field}, {date} at {time}.",
+      "MEMBERSHIP_EXPIRING": "Your membership expires on {date} ({daysLeft, plural, =0 {today} one {in # day} other {in # days}}).",
+      "MEMBERSHIP_EXPIRED": "Your membership expired on {date}: you cannot book beyond that date."
+    }
   }
 }

@@ -8,6 +8,7 @@ import { Link } from '@/i18n/routing'
 import { requireAdmin } from '@/lib/auth'
 import { listAllBookings } from '@/lib/booking-queries'
 import { prisma } from '@/lib/db'
+import { displayReason } from '@/lib/reasons'
 
 const text = (v: string | string[] | undefined) => (typeof v === 'string' && v !== '' ? v : undefined)
 
@@ -17,11 +18,12 @@ export default async function AdminBookingsPage({ searchParams }: PageProps<'/[l
   const day = /^\d{4}-\d{2}-\d{2}$/.test(text(sp.day) ?? '') ? text(sp.day) : undefined
   const filters = { fieldId: text(sp.field), day, q: text(sp.q) }
 
-  const [bookings, fields, t, tb, format] = await Promise.all([
+  const [bookings, fields, t, tb, tAll, format] = await Promise.all([
     listAllBookings(admin, filters),
     prisma.field.findMany({ orderBy: { name: 'asc' } }),
     getTranslations('admin.bookings'),
     getTranslations('bookings'),
+    getTranslations(),
     getFormatter(),
   ])
   const time = (d: Date) => format.dateTime(d, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
@@ -95,7 +97,7 @@ export default async function AdminBookingsPage({ searchParams }: PageProps<'/[l
                 </TableCell>
                 <TableCell>
                   <Badge variant={b.status === 'CANCELLED' ? 'outline' : 'secondary'}>{tb(`status.${b.status}`)}</Badge>
-                  {b.cancelReason && <div className="mt-1 text-xs text-muted-foreground">{tb('reason', { reason: b.cancelReason })}</div>}
+                  {b.cancelReason && <div className="mt-1 text-xs text-muted-foreground">{tb('reason', { reason: displayReason(b.cancelReason, (k) => tAll(k)) ?? '' })}</div>}
                 </TableCell>
                 <TableCell>{(b.status === 'CONFIRMED' || b.chargeable) && tb(`payment.${b.paymentStatus}`)}</TableCell>
                 <TableCell>{money(b.priceCents)}</TableCell>

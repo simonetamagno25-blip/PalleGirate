@@ -6,15 +6,17 @@ import { Link } from '@/i18n/routing'
 import { requireMember } from '@/lib/auth'
 import { listMemberBookings } from '@/lib/booking-queries'
 import { canChangeOrCancel } from '@/lib/booking-rules'
+import { displayReason } from '@/lib/reasons'
 import { getSettings } from '@/lib/settings'
 
 export default async function MyBookingsPage() {
   const user = await requireMember()
   const now = new Date()
-  const [{ upcoming, history }, settings, t, format] = await Promise.all([
+  const [{ upcoming, history }, settings, t, tAll, format] = await Promise.all([
     listMemberBookings(user.id, now),
     getSettings(),
     getTranslations('bookings'),
+    getTranslations(),
     getFormatter(),
   ])
   const time = (d: Date) => format.dateTime(d, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
@@ -69,7 +71,9 @@ export default async function MyBookingsPage() {
               <div>
                 <p className="font-medium">{b.field.name}</p>
                 <p className="capitalize">{when(b)}</p>
-                {b.cancelReason && <p className="text-muted-foreground">{t('reason', { reason: b.cancelReason })}</p>}
+                {b.cancelReason && (
+                  <p className="text-muted-foreground">{t('reason', { reason: displayReason(b.cancelReason, (k) => tAll(k)) ?? '' })}</p>
+                )}
               </div>
               <div className="flex flex-col items-end gap-1">
                 <Badge variant={b.status === 'CANCELLED' ? 'outline' : 'secondary'}>{t(`status.${b.status}`)}</Badge>

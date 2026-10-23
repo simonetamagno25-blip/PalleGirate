@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import { logoutAction } from '@/app/[locale]/actions-session'
 import { Button } from '@/components/ui/button'
 import { LocaleSwitcher } from '@/components/LocaleSwitcher'
+import { NotificationBell } from '@/components/NotificationBell'
 import { Link } from '@/i18n/routing'
 import type { SessionUser } from '@/lib/auth'
 
@@ -30,6 +31,7 @@ export async function AppShell({ user, children }: { user: SessionUser; children
               </Link>
             ))}
           </nav>
+          <NotificationBell userId={user.id} />
           <LocaleSwitcher />
           <form action={logoutAction}>
             <Button type="submit" variant="outline" size="sm">

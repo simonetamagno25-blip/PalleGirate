@@ -216,5 +216,25 @@
   "reasons": {
     "AUTO_BLOCK": "Blocco per mancato pagamento",
     "FIELD_DEACTIVATED": "Campo non più disponibile"
+  },
+  "notifications": {
+    "title": "Notifiche",
+    "bell": "Notifiche",
+    "bellUnread": "Notifiche ({count} non lette)",
+    "markRead": "Segna come letta",
+    "markAll": "Segna tutte come lette",
+    "empty": "Nessuna notifica.",
+    "reason": "Motivo: {reason}",
+    "types": {
+      "BOOKING_CREATED": "Prenotazione confermata: {field}, {date} alle {time}.{by, select, admin { Creata dall'amministrazione.} other {}}",
+      "BOOKING_UPDATED": "Prenotazione modificata: {field}, ora {date} alle {time}.{by, select, admin { Modificata dall'amministrazione.} other {}}",
+      "BOOKING_CANCELLED": "Prenotazione cancellata: {field}, {date} alle {time}.{by, select, admin { Cancellata dall'amministrazione.} system { Cancellata dal sistema.} other {}}",
+      "STRIKE_WARNING": "Avviso: una tua prenotazione non è stata pagata. Al prossimo mancato pagamento l'account verrà bloccato.",
+      "ACCOUNT_BLOCKED": "Account bloccato per mancato pagamento: le prenotazioni future sono state cancellate. Salda gli importi dovuti per tornare a prenotare.",
+      "ACCOUNT_UNBLOCKED": "Account sbloccato: puoi prenotare di nuovo.",
+      "BOOKING_REMINDER": "Promemoria: {field}, {date} alle {time}.",
+      "MEMBERSHIP_EXPIRING": "La tua tessera scade il {date} ({daysLeft, plural, =0 {oggi} one {tra # giorno} other {tra # giorni}}).",
+      "MEMBERSHIP_EXPIRED": "La tua tessera è scaduta il {date}: non puoi prenotare oltre quella data."
+    }
   }
 }
