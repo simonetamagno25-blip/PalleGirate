@@ -22,7 +22,7 @@
 - Strike: non si azzerano mai. 1° → avviso; 2° e successivi → blocco + cancellazione delle prenotazioni future. Bloccato = `strike ≥ 2` **e** almeno una prenotazione `UNPAID` (stato derivato).
 - Fuori ambito: pagamenti online, ricorrenze, store, email/SMS/push, numero giocatori, costi.
 - Avvio locale: `npm install`, `npm run db:setup`, `npm run dev`. `.env.example` è committato, `.env` no.
-- Git: branch `main`, remote `https://github.com/simonetamagno25-blip/PalleGirate`, commit piccoli e descrittivi. **Il primo push si fa solo dopo una conferma esplicita dell'utente.**
+- Git: branch `main`, remote `https://github.com/simonetamagno25-blip/PalleGirate`, commit piccoli e descrittivi. Primo push già fatto e autorizzato dall'utente: i push su `main` a fine task o sessione sono ok. Mai `--force`.
 - Comandi pensati per Windows (PowerShell o Git Bash): niente `VAR=x cmd` inline, si usano script npm e config Vitest.
 
 ## Review Focus
@@ -81,24 +81,15 @@ Ogni test di un modulo sta accanto al modulo (`x.ts` → `x.test.ts`). I test ch
 
 **Files:**
 - Create: `package.json`, `tsconfig.json`, `next.config.ts`, `postcss.config.mjs`, `eslint.config.mjs`, `vitest.config.ts`, `.gitignore`, `.env.example`, `README.md`, `src/app/globals.css`, `src/app/layout.tsx`, `src/app/page.tsx`, `src/lib/smoke.test.ts`
-- Move: `requirements.md` → `docs/requirements.md`, `2026-10-13-palle-girate-design.md` → `docs/superpowers/specs/2026-10-13-palle-girate-design.md`
 
 **Interfaces:**
 - Produces: script npm `dev`, `build`, `lint`, `test`, `db:setup`, `db:seed`; alias di import `@/` → `src/`.
 
 > Nota: la cartella si chiama `palle girate` (con lo spazio), che non è un nome npm valido. Per questo non usiamo `create-next-app` e scriviamo i file di configurazione a mano.
 
-- [ ] **Step 1: Sposta i documenti e inizializza Git**
+- [x] **Step 1: Git e documenti (già fatto il 23/10/2026)**
 
-```bash
-mkdir -p docs/superpowers/specs
-git init -b main
-git mv -k requirements.md docs/requirements.md 2>/dev/null || mv requirements.md docs/requirements.md
-mv 2026-10-13-palle-girate-design.md docs/superpowers/specs/2026-10-13-palle-girate-design.md
-git remote add origin https://github.com/simonetamagno25-blip/PalleGirate.git
-```
-
-Nella spec il link `../../requirements.md` diventa corretto proprio con questa struttura: non va modificato.
+Repo inizializzato su `main`, collegato a `origin` e allineato a `origin/main`. I documenti sono già in `docs/requirements.md` e `docs/superpowers/specs/`. Sul remoto c'è anche `info per progetto Palle Girate.odt` (appunti del cliente): lascialo dov'è. Il primo push è già stato fatto, quindi i push successivi su `main` non richiedono un'altra conferma.
 
 - [ ] **Step 2: Scrivi `package.json`**
 
@@ -4003,7 +3994,7 @@ git add -A
 git commit -m "docs: README architecture section for session 1"
 ```
 
-**Prima del push chiedi conferma all'utente** (è il primo push sul repository remoto). Dopo la conferma:
+Il primo push è già stato fatto (23/10/2026): fai push direttamente.
 ```bash
 git push -u origin main
 ```
