@@ -47,6 +47,24 @@
     "ALREADY_CANCELLED": "The booking is already cancelled.",
     "NOT_FOUND": "Item not found.",
     "FORBIDDEN": "You are not allowed to do this.",
-    "INVALID_INPUT": "Please check the data you entered."
+    "INVALID_INPUT": "Please check the data you entered.",
+    "ACTIVATION_MISMATCH": "Card number and email do not match a registered member.",
+    "ALREADY_ACTIVE": "This account is already active. Log in with your password.",
+    "PASSWORD_TOO_SHORT": "The password must be at least {min} characters long.",
+    "INVALID_CREDENTIALS": "Wrong email or password."
+  },
+  "auth": {
+    "loginTitle": "Log in",
+    "email": "Email",
+    "password": "Password",
+    "login": "Log in",
+    "noAccount": "First time? Activate your account",
+    "activateTitle": "Activate your account",
+    "activateIntro": "Enter your membership card number and the email you gave the office, then choose a password.",
+    "cardNumber": "Card number",
+    "newPassword": "New password",
+    "activate": "Activate",
+    "forgot": "Forgot your password? Ask the administrator to reset your access.",
+    "haveAccount": "Already have an account? Log in"
   }
 }

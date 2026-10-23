@@ -47,6 +47,24 @@
     "ALREADY_CANCELLED": "La prenotazione è già cancellata.",
     "NOT_FOUND": "Elemento non trovato.",
     "FORBIDDEN": "Non hai i permessi per questa operazione.",
-    "INVALID_INPUT": "Controlla i dati inseriti."
+    "INVALID_INPUT": "Controlla i dati inseriti.",
+    "ACTIVATION_MISMATCH": "Numero tessera ed email non corrispondono a un socio registrato.",
+    "ALREADY_ACTIVE": "Questo account è già attivo. Accedi con la tua password.",
+    "PASSWORD_TOO_SHORT": "La password deve avere almeno {min} caratteri.",
+    "INVALID_CREDENTIALS": "Email o password non corretti."
+  },
+  "auth": {
+    "loginTitle": "Accedi",
+    "email": "Email",
+    "password": "Password",
+    "login": "Accedi",
+    "noAccount": "Primo accesso? Attiva il tuo account",
+    "activateTitle": "Attiva il tuo account",
+    "activateIntro": "Inserisci il numero della tua tessera e l'email che hai lasciato in segreteria, poi scegli una password.",
+    "cardNumber": "Numero tessera",
+    "newPassword": "Nuova password",
+    "activate": "Attiva",
+    "forgot": "Password dimenticata? Chiedi all'amministratore di reimpostare l'accesso.",
+    "haveAccount": "Hai già un account? Accedi"
   }
 }

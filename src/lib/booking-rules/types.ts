@@ -37,6 +37,10 @@ export type ViolationCode =
   | "ALREADY_CANCELLED"
   | "NOT_FOUND"
   | "FORBIDDEN"
-  | "INVALID_INPUT";
+  | "INVALID_INPUT"
+  | "ACTIVATION_MISMATCH"
+  | "ALREADY_ACTIVE"
+  | "PASSWORD_TOO_SHORT"
+  | "INVALID_CREDENTIALS";
 
 export type Violation = { code: ViolationCode; params?: Record<string, string | number> };
