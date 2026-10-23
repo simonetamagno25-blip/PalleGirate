@@ -96,7 +96,8 @@
       "bookings": "Bookings",
       "payments": "Payments",
       "fields": "Fields",
-      "settings": "Settings"
+      "settings": "Settings",
+      "dashboard": "Dashboard"
     },
     "bookings": {
       "title": "Bookings",
@@ -247,6 +248,43 @@
       "deactivate": "Deactivate",
       "confirmDeactivate": "The field has {count, plural, one {# future booking} other {# future bookings}}: they will be cancelled and the members notified. Continue?",
       "newTitle": "New field"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "kpis": "Indicators",
+      "range": {
+        "label": "Period",
+        "day": "Today",
+        "week": "Week",
+        "month": "Month"
+      },
+      "occupancy": "Occupancy",
+      "occupancyHint": "Average of active fields",
+      "collected": "Collected",
+      "collectedHint": "Expected: {expected}",
+      "unpaid": "Unpaid",
+      "unpaidHint": "Total unpaid",
+      "noShows": "No-shows",
+      "noShowsHint": "In the period",
+      "blocked": "Blocked members",
+      "blockedHint": "With strikes and unpaid bookings",
+      "occupancyByField": "Occupancy by field",
+      "revenue": "Revenue",
+      "expected": "Expected",
+      "collectedShort": "Collected",
+      "popular": "Busiest time slots",
+      "popularHint": "Bookings of the last 90 days, by day and start hour.",
+      "cell": "{day} at {hour}: {count, plural, =0 {no bookings} one {# booking} other {# bookings}}",
+      "trend": "Booking trend",
+      "trendSeries": "Bookings",
+      "expiring": "Memberships expiring (within {days, plural, one {# day} other {# days}})",
+      "noExpiring": "No memberships expiring.",
+      "noData": "No data yet.",
+      "col": {
+        "member": "Member",
+        "card": "Card",
+        "expires": "Expires"
+      }
     }
   },
   "auth": {

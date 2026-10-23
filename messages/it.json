@@ -96,7 +96,8 @@
       "bookings": "Prenotazioni",
       "payments": "Pagamenti",
       "fields": "Campi",
-      "settings": "Impostazioni"
+      "settings": "Impostazioni",
+      "dashboard": "Dashboard"
     },
     "bookings": {
       "title": "Prenotazioni",
@@ -247,6 +248,43 @@
       "deactivate": "Disattiva",
       "confirmDeactivate": "Il campo ha {count, plural, one {# prenotazione futura} other {# prenotazioni future}}: verranno cancellate e i soci avvisati. Continuare?",
       "newTitle": "Nuovo campo"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "kpis": "Indicatori",
+      "range": {
+        "label": "Periodo",
+        "day": "Oggi",
+        "week": "Settimana",
+        "month": "Mese"
+      },
+      "occupancy": "Occupazione",
+      "occupancyHint": "Media dei campi attivi",
+      "collected": "Incassato",
+      "collectedHint": "Atteso: {expected}",
+      "unpaid": "Insoluto",
+      "unpaidHint": "Totale non pagato",
+      "noShows": "No-show",
+      "noShowsHint": "Nel periodo",
+      "blocked": "Soci bloccati",
+      "blockedHint": "Con strike e insoluti",
+      "occupancyByField": "Occupazione per campo",
+      "revenue": "Incassi",
+      "expected": "Atteso",
+      "collectedShort": "Incassato",
+      "popular": "Fasce orarie più richieste",
+      "popularHint": "Prenotazioni degli ultimi 90 giorni, per giorno e ora di inizio.",
+      "cell": "{day} ore {hour}: {count, plural, =0 {nessuna prenotazione} one {# prenotazione} other {# prenotazioni}}",
+      "trend": "Andamento prenotazioni",
+      "trendSeries": "Prenotazioni",
+      "expiring": "Tessere in scadenza (entro {days, plural, one {# giorno} other {# giorni}})",
+      "noExpiring": "Nessuna tessera in scadenza.",
+      "noData": "Ancora nessun dato.",
+      "col": {
+        "member": "Socio",
+        "card": "Tessera",
+        "expires": "Scadenza"
+      }
     }
   },
   "auth": {

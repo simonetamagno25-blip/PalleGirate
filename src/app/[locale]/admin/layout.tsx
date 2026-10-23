@@ -14,6 +14,9 @@ export default async function AdminLayout({ children }: LayoutProps<'/[locale]/a
   return (
     <AppShell user={user}>
       <nav className="mb-6 flex gap-1 overflow-x-auto border-b pb-3 text-sm">
+        <Link href="/admin/dashboard" className="rounded-md px-3 py-1.5 hover:bg-muted">
+          {t('dashboard')}
+        </Link>
         <Link href="/admin/members" className="rounded-md px-3 py-1.5 hover:bg-muted">
           {t('members')}
         </Link>

@@ -1,8 +1,8 @@
 'use client'
 
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 
-export type BarDatum = { label: string; value: number }
+export type BarDatum = { label: string; value: number; color?: string }
 
 /**
  * Grafico a barre generico per le dashboard: etichette e valori arrivano già formattati/tradotti dal server.
@@ -48,7 +48,11 @@ export function BarSeriesChart({
             }}
             formatter={(v) => [fmt(Number(v)), seriesLabel]}
           />
-          <Bar dataKey="value" fill={color} radius={[4, 4, 0, 0]} maxBarSize={48} isAnimationActive={false} />
+          <Bar dataKey="value" fill={color} radius={[4, 4, 0, 0]} maxBarSize={48} isAnimationActive={false}>
+            {data.map((d) => (
+              <Cell key={d.label} fill={d.color ?? color} />
+            ))}
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
     </div>

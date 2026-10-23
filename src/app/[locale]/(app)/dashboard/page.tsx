@@ -81,7 +81,7 @@ export default async function MemberDashboardPage() {
       </section>
 
       <section className="grid gap-4 lg:grid-cols-2">
-        <div className="rounded-xl border bg-card p-4">
+        <div className="min-w-0 rounded-xl border bg-card p-4">
           <h2 className="mb-3 font-medium">{t('hoursBySport')}</h2>
           {d.hoursBySport.length === 0 ? (
             <p className="text-sm text-muted-foreground">{t('noData')}</p>
@@ -94,7 +94,7 @@ export default async function MemberDashboardPage() {
             />
           )}
         </div>
-        <div className="rounded-xl border bg-card p-4">
+        <div className="min-w-0 rounded-xl border bg-card p-4">
           <h2 className="mb-3 font-medium">{t('bookingsByMonth')}</h2>
           {d.bookingsByMonth.every((m) => m.count === 0) ? (
             <p className="text-sm text-muted-foreground">{t('noData')}</p>
