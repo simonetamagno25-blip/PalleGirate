@@ -51,6 +51,7 @@
     "ACTIVATION_MISMATCH": "Card number and email do not match a registered member.",
     "ALREADY_ACTIVE": "This account is already active. Log in with your password.",
     "PASSWORD_TOO_SHORT": "The password must be at least {min} characters long.",
+    "PASSWORD_TOO_LONG": "The password can be at most {max} characters long.",
     "INVALID_CREDENTIALS": "Wrong email or password."
   },
   "auth": {

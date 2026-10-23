@@ -1,11 +1,13 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
+import { isSessionValid } from "./accounts";
 import { prisma } from "./db";
 
 export async function currentUser() {
   const session = await auth();
   if (!session?.user?.id) return null;
-  return prisma.user.findUnique({ where: { id: session.user.id }, include: { membership: true } });
+  const user = await prisma.user.findUnique({ where: { id: session.user.id }, include: { membership: true } });
+  return user && isSessionValid(user, session.user.sv) ? user : null;
 }
 
 export async function requireUser() {

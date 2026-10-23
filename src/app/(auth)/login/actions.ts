@@ -13,7 +13,7 @@ export async function loginAction(_: ActionResult | null, form: FormData): Promi
   try {
     await signIn("credentials", { email, password: String(form.get("password") ?? ""), redirect: false });
   } catch (e) {
-    if (e instanceof AuthError) return { ok: false, violations: [{ code: "INVALID_CREDENTIALS" }] };
+    if (e instanceof AuthError && e.type === "CredentialsSignin") return { ok: false, violations: [{ code: "INVALID_CREDENTIALS" }] };
     throw e;
   }
   const user = await prisma.user.findUnique({ where: { email: normalizeEmail(email) } });

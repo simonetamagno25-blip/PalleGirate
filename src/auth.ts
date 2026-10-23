@@ -11,17 +11,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       credentials: { email: {}, password: {} },
       authorize: async (c) => {
         const user = await verifyCredentials(prisma, String(c?.email ?? ""), String(c?.password ?? ""));
-        return user ? { id: user.id, email: user.email, name: `${user.firstName} ${user.lastName}` } : null;
+        return user ? { id: user.id, email: user.email, name: `${user.firstName} ${user.lastName}`, sessionVersion: user.sessionVersion } : null;
       },
     }),
   ],
   callbacks: {
     jwt({ token, user }) {
-      if (user?.id) token.sub = user.id;
+      if (user?.id) {
+        token.sub = user.id;
+        token.sv = user.sessionVersion;
+      }
       return token;
     },
     session({ session, token }) {
       if (token.sub) session.user.id = token.sub;
+      session.user.sv = typeof token.sv === "number" ? token.sv : undefined;
       return session;
     },
   },

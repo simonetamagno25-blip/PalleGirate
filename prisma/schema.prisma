@@ -17,6 +17,7 @@ model User {
   locale       String   @default("it")
   passwordHash String?  // null = account da attivare
   isAdmin      Boolean  @default(false)
+  sessionVersion Int    @default(0) // incrementato a ogni attivazione/reset: invalida i JWT vecchi
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

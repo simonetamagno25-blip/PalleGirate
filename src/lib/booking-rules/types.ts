@@ -41,6 +41,7 @@ export type ViolationCode =
   | "ACTIVATION_MISMATCH"
   | "ALREADY_ACTIVE"
   | "PASSWORD_TOO_SHORT"
-  | "INVALID_CREDENTIALS";
+  | "INVALID_CREDENTIALS"
+  | "PASSWORD_TOO_LONG";
 
 export type Violation = { code: ViolationCode; params?: Record<string, string | number> };

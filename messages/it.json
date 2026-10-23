@@ -51,6 +51,7 @@
     "ACTIVATION_MISMATCH": "Numero tessera ed email non corrispondono a un socio registrato.",
     "ALREADY_ACTIVE": "Questo account è già attivo. Accedi con la tua password.",
     "PASSWORD_TOO_SHORT": "La password deve avere almeno {min} caratteri.",
+    "PASSWORD_TOO_LONG": "La password può avere al massimo {max} caratteri.",
     "INVALID_CREDENTIALS": "Email o password non corretti."
   },
   "auth": {

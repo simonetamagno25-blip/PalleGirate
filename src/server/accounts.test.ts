@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { prisma } from "./db";
 import { DomainError } from "./errors";
-import { activateAccount, verifyCredentials } from "./accounts";
+import { activateAccount, isSessionValid, verifyCredentials } from "./accounts";
 import { makeMember, resetDb } from "../../tests/helpers/db";
 
 async function code(p: Promise<unknown>) {
@@ -45,5 +45,37 @@ describe("accounts", () => {
     expect(await verifyCredentials(prisma, "a@example.it", "sbagliata")).toBeNull();
     expect(await verifyCredentials(prisma, "b@example.it", "")).toBeNull();
     expect(await verifyCredentials(prisma, "nessuno@example.it", "x")).toBeNull();
+  });
+});
+
+describe("sessions and limits", () => {
+  beforeEach(resetDb);
+
+  it("isSessionValid", () => {
+    expect(isSessionValid({ passwordHash: "h", sessionVersion: 2 }, 2)).toBe(true);
+    expect(isSessionValid({ passwordHash: null, sessionVersion: 2 }, 2)).toBe(false);
+    expect(isSessionValid({ passwordHash: "h", sessionVersion: 3 }, 2)).toBe(false);
+    expect(isSessionValid({ passwordHash: "h", sessionVersion: 0 }, undefined)).toBe(false);
+    expect(isSessionValid(null, 0)).toBe(false);
+  });
+
+  it("increments sessionVersion on activation", async () => {
+    const m = await makeMember({ email: "a@example.it", number: "PG-1", password: null });
+    const before = (await prisma.user.findUniqueOrThrow({ where: { id: m.id } })).sessionVersion;
+    await activateAccount(prisma, { cardNumber: "PG-1", email: "a@example.it", password: "segreta123" });
+    expect((await prisma.user.findUniqueOrThrow({ where: { id: m.id } })).sessionVersion).toBe(before + 1);
+  });
+
+  it("rejects passwords longer than 72 characters", async () => {
+    await makeMember({ email: "a@example.it", number: "PG-1", password: null });
+    expect(await code(activateAccount(prisma, { cardNumber: "PG-1", email: "a@example.it", password: "x".repeat(73) }))).toBe("PASSWORD_TOO_LONG");
+    await activateAccount(prisma, { cardNumber: "PG-1", email: "a@example.it", password: "x".repeat(72) });
+  });
+
+  it("only one of two concurrent activations succeeds", async () => {
+    await makeMember({ email: "a@example.it", number: "PG-1", password: null });
+    const go = (pw: string) => activateAccount(prisma, { cardNumber: "PG-1", email: "a@example.it", password: pw }).then(() => "ok", () => "fail");
+    const r = await Promise.all([go("segreta123"), go("altrapass123")]);
+    expect(r.filter((x) => x === "ok")).toHaveLength(1);
   });
 });
