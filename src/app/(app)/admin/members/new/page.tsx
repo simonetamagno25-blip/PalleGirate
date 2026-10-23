@@ -1,9 +1,11 @@
+import { requireAdmin } from "@/server/guards";
 import { getTranslations } from "next-intl/server";
 import { defaultExpiry } from "@/lib/membership";
 import { romeDay } from "@/lib/time/rome";
 import { MemberForm } from "@/components/admin/member-form";
 
 export default async function NewMemberPage() {
+  await requireAdmin();
   const t = await getTranslations("members");
   const today = romeDay(new Date());
   return (

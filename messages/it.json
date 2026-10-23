@@ -55,7 +55,9 @@
     "INVALID_CREDENTIALS": "Email o password non corretti.",
     "EMAIL_TAKEN": "Esiste già un utente con questa email.",
     "CARD_TAKEN": "Questo numero di tessera è già assegnato.",
-    "CANNOT_DEMOTE_SELF": "Non puoi togliere a te stesso i permessi di amministratore."
+    "CANNOT_DEMOTE_SELF": "Non puoi togliere a te stesso i permessi di amministratore.",
+    "CANNOT_RESET_SELF": "Non puoi reimpostare il tuo stesso accesso.",
+    "NO_MEMBERSHIP": "Questo utente non ha una tessera: non potrebbe riattivare l'account."
   },
   "auth": {
     "loginTitle": "Accedi",

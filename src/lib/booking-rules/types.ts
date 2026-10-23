@@ -45,6 +45,8 @@ export type ViolationCode =
   | "PASSWORD_TOO_LONG"
   | "EMAIL_TAKEN"
   | "CARD_TAKEN"
-  | "CANNOT_DEMOTE_SELF";
+  | "CANNOT_DEMOTE_SELF"
+  | "CANNOT_RESET_SELF"
+  | "NO_MEMBERSHIP";
 
 export type Violation = { code: ViolationCode; params?: Record<string, string | number> };

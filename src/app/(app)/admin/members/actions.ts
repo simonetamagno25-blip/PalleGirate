@@ -31,8 +31,8 @@ export async function renewAction(userId: string, expiryOverride: string) {
 }
 
 export async function resetAccessAction(userId: string) {
-  await requireAdmin();
-  const res = await runAction(() => resetAccess(prisma, userId).then(() => null));
+  const me = await requireAdmin();
+  const res = await runAction(() => resetAccess(prisma, me.id, userId).then(() => null));
   revalidatePath(`/admin/members/${userId}`);
   return res;
 }

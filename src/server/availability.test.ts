@@ -17,10 +17,12 @@ describe("availability", () => {
     const f = await makeField();
     const a = await makeMember();
     const b = await makeMember();
-    await createBooking(prisma, { userId: a.id, mode: "member" }, a.id, { fieldId: f.id, start: romeInstant("2026-11-05", 600), slots: 1 }, NOW);
+    const created = await createBooking(prisma, { userId: a.id, mode: "member" }, a.id, { fieldId: f.id, start: romeInstant("2026-11-05", 600), slots: 1 }, NOW);
 
     const forB = await getDayAvailability(prisma, "2026-11-05", { userId: b.id, isAdmin: false });
     expect(forB.bookings).toHaveLength(1);
+    expect(forB.bookings[0].id).not.toBe(created.id);
+    expect(JSON.stringify(forB)).not.toContain(created.id);
     expect(forB.bookings[0]).toEqual({ id: expect.any(String), fieldId: f.id, startMin: 600, endMin: 660, mine: false });
     expect(JSON.stringify(forB)).not.toContain(a.lastName);
 

@@ -1,3 +1,4 @@
+import { requireAdmin } from "@/server/guards";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { romeDay } from "@/lib/time/rome";
@@ -8,6 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { prisma } from "@/server/db";
 
 export default async function MembersPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  await requireAdmin();
   const t = await getTranslations("members");
   const tc = await getTranslations("common");
   const q = (await searchParams).q?.trim() ?? "";

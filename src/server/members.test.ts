@@ -45,10 +45,31 @@ describe("members service", () => {
 
   it("reset access makes the account 'to activate' again and kills sessions", async () => {
     const m = await makeMember();
-    await resetAccess(prisma, m.id);
+    const admin = await makeAdmin();
+    await resetAccess(prisma, admin.id, m.id);
     const after = await prisma.user.findUniqueOrThrow({ where: { id: m.id } });
     expect(after.passwordHash).toBeNull();
     expect(after.sessionVersion).toBe(m.sessionVersion + 1);
+  });
+
+  it("refuses to reset own access or a user without membership", async () => {
+    const admin = await makeAdmin();
+    expect(await code(resetAccess(prisma, admin.id, admin.id))).toBe("CANNOT_RESET_SELF");
+    expect(await code(resetAccess(prisma, "nope", admin.id))).toBe("NO_MEMBERSHIP");
+    expect(await code(resetAccess(prisma, admin.id, "missing"))).toBe("NOT_FOUND");
+  });
+
+  it("rejects impossible calendar dates", async () => {
+    expect(await code(createMember(prisma, input({ expiryDate: "2027-02-30" })))).toBe("INVALID_INPUT");
+    expect(await code(createMember(prisma, input({ issueDate: "2026-13-45" })))).toBe("INVALID_INPUT");
+    expect(await code(createMember(prisma, input({ birthDate: "2026-02-30" })))).toBe("INVALID_INPUT");
+  });
+
+  it("rejects invalid or too-early renewal overrides", async () => {
+    const u = await createMember(prisma, input({ expiryDate: "2026-10-20" }));
+    expect(await code(renewMembership(prisma, u.id, "2026-10-01", "2026-02-30"))).toBe("INVALID_INPUT");
+    expect(await code(renewMembership(prisma, u.id, "2026-10-01", "2026-09-01"))).toBe("INVALID_INPUT");
+    expect((await renewMembership(prisma, u.id, "2026-10-01", "")).expiryDate).toBe("2027-10-20");
   });
 
   it("promotes users but an admin cannot demote themselves", async () => {

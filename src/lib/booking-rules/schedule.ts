@@ -13,7 +13,10 @@ export function bookingPrice(priceCentsPerSlot: number, slots: number): number {
 
 export function quarterStarts(start: Date, end: Date): Date[] {
   const out: Date[] = [];
-  for (let t = start.getTime(); t < end.getTime(); t += QUARTER_MS) out.push(new Date(t));
+  // Griglia assoluta di 15 minuti (gli offset di Roma sono ore intere): inizio per difetto, fine per eccesso.
+  const first = Math.floor(start.getTime() / QUARTER_MS) * QUARTER_MS;
+  const last = Math.ceil(end.getTime() / QUARTER_MS) * QUARTER_MS;
+  for (let t = first; t < last; t += QUARTER_MS) out.push(new Date(t));
   return out;
 }
 

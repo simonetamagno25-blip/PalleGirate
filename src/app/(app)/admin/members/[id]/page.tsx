@@ -1,3 +1,4 @@
+import { requireAdmin } from "@/server/guards";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { proposeRenewal } from "@/lib/membership";
@@ -8,6 +9,7 @@ import { MemberActions } from "@/components/admin/member-actions";
 import { prisma } from "@/server/db";
 
 export default async function MemberPage({ params }: { params: Promise<{ id: string }> }) {
+  await requireAdmin();
   const { id } = await params;
   const t = await getTranslations("members");
   const user = await prisma.user.findUnique({ where: { id }, include: { membership: { include: { renewals: { orderBy: { createdAt: "desc" } } } } } });

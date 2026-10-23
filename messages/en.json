@@ -55,7 +55,9 @@
     "INVALID_CREDENTIALS": "Wrong email or password.",
     "EMAIL_TAKEN": "A user with this email already exists.",
     "CARD_TAKEN": "This card number is already assigned.",
-    "CANNOT_DEMOTE_SELF": "You cannot remove your own administrator rights."
+    "CANNOT_DEMOTE_SELF": "You cannot remove your own administrator rights.",
+    "CANNOT_RESET_SELF": "You cannot reset your own access.",
+    "NO_MEMBERSHIP": "This user has no membership card: they could not reactivate the account."
   },
   "auth": {
     "loginTitle": "Log in",

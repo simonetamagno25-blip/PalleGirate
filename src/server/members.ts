@@ -2,10 +2,11 @@ import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { normalizeCardNumber, normalizeEmail } from "@/lib/auth/normalize";
 import { proposeRenewal } from "@/lib/membership";
+import { isValidDay } from "@/lib/time/rome";
 import type { Db } from "./db";
 import { fail } from "./errors";
 
-const day = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
+const day = z.string().refine(isValidDay);
 const optional = (s: z.ZodString) => s.optional().or(z.literal("").transform(() => undefined));
 
 export const memberInputSchema = z
@@ -81,7 +82,11 @@ export async function renewMembership(db: Db, userId: string, today: string, exp
   const current = await db.membership.findUnique({ where: { userId } });
   if (!current) return fail("NOT_FOUND");
   const proposal = proposeRenewal(today, current.expiryDate);
-  const expiryDate = expiryOverride && day.safeParse(expiryOverride).success ? expiryOverride : proposal.expiryDate;
+  let expiryDate = proposal.expiryDate;
+  if (expiryOverride) {
+    if (!isValidDay(expiryOverride) || expiryOverride < proposal.issueDate) return fail("INVALID_INPUT");
+    expiryDate = expiryOverride;
+  }
   return db.membership.update({
     where: { id: current.id },
     data: { issueDate: proposal.issueDate, expiryDate, renewals: { create: { issueDate: proposal.issueDate, expiryDate } } },
@@ -89,7 +94,11 @@ export async function renewMembership(db: Db, userId: string, today: string, exp
 }
 
 /** Il socio dovrà riattivare l'account; le sessioni esistenti muoiono (sessionVersion). */
-export async function resetAccess(db: Db, userId: string) {
+export async function resetAccess(db: Db, actorId: string, userId: string) {
+  if (actorId === userId) fail("CANNOT_RESET_SELF");
+  const user = await db.user.findUnique({ where: { id: userId }, include: { membership: true } });
+  if (!user) return fail("NOT_FOUND");
+  if (!user.membership) return fail("NO_MEMBERSHIP");
   await db.user.update({ where: { id: userId }, data: { passwordHash: null, sessionVersion: { increment: 1 } } });
 }
 

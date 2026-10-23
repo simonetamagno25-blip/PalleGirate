@@ -32,7 +32,11 @@ export async function getDayAvailability(db: Db, day: string, viewer: Viewer): P
     day,
     fields: fields.map(({ id, name, sport, slotMinutes, priceCents }) => ({ id, name, sport, slotMinutes, priceCents })),
     bookings: bookings.map((b) => {
-      const base: DayBooking = { id: b.id, fieldId: b.fieldId, ...toInterval(b), mine: b.memberId === viewer.userId };
+      const mine = b.memberId === viewer.userId;
+      const iv = toInterval(b);
+      // Gli id reali delle prenotazioni altrui non escono verso i soci.
+      const id = mine || viewer.isAdmin ? b.id : `${b.fieldId}:${iv.startMin}`;
+      const base: DayBooking = { id, fieldId: b.fieldId, ...iv, mine };
       if (viewer.isAdmin && "member" in b) {
         const m = b.member as { firstName: string; lastName: string };
         base.memberName = `${m.firstName} ${m.lastName}`;

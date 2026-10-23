@@ -37,7 +37,9 @@ export function MemberActions({ userId, isAdmin, proposedExpiry, hasMembership }
         </div>
       )}
       <div className="flex flex-wrap gap-2">
-        <Button variant="outline" disabled={pending} onClick={() => confirm(t("resetConfirm")) && run(() => resetAccessAction(userId))}>{t("resetAccess")}</Button>
+        {hasMembership && (
+          <Button variant="outline" disabled={pending} onClick={() => confirm(t("resetConfirm")) && run(() => resetAccessAction(userId))}>{t("resetAccess")}</Button>
+        )}
         <Button variant="outline" disabled={pending} onClick={() => run(() => setAdminAction(userId, !isAdmin))}>{isAdmin ? t("removeAdmin") : t("makeAdmin")}</Button>
       </div>
       {errors.length > 0 && <ViolationList violations={errors} />}

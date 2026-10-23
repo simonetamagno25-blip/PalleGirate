@@ -60,4 +60,10 @@ describe("bookingEnd, price and quarters", () => {
     expect(q[0].getTime()).toBe(at("10:00").getTime());
     expect(q[5].getTime()).toBe(at("11:15").getTime());
   });
+  it("aligns quarters to the absolute 15-minute grid", () => {
+    const q = quarterStarts(at("08:10"), at("09:10")).map((d) => d.getTime());
+    expect(q).toEqual(["08:00", "08:15", "08:30", "08:45", "09:00"].map((h) => at(h).getTime()));
+    const aligned = new Set(quarterStarts(at("08:00"), at("09:00")).map((d) => d.getTime()));
+    expect(q.some((t) => aligned.has(t))).toBe(true);
+  });
 });
