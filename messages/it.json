@@ -210,7 +210,10 @@
       "ALREADY_CANCELLED": "Questa prenotazione è già stata cancellata.",
       "WINDOW_CLOSED": "Mancano meno di 2 ore all'inizio: non è più possibile modificarla o cancellarla.",
       "FIELD_INACTIVE": "Questo campo al momento non è prenotabile.",
-      "INVALID_INPUT": "Controlla i dati inseriti: giorno, orario o durata non sono validi."
+      "INVALID_INPUT": "Controlla i dati inseriti: giorno, orario o durata non sono validi.",
+      "NOT_PAYABLE": "Questa prenotazione non è dovuta: non c'è nulla da registrare.",
+      "NOT_ENDED": "La prenotazione non è ancora conclusa.",
+      "INVALID_TRANSITION": "Questo esito non è ammesso (o è già stato registrato)."
     }
   },
   "reasons": {

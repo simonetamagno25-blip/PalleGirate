@@ -210,7 +210,10 @@
       "ALREADY_CANCELLED": "This booking has already been cancelled.",
       "WINDOW_CLOSED": "Less than 2 hours to the start: it can no longer be changed or cancelled.",
       "FIELD_INACTIVE": "This field can't be booked at the moment.",
-      "INVALID_INPUT": "Check your input: the day, time or duration is not valid."
+      "INVALID_INPUT": "Check your input: the day, time or duration is not valid.",
+      "NOT_PAYABLE": "This booking is not due: there is nothing to record.",
+      "NOT_ENDED": "The booking has not ended yet.",
+      "INVALID_TRANSITION": "This outcome is not allowed (or has already been recorded)."
     }
   },
   "reasons": {

@@ -1,3 +1,5 @@
+import type { PaymentStatus } from '@prisma/client'
+import { quarterStarts } from '@/lib/booking-rules'
 import { prisma } from '@/lib/db'
 import { fromRome } from '@/lib/time'
 
@@ -48,4 +50,38 @@ export function makeField(over: { name?: string; slotMinutes?: number; pricePerS
       active: over.active ?? true,
     },
   })
+}
+
+export async function makeBooking(over: {
+  userId: string
+  fieldId: string
+  start: Date
+  slots?: number
+  status?: 'CONFIRMED' | 'CANCELLED'
+  paymentStatus?: PaymentStatus
+  chargeable?: boolean
+}) {
+  const field = await prisma.field.findUniqueOrThrow({ where: { id: over.fieldId } })
+  const slots = over.slots ?? 1
+  const end = new Date(over.start.getTime() + slots * field.slotMinutes * 60_000)
+  const status = over.status ?? 'CONFIRMED'
+  const booking = await prisma.booking.create({
+    data: {
+      userId: over.userId,
+      fieldId: over.fieldId,
+      start: over.start,
+      end,
+      slots,
+      priceCents: slots * field.pricePerSlot,
+      status,
+      paymentStatus: over.paymentStatus ?? 'PENDING',
+      chargeable: over.chargeable ?? false,
+    },
+  })
+  if (status === 'CONFIRMED') {
+    await prisma.occupancy.createMany({
+      data: quarterStarts(over.start, end).map((quarterStart) => ({ bookingId: booking.id, fieldId: field.id, quarterStart })),
+    })
+  }
+  return booking
 }

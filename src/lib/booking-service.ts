@@ -24,6 +24,9 @@ export const BOOKING_ERROR_CODES = [
   'ALREADY_CANCELLED',
   'WINDOW_CLOSED',
   'FIELD_INACTIVE',
+  'NOT_PAYABLE',
+  'NOT_ENDED',
+  'INVALID_TRANSITION',
 ] as const
 
 export type BookingErrorCode = (typeof BOOKING_ERROR_CODES)[number]
