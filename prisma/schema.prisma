@@ -1,0 +1,149 @@
+// Schema compatibile con SQLite (locale) e PostgreSQL (produzione): cambiare solo `provider` e `url`.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum BookingStatus {
+  CONFIRMED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  UNPAID
+  EXEMPT
+}
+
+model User {
+  id           String    @id @default(cuid())
+  isAdmin      Boolean   @default(false)
+  firstName    String
+  lastName     String
+  birthDate    DateTime?
+  email        String    @unique
+  phone        String?
+  locale       String    @default("it")
+  passwordHash String?
+  activatedAt  DateTime?
+  createdAt    DateTime  @default(now())
+
+  membership    Membership?
+  bookings      Booking[]
+  strikes       Strike[]
+  notifications Notification[]
+}
+
+model Membership {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  number    String   @unique
+  issuedAt  DateTime
+  expiresAt DateTime
+
+  user     User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  renewals MembershipRenewal[]
+}
+
+model MembershipRenewal {
+  id           String   @id @default(cuid())
+  membershipId String
+  issuedAt     DateTime
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+
+  membership Membership @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+}
+
+model Field {
+  id           String  @id @default(cuid())
+  name         String  @unique
+  sport        String
+  slotMinutes  Int
+  pricePerSlot Int // centesimi di euro
+  active       Boolean @default(true)
+
+  bookings  Booking[]
+  occupancy Occupancy[]
+}
+
+// Riga singola (id = 1). Minuti = minuti dalla mezzanotte locale.
+model Settings {
+  id                 Int @id @default(1)
+  openMinutes        Int @default(480)
+  closeMinutes       Int @default(1380)
+  stepMinutes        Int @default(15)
+  maxAdvanceDays     Int @default(14)
+  maxActiveBookings  Int @default(3)
+  changeWindowHours  Int @default(2)
+  maxSlotsPerBooking Int @default(2)
+  membershipWarnDays Int @default(15)
+  reminderHours      Int @default(2)
+}
+
+model Booking {
+  id            String        @id @default(cuid())
+  userId        String
+  fieldId       String
+  start         DateTime
+  end           DateTime
+  slots         Int
+  priceCents    Int
+  status        BookingStatus @default(CONFIRMED)
+  cancelReason  String?
+  cancelledById String?
+  paymentStatus PaymentStatus @default(PENDING)
+  chargeable    Boolean       @default(false)
+  noShow        Boolean       @default(false)
+  createdAt     DateTime      @default(now())
+
+  user      User        @relation(fields: [userId], references: [id])
+  field     Field       @relation(fields: [fieldId], references: [id])
+  occupancy Occupancy[]
+  strikes   Strike[]
+
+  @@index([userId, status, start])
+  @@index([fieldId, start])
+}
+
+model Strike {
+  id        String   @id @default(cuid())
+  userId    String
+  bookingId String
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String
+  params    String   @default("{}") // JSON serializzato, tradotto al momento della visualizzazione
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, read])
+}
+
+// Una riga per ogni quarto d'ora occupato: l'indice univoco rende impossibili le sovrapposizioni.
+model Occupancy {
+  id           String   @id @default(cuid())
+  fieldId      String
+  quarterStart DateTime
+  bookingId    String
+
+  field   Field   @relation(fields: [fieldId], references: [id], onDelete: Cascade)
+  booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  @@unique([fieldId, quarterStart])
+  @@index([bookingId])
+}

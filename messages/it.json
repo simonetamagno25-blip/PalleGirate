@@ -1,0 +1,216 @@
+{
+  "common": {
+    "appName": "Palle Girate",
+    "language": "Lingua",
+    "loading": "Caricamento…",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "back": "Indietro"
+  },
+  "nav": {
+    "calendar": "Calendario",
+    "newBooking": "Prenota",
+    "myBookings": "Le mie prenotazioni",
+    "profile": "Profilo",
+    "admin": "Area admin",
+    "login": "Accedi",
+    "logout": "Esci"
+  },
+  "booking": {
+    "newTitle": "Nuova prenotazione",
+    "editTitle": "Modifica prenotazione",
+    "adminNewTitle": "Nuova prenotazione per un socio",
+    "member": "Socio",
+    "pickMember": "Scegli il socio",
+    "field": "Campo",
+    "day": "Giorno",
+    "time": "Orario di inizio",
+    "duration": "Durata",
+    "minutes": "{minutes} minuti",
+    "summary": "Riepilogo",
+    "summaryText": "{field}, dalle {start} alle {end}",
+    "price": "Prezzo",
+    "payAtCenter": "Il pagamento si fa in contanti, di persona al centro.",
+    "confirm": "Conferma prenotazione",
+    "saveChanges": "Salva modifiche",
+    "slotPrice": "{price} a slot"
+  },
+  "bookings": {
+    "title": "Le mie prenotazioni",
+    "upcoming": "Prossime",
+    "history": "Storico",
+    "emptyUpcoming": "Non hai prenotazioni in programma.",
+    "emptyHistory": "Nessuna prenotazione passata.",
+    "newBooking": "Nuova prenotazione",
+    "edit": "Modifica",
+    "cancel": "Cancella",
+    "cancelReasonLabel": "Motivo (facoltativo)",
+    "cancelConfirm": "Conferma cancellazione",
+    "cancelKeep": "Mantieni",
+    "windowClosed": "Mancano meno di 2 ore: non si può più modificare né cancellare e la prenotazione va pagata.",
+    "when": "{date}, {start}–{end}",
+    "reason": "Motivo: {reason}",
+    "chargeableHint": "Cancellata, ma da pagare",
+    "status": {
+      "CONFIRMED": "Confermata",
+      "CANCELLED": "Cancellata"
+    },
+    "payment": {
+      "PENDING": "Da pagare",
+      "PAID": "Pagata",
+      "UNPAID": "Non pagata",
+      "EXEMPT": "Esente"
+    }
+  },
+  "profile": {
+    "title": "Profilo",
+    "personal": "Dati personali",
+    "name": "Nome",
+    "email": "Email",
+    "phone": "Telefono",
+    "birthDate": "Data di nascita",
+    "membership": "Tessera",
+    "number": "Numero",
+    "issued": "Emessa il",
+    "expires": "Scade il",
+    "noMembership": "Nessuna tessera registrata.",
+    "expired": "Scaduta",
+    "daysLeft": "{days, plural, =0 {Scade oggi} one {# giorno rimasto} other {# giorni rimasti}}"
+  },
+  "calendar": {
+    "title": "Disponibilità",
+    "today": "Oggi",
+    "prevDay": "Giorno precedente",
+    "nextDay": "Giorno successivo",
+    "selectField": "Campo",
+    "free": "Libero",
+    "busy": "Occupato",
+    "past": "Orario passato",
+    "bookSlot": "Prenota {field} alle {time}",
+    "hint": "Tocca un orario libero per prenotare."
+  },
+  "admin": {
+    "nav": {
+      "members": "Soci e tessere",
+      "bookings": "Prenotazioni"
+    },
+    "bookings": {
+      "title": "Prenotazioni",
+      "filterField": "Campo",
+      "allFields": "Tutti i campi",
+      "filterDay": "Giorno",
+      "filterMember": "Socio",
+      "filter": "Filtra",
+      "reset": "Azzera",
+      "new": "Nuova prenotazione",
+      "empty": "Nessuna prenotazione trovata.",
+      "cancelReasonDefault": "Cancellata dal centro",
+      "col": {
+        "when": "Quando",
+        "field": "Campo",
+        "member": "Socio",
+        "status": "Stato",
+        "payment": "Pagamento",
+        "price": "Prezzo",
+        "actions": "Azioni"
+      }
+    },
+    "members": {
+      "title": "Soci e tessere",
+      "search": "Cerca per nome, email o tessera",
+      "searchButton": "Cerca",
+      "new": "Nuovo socio",
+      "empty": "Nessun socio trovato.",
+      "col": {
+        "name": "Socio",
+        "card": "Tessera",
+        "expires": "Scadenza",
+        "status": "Accesso",
+        "actions": "Azioni"
+      },
+      "status": {
+        "active": "Attivo",
+        "pending": "Da attivare"
+      },
+      "badge": {
+        "admin": "Admin",
+        "expired": "Scaduta",
+        "noCard": "Senza tessera",
+        "expiresIn": "Scade tra {days, plural, one {# giorno} other {# giorni}}"
+      },
+      "action": {
+        "edit": "Modifica",
+        "renew": "Rinnova",
+        "resetAccess": "Reimposta accesso",
+        "makeAdmin": "Rendi admin",
+        "removeAdmin": "Togli admin",
+        "confirmRenew": "Rinnovare la tessera?",
+        "confirmReset": "Il socio dovrà riattivare l'account con numero tessera ed email. Continuare?"
+      },
+      "form": {
+        "titleNew": "Nuovo socio",
+        "titleEdit": "Modifica socio",
+        "firstName": "Nome",
+        "lastName": "Cognome",
+        "birthDate": "Data di nascita",
+        "email": "Email",
+        "phone": "Telefono",
+        "membershipNumber": "Numero tessera",
+        "issuedAt": "Data di emissione",
+        "expiresAt": "Data di scadenza",
+        "expiresAtHint": "Lascia vuoto per emissione + 1 anno.",
+        "noCardHint": "Questo utente non ha una tessera."
+      },
+      "errors": {
+        "DUPLICATE_EMAIL": "Esiste già un socio con questa email.",
+        "DUPLICATE_MEMBERSHIP_NUMBER": "Esiste già una tessera con questo numero.",
+        "LAST_ADMIN": "Deve restare almeno un admin.",
+        "INVALID_INPUT": "Controlla i campi: alcuni dati non sono validi.",
+        "NOT_FOUND": "Socio non trovato.",
+        "SELF_RESET": "Non puoi reimpostare il tuo stesso accesso: chiedi a un altro admin.",
+        "NO_MEMBERSHIP": "Questo utente non ha una tessera, quindi non potrebbe riattivare l'account."
+      }
+    }
+  },
+  "auth": {
+    "loginTitle": "Accedi",
+    "email": "Email",
+    "password": "Password",
+    "loginButton": "Accedi",
+    "loginError": "Email o password non corrette.",
+    "firstTime": "Prima volta? Attiva il tuo account",
+    "activateTitle": "Attiva il tuo account",
+    "activateIntro": "Inserisci il numero della tua tessera e l'email che hai dato al centro, poi scegli una password.",
+    "membershipNumber": "Numero tessera",
+    "newPassword": "Scegli una password (almeno 8 caratteri)",
+    "activateButton": "Attiva account",
+    "activateSuccess": "Account attivato. Ora puoi accedere.",
+    "alreadyActive": "Hai già un account? Accedi",
+    "errors": {
+      "ACTIVATION_FAILED": "Non riusciamo ad attivare l'account con questi dati. Controlla numero tessera ed email, oppure chiedi al centro di reimpostare il tuo accesso.",
+      "WEAK_PASSWORD": "La password deve avere almeno 8 caratteri."
+    }
+  },
+  "errors": {
+    "generic": "Qualcosa è andato storto. Riprova.",
+    "forbidden": "Non hai i permessi per questa azione.",
+    "booking": {
+      "NOT_ON_STEP": "L'orario di inizio deve essere un multiplo di 15 minuti.",
+      "BEFORE_OPENING": "Il centro apre alle 08:00: scegli un orario successivo.",
+      "AFTER_CLOSING": "La prenotazione deve finire entro la chiusura del centro (23:00).",
+      "BAD_DURATION": "La durata deve essere di 1 o 2 slot consecutivi.",
+      "IN_PAST": "Non puoi prenotare un orario già passato.",
+      "TOO_FAR_AHEAD": "Puoi prenotare al massimo 14 giorni prima.",
+      "MEMBERSHIP_EXPIRED": "La tua tessera non è valida per quel giorno: è scaduta o non c'è.",
+      "MAX_ACTIVE_REACHED": "Hai già il numero massimo di prenotazioni attive.",
+      "BLOCKED": "Il tuo account è bloccato per pagamenti non saldati. Rivolgiti al centro.",
+      "OVERLAP": "Quel campo è già occupato in quell'orario.",
+      "NOT_FOUND": "Prenotazione o campo non trovato.",
+      "FORBIDDEN": "Non puoi eseguire questa azione.",
+      "ALREADY_CANCELLED": "Questa prenotazione è già stata cancellata.",
+      "WINDOW_CLOSED": "Mancano meno di 2 ore all'inizio: non è più possibile modificarla o cancellarla.",
+      "FIELD_INACTIVE": "Questo campo al momento non è prenotabile.",
+      "INVALID_INPUT": "Controlla i dati inseriti: giorno, orario o durata non sono validi."
+    }
+  }
+}
