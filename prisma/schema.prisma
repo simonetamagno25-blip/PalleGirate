@@ -1,0 +1,139 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite" // in produzione: "postgresql" (vedi README)
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  firstName    String
+  lastName     String
+  birthDate    String?  // YYYY-MM-DD
+  email        String   @unique // sempre normalizzata (trim + minuscolo)
+  phone        String?
+  locale       String   @default("it")
+  passwordHash String?  // null = account da attivare
+  isAdmin      Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  membership        Membership?
+  bookings          Booking[]      @relation("MemberBookings")
+  cancelledBookings Booking[]      @relation("CancelledBy")
+  strikes           Strike[]
+  notifications     Notification[]
+}
+
+model Membership {
+  id         String              @id @default(cuid())
+  userId     String              @unique
+  user       User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  number     String              @unique // resta uguale ai rinnovi
+  issueDate  String              // YYYY-MM-DD
+  expiryDate String              // YYYY-MM-DD, ultimo giorno valido
+  renewals   MembershipRenewal[]
+}
+
+model MembershipRenewal {
+  id           String     @id @default(cuid())
+  membershipId String
+  membership   Membership @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  issueDate    String
+  expiryDate   String
+  createdAt    DateTime   @default(now())
+}
+
+model Field {
+  id          String           @id @default(cuid())
+  name        String
+  sport       String           // FOOTBALL | TENNIS | BASKETBALL | BOCCE
+  slotMinutes Int
+  priceCents  Int
+  active      Boolean          @default(true)
+  sortOrder   Int              @default(0)
+  bookings    Booking[]
+  occupancy   FieldOccupancy[]
+}
+
+model Settings {
+  id                    Int @id @default(1)
+  openMinutes           Int @default(480)
+  closeMinutes          Int @default(1380)
+  startStepMinutes      Int @default(15)
+  maxAdvanceDays        Int @default(14)
+  maxActiveBookings     Int @default(3)
+  changeWindowMinutes   Int @default(120)
+  maxSlotsPerBooking    Int @default(2)
+  membershipWarningDays Int @default(15)
+  reminderHours         Int @default(24)
+}
+
+model Booking {
+  id            String    @id @default(cuid())
+  memberId      String
+  member        User      @relation("MemberBookings", fields: [memberId], references: [id], onDelete: Cascade)
+  fieldId       String
+  field         Field     @relation(fields: [fieldId], references: [id])
+  start         DateTime
+  end           DateTime
+  slots         Int
+  priceCents    Int
+  status        String    @default("CONFIRMED")
+  // true = va pagata. Diventa false quando viene cancellata in tempo (o per blocco).
+  chargeable    Boolean   @default(true)
+  cancelReason  String?
+  cancelledById String?   // null con status CANCELLED = cancellazione automatica di sistema
+  cancelledBy   User?     @relation("CancelledBy", fields: [cancelledById], references: [id])
+  cancelledAt   DateTime?
+  paymentStatus String    @default("PENDING")
+  noShow        Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  occupancy FieldOccupancy[]
+  strike    Strike?
+
+  @@index([memberId, start])
+  @@index([fieldId, start])
+  @@index([paymentStatus, end])
+}
+
+/// Una riga per ogni quarto d'ora occupato. La chiave primaria rende impossibili le sovrapposizioni.
+model FieldOccupancy {
+  fieldId      String
+  field        Field    @relation(fields: [fieldId], references: [id])
+  quarterStart DateTime
+  bookingId    String
+  booking      Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  @@id([fieldId, quarterStart])
+  @@index([bookingId])
+}
+
+model Strike {
+  id        String   @id @default(cuid())
+  memberId  String
+  member    User     @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  bookingId String   @unique
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([memberId])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String
+  params    String   @default("{}") // JSON, tradotto al momento della visualizzazione
+  dedupeKey String?  // per le notifiche temporali: al massimo una per evento
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, dedupeKey])
+  @@index([userId, read])
+}
