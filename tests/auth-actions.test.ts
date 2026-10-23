@@ -1,18 +1,27 @@
-import { beforeEach, describe, expect, test, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
 // Si simulano solo next-auth e gli header della richiesta; la logica di attivazione e il limite sono veri.
 const signInMock = vi.hoisted(() => vi.fn())
-vi.mock('next-auth', () => ({
-  default: () => ({ handlers: {}, auth: vi.fn(), signIn: signInMock, signOut: vi.fn() }),
-  AuthError: class AuthError extends Error {},
-}))
+vi.mock('next-auth', () => {
+  class AuthError extends Error {}
+  // Come in Auth.js: CredentialsSignin è un AuthError con un `code`.
+  class CredentialsSignin extends AuthError {
+    code = 'credentials'
+  }
+  return {
+    default: () => ({ handlers: {}, auth: vi.fn(), signIn: signInMock, signOut: vi.fn() }),
+    AuthError,
+    CredentialsSignin,
+  }
+})
 vi.mock('next-auth/providers/credentials', () => ({ default: () => ({}) }))
 const ip = vi.hoisted(() => ({ value: '1.1.1.1' }))
 vi.mock('next/headers', () => ({
-  headers: async () => new Headers({ 'x-forwarded-for': `${ip.value}, 10.0.0.1` }),
+  // Il proxy fidato aggiunge a destra l'IP del client; quello a sinistra lo scrive il client (qui: falso).
+  headers: async () => new Headers({ 'x-forwarded-for': `9.9.9.9, ${ip.value}` }),
 }))
 
-import { AuthError } from 'next-auth'
+import { AuthError, CredentialsSignin } from 'next-auth'
 import { activateAction, loginAction } from '@/app/[locale]/(auth)/actions'
 import { prisma } from '@/lib/db'
 import { resetRateLimits } from '@/lib/rate-limit'
@@ -30,6 +39,8 @@ beforeEach(async () => {
   signInMock.mockReset()
   ip.value = '1.1.1.1'
 })
+
+afterEach(() => vi.unstubAllEnvs())
 
 describe('attivazione con limite di tentativi', () => {
   test('dopo 5 tentativi falliti sullo stesso numero tessera, anche quello giusto è rifiutato con tooMany', async () => {
@@ -57,7 +68,8 @@ describe('attivazione con limite di tentativi', () => {
     })
   })
 
-  test('dallo stesso IP, tessere diverse: dopo 5 tentativi → tooMany', async () => {
+  test('con un proxy fidato, dallo stesso IP e tessere diverse: dopo 5 tentativi → tooMany', async () => {
+    vi.stubEnv('TRUSTED_PROXY_HOPS', '1')
     for (let i = 0; i < 5; i++) {
       await activateAction({}, form({ membershipNumber: `Z${i}`, email: 'x@example.com', password: 'password123' }))
     }
@@ -73,16 +85,24 @@ describe('attivazione con limite di tentativi', () => {
   })
 })
 
-describe('login con limite di tentativi', () => {
-  test('dopo 10 tentativi falliti sulla stessa email → tooMany senza chiamare signIn', async () => {
-    signInMock.mockRejectedValue(new AuthError('CredentialsSignin'))
-    for (let i = 0; i < 10; i++) {
-      ip.value = `5.5.5.${i}`
-      expect(await loginAction({}, form({ email: 'Mario@Example.com ', password: 'x' }))).toEqual({ error: 'loginError' })
+describe('senza proxy fidati dichiarati', () => {
+  test('il limite per IP è disattivato: l\'header scritto dal client non lo fa scattare né lo aggira', async () => {
+    for (let i = 0; i < 8; i++) {
+      const r = await activateAction({}, form({ membershipNumber: `Y${i}`, email: 'x@example.com', password: 'password123' }))
+      expect(r).toEqual({ error: 'ACTIVATION_FAILED' })
     }
-    signInMock.mockClear()
-    ip.value = '6.6.6.6'
-    expect(await loginAction({}, form({ email: 'mario@example.com', password: 'x' }))).toEqual({ error: 'tooMany' })
-    expect(signInMock).not.toHaveBeenCalled()
+  })
+})
+
+describe('loginAction', () => {
+  test('troppi tentativi (codice too_many da authorize) → tooMany; altro errore di Auth.js → loginError', async () => {
+    const tooMany = new CredentialsSignin()
+    tooMany.code = 'too_many'
+    signInMock.mockRejectedValueOnce(tooMany)
+    expect(await loginAction({}, form({ email: 'a@example.com', password: 'x' }))).toEqual({ error: 'tooMany' })
+    signInMock.mockRejectedValueOnce(new CredentialsSignin()) // codice 'credentials': password sbagliata
+    expect(await loginAction({}, form({ email: 'a@example.com', password: 'x' }))).toEqual({ error: 'loginError' })
+    signInMock.mockRejectedValueOnce(new AuthError('Configuration'))
+    expect(await loginAction({}, form({ email: 'a@example.com', password: 'x' }))).toEqual({ error: 'loginError' })
   })
 })

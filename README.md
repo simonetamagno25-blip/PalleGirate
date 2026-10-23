@@ -44,6 +44,7 @@ In `.env`:
 | `DATABASE_URL` | Database SQLite locale. Lascia `?connection_limit=1`: serializza le scritture concorrenti. |
 | `AUTH_SECRET` | Segreto delle sessioni. Generane uno con `npx auth secret` (o `openssl rand -base64 32`). |
 | `ADMIN_EMAIL`, `ADMIN_PASSWORD` | Credenziali dell'admin creato dal seed. |
+| `TRUSTED_PROXY_HOPS` | Quanti proxy fidati (es. nginx, il load balancer della piattaforma) stanno davanti all'app. Default `0`: i limiti di tentativi **per IP** restano spenti, perché senza un proxy l'IP si può falsificare con un header; restano attivi quelli per email e per numero tessera. Con `1` l'IP del client è l'ultima voce di `X-Forwarded-For`. |
 
 ### Dati di esempio (seed)
 
@@ -79,7 +80,7 @@ In `.env`:
 
 ## Limiti noti e scelte da conoscere
 
-- **Rate limit in memoria** (`src/lib/rate-limit.ts`): i tentativi di login (10 ogni 15 minuti per email) e di attivazione (5 per numero tessera e per IP) sono contati nella memoria del server. Con più istanze o in serverless ogni istanza conta per sé: per un deploy così serve un archivio condiviso (es. Redis) dietro la stessa funzione `checkRateLimit`.
+- **Rate limit in memoria** (`src/lib/rate-limit.ts`): i tentativi di login (10 ogni 15 minuti per email, 30 per IP) e di attivazione (5 per numero tessera, 5 per IP) sono contati nella memoria del server; i limiti per IP valgono solo con `TRUSTED_PROXY_HOPS` impostato. Il limite del login sta in `authorize`, quindi vale anche per chiamate dirette a `/api/auth/callback/credentials`. La mappa ha un tetto di 5000 chiavi. Con più istanze o in serverless ogni istanza conta per sé: per un deploy così serve un archivio condiviso (es. Redis) dietro la stessa funzione `checkRateLimit`. Chi conosce un'email può bloccarne il login per 15 minuti con 10 tentativi sbagliati: è il prezzo del limite per email.
 - **Notifiche temporali "pigre"**: promemoria prenotazione e avvisi di tessera non hanno un cron; si generano, una sola volta per evento, quando l'utente carica una pagina. In produzione si possono sostituire con un job programmato che chiami `runLazyNotifications`.
 - **Tessere e numeri**: i numeri tessera sono sequenziali, quindi l'attivazione dipende dal limite di tentativi qui sopra e dall'email, che deve coincidere.
 - **Sessioni JWT**: i token emessi prima dell'introduzione della versione di sessione non sono più validi (un nuovo login).

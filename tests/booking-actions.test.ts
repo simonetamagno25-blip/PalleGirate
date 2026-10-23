@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, test, vi } from 'vitest'
 const authMock = vi.hoisted(() => vi.fn())
 vi.mock('next-auth', () => ({
   default: () => ({ handlers: {}, auth: authMock, signIn: vi.fn(), signOut: vi.fn() }),
+  CredentialsSignin: class CredentialsSignin extends Error {},
 }))
 vi.mock('next-auth/providers/credentials', () => ({ default: () => ({}) }))
 

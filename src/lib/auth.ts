@@ -1,13 +1,18 @@
 // Autenticazione (Auth.js, credenziali, sessione JWT) e guardie di autorizzazione lato server.
 // Il JWT contiene solo l'id: ruolo e lingua si leggono dal database a ogni richiesta, così un cambio
 // di ruolo o un "reimposta accesso" dell'admin ha effetto subito.
-import NextAuth from 'next-auth'
+import NextAuth, { CredentialsSignin } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import { redirect } from 'next/navigation'
-import { z } from 'zod'
 import { prisma } from '@/lib/db'
-import { verifyCredentials } from '@/lib/members'
+import { clientIp, trustedProxyHops } from '@/lib/client-ip'
+import { authorizeCredentials, TooManyAttemptsError } from '@/lib/login'
 import { isSessionCurrent } from '@/lib/session-version'
+
+/** Errore di login per troppi tentativi: il codice arriva fino a `loginAction`, che mostra il messaggio giusto. */
+export class TooManyLoginsError extends CredentialsSignin {
+  code = 'too_many'
+}
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   trustHost: true,
@@ -16,10 +21,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     Credentials({
       credentials: { email: {}, password: {} },
-      async authorize(raw) {
-        const parsed = z.object({ email: z.string(), password: z.string() }).safeParse(raw)
-        if (!parsed.success) return null
-        return verifyCredentials(parsed.data.email, parsed.data.password)
+      // Il limite di tentativi sta qui, non nella pagina di login: anche un POST diretto a
+      // /api/auth/callback/credentials passa da `authorize`.
+      async authorize(raw, request) {
+        const ip = clientIp(request?.headers?.get('x-forwarded-for') ?? null, trustedProxyHops())
+        try {
+          return await authorizeCredentials(raw, ip)
+        } catch (e) {
+          if (e instanceof TooManyAttemptsError) throw new TooManyLoginsError()
+          throw e
+        }
       },
     }),
   ],

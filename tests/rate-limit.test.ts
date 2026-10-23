@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, test } from 'vitest'
-import { checkRateLimit, resetRateLimits } from '@/lib/rate-limit'
+import { clientIp } from '@/lib/client-ip'
+import { checkRateLimit, rateLimitSize, resetRateLimits } from '@/lib/rate-limit'
 
 beforeEach(resetRateLimits)
 
@@ -36,5 +37,35 @@ describe('checkRateLimit', () => {
     expect(checkRateLimit('a', opts, t0).allowed).toBe(true)
     expect(checkRateLimit('a', opts, t0).allowed).toBe(false)
     expect(checkRateLimit('b', opts, t0).allowed).toBe(true)
+  })
+})
+
+describe('memoria del limiter', () => {
+  test('la mappa ha un tetto: chiavi in eccesso vengono scartate, quelle recenti restano limitate', () => {
+    const t0 = 1_000_000
+    for (let i = 0; i < 6000; i++) checkRateLimit(`casuale-${i}`, undefined, t0 + i)
+    for (let i = 0; i < 5; i++) checkRateLimit('bersaglio', undefined, t0 + 6000 + i)
+    expect(rateLimitSize()).toBeLessThanOrEqual(5000)
+    // Il bersaglio è tra le chiavi più recenti: resta contato e quindi negato.
+    expect(checkRateLimit('bersaglio', undefined, t0 + 7000).allowed).toBe(false)
+  })
+})
+
+describe('clientIp', () => {
+  test('senza proxy fidati (0 hop) l\'IP non è affidabile: null', () => {
+    expect(clientIp('1.2.3.4', 0)).toBeNull()
+    expect(clientIp(null, 1)).toBeNull()
+  })
+
+  test('con N proxy fidati si prende la N-esima voce da destra, non quella scritta dal client', () => {
+    expect(clientIp('6.6.6.6, 1.2.3.4', 1)).toBe('1.2.3.4')
+    expect(clientIp('6.6.6.6, 1.2.3.4, 10.0.0.1', 2)).toBe('1.2.3.4')
+    expect(clientIp(' 1.2.3.4 ', 1)).toBe('1.2.3.4')
+  })
+
+  test('meno voci degli hop dichiarati o hop non validi → null', () => {
+    expect(clientIp('1.2.3.4', 2)).toBeNull()
+    expect(clientIp('1.2.3.4', -1)).toBeNull()
+    expect(clientIp('1.2.3.4', Number.NaN)).toBeNull()
   })
 })
