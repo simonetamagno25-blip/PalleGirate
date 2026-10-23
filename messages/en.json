@@ -14,7 +14,8 @@
     "profile": "Profile",
     "admin": "Admin area",
     "login": "Log in",
-    "logout": "Log out"
+    "logout": "Log out",
+    "dashboard": "Dashboard"
   },
   "booking": {
     "newTitle": "New booking",
@@ -324,5 +325,28 @@
       "MEMBERSHIP_EXPIRING": "Your membership expires on {date} ({daysLeft, plural, =0 {today} one {in # day} other {in # days}}).",
       "MEMBERSHIP_EXPIRED": "Your membership expired on {date}: you cannot book beyond that date."
     }
+  },
+  "dashboard": {
+    "title": "My dashboard",
+    "kpis": "Indicators",
+    "active": "Active bookings",
+    "activeHint": "Used / available",
+    "membership": "Membership",
+    "noMembership": "No membership",
+    "expired": "Expired",
+    "daysLeft": "{days, plural, =0 {Expires today} one {# day} other {# days}}",
+    "membershipHint": "No. {number}, expires {date}",
+    "due": "Amount due",
+    "dueHint": "Unpaid bookings",
+    "strikes": "Strikes",
+    "strikesHint": "Total missed payments",
+    "blockedTitle": "Account blocked",
+    "blockedText": "You cannot book until you settle your unpaid bookings ({amount}) at the club.",
+    "upcoming": "Upcoming bookings",
+    "hoursBySport": "Hours played by sport",
+    "hoursSeries": "Hours",
+    "bookingsByMonth": "Bookings per month",
+    "bookingsSeries": "Bookings",
+    "noData": "No data yet."
   }
 }

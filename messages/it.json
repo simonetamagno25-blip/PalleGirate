@@ -14,7 +14,8 @@
     "profile": "Profilo",
     "admin": "Area admin",
     "login": "Accedi",
-    "logout": "Esci"
+    "logout": "Esci",
+    "dashboard": "Dashboard"
   },
   "booking": {
     "newTitle": "Nuova prenotazione",
@@ -324,5 +325,28 @@
       "MEMBERSHIP_EXPIRING": "La tua tessera scade il {date} ({daysLeft, plural, =0 {oggi} one {tra # giorno} other {tra # giorni}}).",
       "MEMBERSHIP_EXPIRED": "La tua tessera è scaduta il {date}: non puoi prenotare oltre quella data."
     }
+  },
+  "dashboard": {
+    "title": "La mia dashboard",
+    "kpis": "Indicatori",
+    "active": "Prenotazioni attive",
+    "activeHint": "Usate / disponibili",
+    "membership": "Tessera",
+    "noMembership": "Nessuna tessera",
+    "expired": "Scaduta",
+    "daysLeft": "{days, plural, =0 {Scade oggi} one {# giorno} other {# giorni}}",
+    "membershipHint": "N. {number}, scade il {date}",
+    "due": "Da saldare",
+    "dueHint": "Prenotazioni non pagate",
+    "strikes": "Strike",
+    "strikesHint": "Mancati pagamenti totali",
+    "blockedTitle": "Account bloccato",
+    "blockedText": "Non puoi prenotare finché non salderai le prenotazioni non pagate ({amount}) al centro.",
+    "upcoming": "Prossime prenotazioni",
+    "hoursBySport": "Ore giocate per sport",
+    "hoursSeries": "Ore",
+    "bookingsByMonth": "Prenotazioni per mese",
+    "bookingsSeries": "Prenotazioni",
+    "noData": "Ancora nessun dato."
   }
 }

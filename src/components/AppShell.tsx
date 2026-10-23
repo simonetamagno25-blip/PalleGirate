@@ -11,6 +11,7 @@ import type { SessionUser } from '@/lib/auth'
 export async function AppShell({ user, children }: { user: SessionUser; children: ReactNode }) {
   const t = await getTranslations('nav')
   const links = [
+    { href: '/dashboard', label: t('dashboard') },
     { href: '/calendar', label: t('calendar') },
     { href: '/booking/new', label: t('newBooking') },
     { href: '/bookings', label: t('myBookings') },
