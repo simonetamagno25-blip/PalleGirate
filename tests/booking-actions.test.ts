@@ -78,13 +78,14 @@ describe('azioni del socio', () => {
     loginAs(other)
     await createBookingAction({ fieldId: f.id, day: day(3), time: '10:00', slots: 1 })
     loginAs(me)
-    expect(await createBookingAction({ fieldId: f.id, day: day(3), time: '10:30', slots: 1 })).toEqual({
+    expect(await createBookingAction({ fieldId: f.id, day: day(3), time: '10:30', slots: 1 })).toMatchObject({
       ok: false,
       violations: ['OVERLAP'],
     })
-    expect(await createBookingAction({ fieldId: f.id, day: day(40), time: '10:00', slots: 1 })).toEqual({
+    expect(await createBookingAction({ fieldId: f.id, day: day(40), time: '10:00', slots: 1 })).toMatchObject({
       ok: false,
       violations: ['TOO_FAR_AHEAD'],
+      params: { days: 14 },
     })
   })
 
@@ -101,8 +102,8 @@ describe('azioni del socio', () => {
     expect((await prisma.booking.findUniqueOrThrow({ where: { id: created.id } })).slots).toBe(2)
 
     loginAs(other)
-    expect(await cancelBookingAction(created.id)).toEqual({ ok: false, violations: ['FORBIDDEN'] })
-    expect(await updateBookingAction(created.id, { fieldId: f.id, day: day(5), time: '15:00', slots: 1 })).toEqual({
+    expect(await cancelBookingAction(created.id)).toMatchObject({ ok: false, violations: ['FORBIDDEN'] })
+    expect(await updateBookingAction(created.id, { fieldId: f.id, day: day(5), time: '15:00', slots: 1 })).toMatchObject({
       ok: false,
       violations: ['FORBIDDEN'],
     })
@@ -129,7 +130,7 @@ describe('un admin che è anche socio', () => {
     })
     const f = await makeField()
     loginAs(admin)
-    expect(await createBookingAction({ fieldId: f.id, day: day(3), time: '10:00', slots: 1 })).toEqual({
+    expect(await createBookingAction({ fieldId: f.id, day: day(3), time: '10:00', slots: 1 })).toMatchObject({
       ok: false,
       violations: ['MEMBERSHIP_EXPIRED'],
     })
@@ -150,7 +151,7 @@ describe('un admin che è anche socio', () => {
       },
     })
     loginAs(admin)
-    expect(await cancelBookingAction(soon.id)).toEqual({ ok: false, violations: ['WINDOW_CLOSED'] })
+    expect(await cancelBookingAction(soon.id)).toMatchObject({ ok: false, violations: ['WINDOW_CLOSED'], params: { hours: 2, open: '08:00', close: '23:00' } })
   })
 })
 

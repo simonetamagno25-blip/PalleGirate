@@ -46,7 +46,7 @@ export default async function EditBookingPage({ params }: PageProps<'/[locale]/b
         />
       ) : (
         <p role="alert" className="text-destructive">
-          {tb('windowClosed')}
+          {tb('windowClosed', { hours: settings.changeWindowHours })}
         </p>
       )}
     </div>

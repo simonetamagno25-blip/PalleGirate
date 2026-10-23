@@ -47,7 +47,7 @@
     "cancelReasonLabel": "Reason (optional)",
     "cancelConfirm": "Confirm cancellation",
     "cancelKeep": "Keep it",
-    "windowClosed": "Less than 2 hours to go: it can no longer be changed or cancelled and must be paid.",
+    "windowClosed": "Less than {hours, plural, one {# hour} other {# hours}} to go: it can no longer be changed or cancelled and must be paid.",
     "when": "{date}, {start}–{end}",
     "reason": "Reason: {reason}",
     "chargeableHint": "Cancelled, but payable",
@@ -93,7 +93,9 @@
     "nav": {
       "members": "Members & cards",
       "bookings": "Bookings",
-      "payments": "Payments"
+      "payments": "Payments",
+      "fields": "Fields",
+      "settings": "Settings"
     },
     "bookings": {
       "title": "Bookings",
@@ -207,6 +209,43 @@
       "history": "Booking history",
       "emptyHistory": "No bookings.",
       "noShow": "No-show"
+    },
+    "settings": {
+      "title": "Club settings",
+      "intro": "These rules apply to members; admins skip them except for overlaps and opening hours.",
+      "open": "Opening",
+      "close": "Closing",
+      "stepMinutes": "Start time step (minutes)",
+      "maxAdvanceDays": "Maximum advance (days)",
+      "maxAdvanceDaysHint": "How many days ahead a booking can be made.",
+      "maxActiveBookings": "Maximum active bookings",
+      "maxActiveBookingsHint": "Per member, at the same time.",
+      "changeWindowHours": "Change/cancel window (hours)",
+      "changeWindowHoursHint": "Up to how many hours before the start a member can change or cancel.",
+      "maxSlotsPerBooking": "Slots per booking",
+      "maxSlotsPerBookingHint": "Consecutive slots that can be booked together.",
+      "membershipWarnDays": "Membership expiry notice (days)",
+      "membershipWarnDaysHint": "How many days before expiry the member is notified.",
+      "reminderHours": "Booking reminder (hours before)",
+      "reminderHoursHint": "How many hours before the start the reminder is sent.",
+      "saved": "Settings saved."
+    },
+    "fields": {
+      "title": "Fields",
+      "intro": "The new price applies to future bookings; existing ones keep the price they were made at.",
+      "name": "Name",
+      "sport": "Sport",
+      "slotMinutes": "Slot length (min)",
+      "price": "Price per slot (€)",
+      "save": "Save",
+      "add": "Add",
+      "saved": "Saved.",
+      "inactive": "Inactive",
+      "futureBookings": "{count, plural, one {# future booking} other {# future bookings}}",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "confirmDeactivate": "The field has {count, plural, one {# future booking} other {# future bookings}}: they will be cancelled and the members notified. Continue?",
+      "newTitle": "New field"
     }
   },
   "auth": {
@@ -232,25 +271,29 @@
     "generic": "Something went wrong. Please try again.",
     "forbidden": "You don't have permission to do this.",
     "booking": {
-      "NOT_ON_STEP": "The start time must be a multiple of 15 minutes.",
-      "BEFORE_OPENING": "The club opens at 08:00: pick a later time.",
-      "AFTER_CLOSING": "The booking must end by closing time (23:00).",
+      "NOT_ON_STEP": "The start time must be a multiple of {step} minutes.",
+      "BEFORE_OPENING": "The club opens at {open}: pick a later time.",
+      "AFTER_CLOSING": "The booking must end by closing time ({close}).",
       "BAD_DURATION": "The duration must be 1 or 2 consecutive slots.",
       "IN_PAST": "You can't book a time that has already passed.",
-      "TOO_FAR_AHEAD": "You can book at most 14 days ahead.",
+      "TOO_FAR_AHEAD": "You can book at most {days, plural, one {# day} other {# days}} ahead.",
       "MEMBERSHIP_EXPIRED": "Your membership isn't valid for that day: it has expired or is missing.",
-      "MAX_ACTIVE_REACHED": "You already have the maximum number of active bookings.",
+      "MAX_ACTIVE_REACHED": "You already have the maximum number of active bookings ({maxActive}).",
       "BLOCKED": "Your account is blocked because of unpaid bookings. Please contact the club.",
       "OVERLAP": "That field is already booked at that time.",
       "NOT_FOUND": "Booking or field not found.",
       "FORBIDDEN": "You can't perform this action.",
       "ALREADY_CANCELLED": "This booking has already been cancelled.",
-      "WINDOW_CLOSED": "Less than 2 hours to the start: it can no longer be changed or cancelled.",
+      "WINDOW_CLOSED": "Less than {hours, plural, one {# hour} other {# hours}} to the start: it can no longer be changed or cancelled.",
       "FIELD_INACTIVE": "This field can't be booked at the moment.",
       "INVALID_INPUT": "Check your input: the day, time or duration is not valid.",
       "NOT_PAYABLE": "This booking is not due: there is nothing to record.",
       "NOT_ENDED": "The booking has not ended yet.",
-      "INVALID_TRANSITION": "This outcome is not allowed (or has already been recorded)."
+      "INVALID_TRANSITION": "This outcome is not allowed (or has already been recorded).",
+      "INVALID_SETTINGS": "Invalid settings: check the hours (opening before closing, multiples of the step) and the limits.",
+      "INVALID_FIELD": "Invalid field data: name and sport are required, duration a multiple of 15 minutes, price above zero.",
+      "DUPLICATE_FIELD_NAME": "A field with this name already exists.",
+      "HAS_FUTURE_BOOKINGS": "The field has future bookings: confirm their cancellation first (or wait, to change the duration)."
     }
   },
   "reasons": {

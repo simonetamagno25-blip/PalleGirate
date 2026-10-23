@@ -6,10 +6,14 @@ import { z } from 'zod'
 import { requireAdmin, requireMember } from '@/lib/auth'
 import { BookingError, cancelBooking, createBooking, updateBooking } from '@/lib/booking-service'
 import { prisma } from '@/lib/db'
+import type { RuleParams } from '@/lib/booking-rules'
+import { ruleParams } from '@/lib/booking-rules'
+import { getSettings } from '@/lib/settings'
 import { fromRome } from '@/lib/time'
 
-export type ActionResult = { ok: true } | { ok: false; violations: string[] }
-export type CreateResult = { ok: true; id: string } | { ok: false; violations: string[] }
+/** `params`: i valori delle regole citati nei messaggi (orari, giorni, ore…), letti dalle impostazioni correnti. */
+export type ActionResult = { ok: true } | { ok: false; violations: string[]; params?: RuleParams }
+export type CreateResult = { ok: true; id: string } | { ok: false; violations: string[]; params?: RuleParams }
 
 const INVALID: { ok: false; violations: string[] } = { ok: false, violations: ['INVALID_INPUT'] }
 
@@ -39,7 +43,9 @@ async function guarded<T extends ActionResult | CreateResult>(run: () => Promise
   try {
     return await run()
   } catch (e) {
-    if (e instanceof BookingError) return { ok: false, violations: [...e.violations] } as T
+    if (e instanceof BookingError) {
+      return { ok: false, violations: [...e.violations], params: ruleParams(await getSettings()) } as T
+    }
     throw e
   }
 }

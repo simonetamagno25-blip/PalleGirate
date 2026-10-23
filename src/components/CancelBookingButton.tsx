@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useRouter } from '@/i18n/routing'
+import type { RuleParams } from '@/lib/booking-rules'
 
 /** "Cancella" con motivo: il socio può lasciarlo vuoto, l'admin lo trova precompilato (consigliato). */
 export function CancelBookingButton({
@@ -24,6 +25,7 @@ export function CancelBookingButton({
   const [open, setOpen] = useState(false)
   const [reason, setReason] = useState(defaultReason)
   const [violations, setViolations] = useState<string[]>([])
+  const [params, setParams] = useState<RuleParams | undefined>()
   const [pending, startTransition] = useTransition()
 
   if (!open) {
@@ -38,7 +40,10 @@ export function CancelBookingButton({
     startTransition(async () => {
       const result = admin ? await adminCancelBookingAction(bookingId, reason) : await cancelBookingAction(bookingId, reason)
       if (result.ok) router.refresh()
-      else setViolations(result.violations)
+      else {
+        setViolations(result.violations)
+        setParams(result.params)
+      }
     })
   }
 
@@ -50,7 +55,7 @@ export function CancelBookingButton({
       <Input id={`reason-${bookingId}`} value={reason} onChange={(e) => setReason(e.target.value)} />
       {violations.map((v) => (
         <p key={v} role="alert" className="text-xs text-destructive">
-          {te(v as 'OVERLAP')}
+          {te(v as 'OVERLAP', { ...params })}
         </p>
       ))}
       <div className="flex gap-2">

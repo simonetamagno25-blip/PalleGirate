@@ -47,7 +47,7 @@
     "cancelReasonLabel": "Motivo (facoltativo)",
     "cancelConfirm": "Conferma cancellazione",
     "cancelKeep": "Mantieni",
-    "windowClosed": "Mancano meno di 2 ore: non si può più modificare né cancellare e la prenotazione va pagata.",
+    "windowClosed": "Mancano meno di {hours, plural, one {# ora} other {# ore}}: non si può più modificare né cancellare e la prenotazione va pagata.",
     "when": "{date}, {start}–{end}",
     "reason": "Motivo: {reason}",
     "chargeableHint": "Cancellata, ma da pagare",
@@ -93,7 +93,9 @@
     "nav": {
       "members": "Soci e tessere",
       "bookings": "Prenotazioni",
-      "payments": "Pagamenti"
+      "payments": "Pagamenti",
+      "fields": "Campi",
+      "settings": "Impostazioni"
     },
     "bookings": {
       "title": "Prenotazioni",
@@ -207,6 +209,43 @@
       "history": "Storico prenotazioni",
       "emptyHistory": "Nessuna prenotazione.",
       "noShow": "No-show"
+    },
+    "settings": {
+      "title": "Impostazioni del centro",
+      "intro": "Queste regole valgono per i soci; l'admin le salta tranne sovrapposizioni e orari di apertura.",
+      "open": "Apertura",
+      "close": "Chiusura",
+      "stepMinutes": "Passo degli orari (minuti)",
+      "maxAdvanceDays": "Anticipo massimo (giorni)",
+      "maxAdvanceDaysHint": "Quanti giorni prima si può prenotare.",
+      "maxActiveBookings": "Prenotazioni attive massime",
+      "maxActiveBookingsHint": "Per socio, contemporaneamente.",
+      "changeWindowHours": "Finestra di modifica/cancellazione (ore)",
+      "changeWindowHoursHint": "Fino a quante ore prima dell'inizio il socio può modificare o cancellare.",
+      "maxSlotsPerBooking": "Slot per prenotazione",
+      "maxSlotsPerBookingHint": "Slot consecutivi prenotabili insieme.",
+      "membershipWarnDays": "Avviso scadenza tessera (giorni)",
+      "membershipWarnDaysHint": "Quanti giorni prima della scadenza avvisare il socio.",
+      "reminderHours": "Promemoria prenotazione (ore prima)",
+      "reminderHoursHint": "Quante ore prima dell'inizio inviare il promemoria.",
+      "saved": "Impostazioni salvate."
+    },
+    "fields": {
+      "title": "Campi",
+      "intro": "Il nuovo prezzo vale per le prossime prenotazioni; quelle esistenti mantengono il prezzo con cui sono state fatte.",
+      "name": "Nome",
+      "sport": "Sport",
+      "slotMinutes": "Durata slot (min)",
+      "price": "Prezzo a slot (€)",
+      "save": "Salva",
+      "add": "Aggiungi",
+      "saved": "Salvato.",
+      "inactive": "Disattivato",
+      "futureBookings": "{count, plural, one {# prenotazione futura} other {# prenotazioni future}}",
+      "activate": "Attiva",
+      "deactivate": "Disattiva",
+      "confirmDeactivate": "Il campo ha {count, plural, one {# prenotazione futura} other {# prenotazioni future}}: verranno cancellate e i soci avvisati. Continuare?",
+      "newTitle": "Nuovo campo"
     }
   },
   "auth": {
@@ -232,25 +271,29 @@
     "generic": "Qualcosa è andato storto. Riprova.",
     "forbidden": "Non hai i permessi per questa azione.",
     "booking": {
-      "NOT_ON_STEP": "L'orario di inizio deve essere un multiplo di 15 minuti.",
-      "BEFORE_OPENING": "Il centro apre alle 08:00: scegli un orario successivo.",
-      "AFTER_CLOSING": "La prenotazione deve finire entro la chiusura del centro (23:00).",
+      "NOT_ON_STEP": "L'orario di inizio deve essere un multiplo di {step} minuti.",
+      "BEFORE_OPENING": "Il centro apre alle {open}: scegli un orario successivo.",
+      "AFTER_CLOSING": "La prenotazione deve finire entro la chiusura del centro ({close}).",
       "BAD_DURATION": "La durata deve essere di 1 o 2 slot consecutivi.",
       "IN_PAST": "Non puoi prenotare un orario già passato.",
-      "TOO_FAR_AHEAD": "Puoi prenotare al massimo 14 giorni prima.",
+      "TOO_FAR_AHEAD": "Puoi prenotare al massimo {days, plural, one {# giorno} other {# giorni}} prima.",
       "MEMBERSHIP_EXPIRED": "La tua tessera non è valida per quel giorno: è scaduta o non c'è.",
-      "MAX_ACTIVE_REACHED": "Hai già il numero massimo di prenotazioni attive.",
+      "MAX_ACTIVE_REACHED": "Hai già il numero massimo di prenotazioni attive ({maxActive}).",
       "BLOCKED": "Il tuo account è bloccato per pagamenti non saldati. Rivolgiti al centro.",
       "OVERLAP": "Quel campo è già occupato in quell'orario.",
       "NOT_FOUND": "Prenotazione o campo non trovato.",
       "FORBIDDEN": "Non puoi eseguire questa azione.",
       "ALREADY_CANCELLED": "Questa prenotazione è già stata cancellata.",
-      "WINDOW_CLOSED": "Mancano meno di 2 ore all'inizio: non è più possibile modificarla o cancellarla.",
+      "WINDOW_CLOSED": "Mancano meno di {hours, plural, one {# ora} other {# ore}} all'inizio: non è più possibile modificarla o cancellarla.",
       "FIELD_INACTIVE": "Questo campo al momento non è prenotabile.",
       "INVALID_INPUT": "Controlla i dati inseriti: giorno, orario o durata non sono validi.",
       "NOT_PAYABLE": "Questa prenotazione non è dovuta: non c'è nulla da registrare.",
       "NOT_ENDED": "La prenotazione non è ancora conclusa.",
-      "INVALID_TRANSITION": "Questo esito non è ammesso (o è già stato registrato)."
+      "INVALID_TRANSITION": "Questo esito non è ammesso (o è già stato registrato).",
+      "INVALID_SETTINGS": "Impostazioni non valide: controlla orari (apertura prima della chiusura, multipli del passo) e limiti.",
+      "INVALID_FIELD": "Dati del campo non validi: nome e sport obbligatori, durata multipla di 15 minuti, prezzo maggiore di zero.",
+      "DUPLICATE_FIELD_NAME": "Esiste già un campo con questo nome.",
+      "HAS_FUTURE_BOOKINGS": "Il campo ha prenotazioni future: servono la conferma di cancellazione o di attendere (per cambiare la durata)."
     }
   },
   "reasons": {

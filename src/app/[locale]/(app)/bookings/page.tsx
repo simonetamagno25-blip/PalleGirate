@@ -44,7 +44,7 @@ export default async function MyBookingsPage() {
                   <p className="font-medium">{b.field.name}</p>
                   <p className="text-sm capitalize">{when(b)}</p>
                   <p className="text-sm text-muted-foreground">{money(b.priceCents)}</p>
-                  {!canChange && <p className="mt-1 text-xs text-muted-foreground">{t('windowClosed')}</p>}
+                  {!canChange && <p className="mt-1 text-xs text-muted-foreground">{t('windowClosed', { hours: settings.changeWindowHours })}</p>}
                 </div>
                 {canChange && (
                   <div className="flex flex-col items-end gap-2">

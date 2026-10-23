@@ -1,5 +1,5 @@
 // Regole di prenotazione (spec §7). Modulo puro: nessuna dipendenza da Next o Prisma.
-import { daysBetween, romeDay, romeMinutesOfDay } from '@/lib/time'
+import { daysBetween, hhmm, romeDay, romeMinutesOfDay } from '@/lib/time'
 
 export type Settings = {
   openMinutes: number
@@ -10,6 +10,7 @@ export type Settings = {
   changeWindowHours: number
   maxSlotsPerBooking: number
   membershipWarnDays: number
+  reminderHours: number
 }
 
 /** Ordine dell'unione = ordine in cui `checkMemberRules` restituisce le violazioni. */
@@ -48,6 +49,21 @@ export const DEFAULT_SETTINGS: Settings = {
   changeWindowHours: 2,
   maxSlotsPerBooking: 2,
   membershipWarnDays: 15,
+  reminderHours: 2,
+}
+
+/** Valori con cui i messaggi di errore citano le regole (così seguono le impostazioni dell'admin). */
+export type RuleParams = { open: string; close: string; days: number; hours: number; maxActive: number; step: number }
+
+export function ruleParams(s: Settings): RuleParams {
+  return {
+    open: hhmm(s.openMinutes),
+    close: hhmm(s.closeMinutes),
+    days: s.maxAdvanceDays,
+    hours: s.changeWindowHours,
+    maxActive: s.maxActiveBookings,
+    step: s.stepMinutes,
+  }
 }
 
 const MINUTE = 60_000

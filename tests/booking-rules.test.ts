@@ -6,6 +6,7 @@ import {
   DEFAULT_SETTINGS,
   isBlocked,
   quarterStarts,
+  ruleParams,
   type RuleContext,
 } from '@/lib/booking-rules'
 import { fromRome } from '@/lib/time'
@@ -154,5 +155,16 @@ describe('quarterStarts', () => {
     expect(q).toHaveLength(6)
     expect(q[0]).toEqual(fromRome('2026-10-14', '08:00'))
     expect(q[5]).toEqual(fromRome('2026-10-14', '09:15'))
+  })
+})
+
+describe('ruleParams', () => {
+  test('espone gli orari come HH:MM e i limiti per i messaggi', () => {
+    expect(ruleParams(DEFAULT_SETTINGS)).toEqual({ open: '08:00', close: '23:00', days: 14, hours: 2, maxActive: 3, step: 15 })
+    expect(ruleParams({ ...DEFAULT_SETTINGS, openMinutes: 9 * 60 + 30, closeMinutes: 22 * 60, maxActiveBookings: 5 })).toMatchObject({
+      open: '09:30',
+      close: '22:00',
+      maxActive: 5,
+    })
   })
 })

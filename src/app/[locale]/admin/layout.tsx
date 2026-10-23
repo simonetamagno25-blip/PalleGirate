@@ -21,6 +21,12 @@ export default async function AdminLayout({ children }: LayoutProps<'/[locale]/a
         <Link href="/admin/payments" className="rounded-md px-3 py-1.5 hover:bg-muted">
           {t('payments')}
         </Link>
+        <Link href="/admin/fields" className="rounded-md px-3 py-1.5 hover:bg-muted">
+          {t('fields')}
+        </Link>
+        <Link href="/admin/settings" className="rounded-md px-3 py-1.5 hover:bg-muted">
+          {t('settings')}
+        </Link>
       </nav>
       {children}
     </AppShell>

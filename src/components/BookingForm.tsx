@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useRouter } from '@/i18n/routing'
+import type { RuleParams } from '@/lib/booking-rules'
 import { hhmm } from '@/lib/time'
 import { cn } from '@/lib/utils'
 
@@ -51,6 +52,7 @@ export function BookingForm({ fields, settings, minDay, maxDay, initial, members
   const [memberId, setMemberId] = useState(initial.memberId ?? '')
   const [priceCents, setPriceCents] = useState<number | null>(null)
   const [violations, setViolations] = useState<string[]>([])
+  const [params, setParams] = useState<RuleParams | undefined>()
 
   const field = fields.find((f) => f.id === fieldId) ?? fields[0]
   const duration = slots * field.slotMinutes
@@ -85,7 +87,10 @@ export function BookingForm({ fields, settings, minDay, maxDay, initial, members
           ? await adminCreateBookingAction({ ...form, memberId })
           : await createBookingAction(form)
       if (result.ok) router.push(doneHref)
-      else setViolations(result.violations)
+      else {
+        setViolations(result.violations)
+        setParams(result.params)
+      }
     })
   }
 
@@ -192,7 +197,7 @@ export function BookingForm({ fields, settings, minDay, maxDay, initial, members
       {violations.length > 0 && (
         <ul role="alert" className="list-disc pl-5 text-sm text-destructive">
           {violations.map((v) => (
-            <li key={v}>{te(v as 'OVERLAP')}</li>
+            <li key={v}>{te(v as 'OVERLAP', { ...params })}</li>
           ))}
         </ul>
       )}

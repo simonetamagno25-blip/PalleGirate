@@ -34,3 +34,35 @@ describe('messaggi IT/EN', () => {
     }
   })
 })
+
+describe('segnaposto ICU', () => {
+  /** Nomi degli argomenti ICU, anche dentro i rami di plural/select (i rami sono messaggi annidati). */
+  function argsOf(msg: string): string[] {
+    const names = new Set<string>()
+    for (let i = 0; i < msg.length; i++) {
+      if (msg[i] !== '{') continue
+      let depth = 0
+      let j = i
+      do {
+        if (msg[j] === '{') depth++
+        else if (msg[j] === '}') depth--
+        j++
+      } while (depth > 0 && j < msg.length)
+      const inner = msg.slice(i + 1, j - 1)
+      names.add(inner.match(/^\s*(\w+)/)![1])
+      const parts = inner.split(',')
+      if (parts.length > 2) {
+        const branches = parts.slice(2).join(',')
+        for (const m of branches.matchAll(/\{([^{}]*(?:\{[^{}]*\}[^{}]*)*)\}/g)) argsOf(m[1]).forEach((n) => names.add(n))
+      }
+      i = j - 1
+    }
+    return [...names].sort()
+  }
+
+  test('ogni chiave usa gli stessi segnaposto in IT ed EN', () => {
+    for (const key of Object.keys(itKeys)) {
+      expect(argsOf(enKeys[key]), key).toEqual(argsOf(itKeys[key]))
+    }
+  })
+})

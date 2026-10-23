@@ -27,6 +27,10 @@ export const BOOKING_ERROR_CODES = [
   'NOT_PAYABLE',
   'NOT_ENDED',
   'INVALID_TRANSITION',
+  'INVALID_SETTINGS',
+  'INVALID_FIELD',
+  'DUPLICATE_FIELD_NAME',
+  'HAS_FUTURE_BOOKINGS',
 ] as const
 
 export type BookingErrorCode = (typeof BOOKING_ERROR_CODES)[number]
