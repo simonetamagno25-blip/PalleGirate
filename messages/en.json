@@ -92,7 +92,8 @@
   "admin": {
     "nav": {
       "members": "Members & cards",
-      "bookings": "Bookings"
+      "bookings": "Bookings",
+      "payments": "Payments"
     },
     "bookings": {
       "title": "Bookings",
@@ -113,7 +114,8 @@
         "payment": "Payment",
         "price": "Price",
         "actions": "Actions"
-      }
+      },
+      "noShow": "No-show"
     },
     "members": {
       "title": "Members & cards",
@@ -126,7 +128,8 @@
         "card": "Card",
         "expires": "Expires",
         "status": "Access",
-        "actions": "Actions"
+        "actions": "Actions",
+        "standing": "Payments"
       },
       "status": {
         "active": "Active",
@@ -136,7 +139,8 @@
         "admin": "Admin",
         "expired": "Expired",
         "noCard": "No card",
-        "expiresIn": "Expires in {days, plural, one {# day} other {# days}}"
+        "expiresIn": "Expires in {days, plural, one {# day} other {# days}}",
+        "blocked": "Blocked"
       },
       "action": {
         "edit": "Edit",
@@ -145,7 +149,8 @@
         "makeAdmin": "Make admin",
         "removeAdmin": "Remove admin",
         "confirmRenew": "Renew the membership?",
-        "confirmReset": "The member will have to reactivate the account with card number and email. Continue?"
+        "confirmReset": "The member will have to reactivate the account with card number and email. Continue?",
+        "detail": "Details"
       },
       "form": {
         "titleNew": "New member",
@@ -169,7 +174,39 @@
         "NOT_FOUND": "Member not found.",
         "SELF_RESET": "You can't reset your own access: ask another admin.",
         "NO_MEMBERSHIP": "This user has no membership card, so they couldn't reactivate the account."
+      },
+      "standing": "{strikes, plural, one {# strike} other {# strikes}}, {unpaid, plural, =0 {nothing unpaid} one {# unpaid} other {# unpaid}}"
+    },
+    "payments": {
+      "title": "Payments to record",
+      "intro": "Finished bookings waiting for an outcome. “Unpaid” gives a strike: from the second one the member is blocked.",
+      "empty": "No payments to record.",
+      "lateCancel": "Late cancellation: must be paid",
+      "confirmUnpaid": "Mark as unpaid? The member will get a strike.",
+      "noShow": "No-show",
+      "outcome": {
+        "PAID": "Paid",
+        "UNPAID": "Unpaid",
+        "EXEMPT": "Exempt"
+      },
+      "col": {
+        "when": "When",
+        "member": "Member",
+        "field": "Field",
+        "price": "Amount",
+        "actions": "Outcome"
       }
+    },
+    "memberDetail": {
+      "card": "card {number}",
+      "blocked": "Blocked",
+      "edit": "Edit",
+      "strikes": "Total strikes",
+      "unpaid": "Unpaid bookings",
+      "debt": "Amount due",
+      "history": "Booking history",
+      "emptyHistory": "No bookings.",
+      "noShow": "No-show"
     }
   },
   "auth": {

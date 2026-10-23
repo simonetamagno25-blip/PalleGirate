@@ -124,3 +124,23 @@ export async function getMemberLedger(
   ])
   return { ...standing, blocked: isBlocked(standing), history }
 }
+
+/** Strike, insoluti e stato di blocco di più utenti con due sole query (per le liste dell'admin). */
+export async function getStandingsByUser(
+  admin: Actor,
+  userIds: string[],
+): Promise<Map<string, { strikes: number; unpaidCount: number; blocked: boolean }>> {
+  assertAdmin(admin)
+  const [strikes, unpaid] = await Promise.all([
+    prisma.strike.groupBy({ by: ['userId'], where: { userId: { in: userIds } }, _count: true }),
+    prisma.booking.groupBy({ by: ['userId'], where: { userId: { in: userIds }, paymentStatus: 'UNPAID' }, _count: true }),
+  ])
+  const strikeOf = new Map(strikes.map((r) => [r.userId, r._count]))
+  const unpaidOf = new Map(unpaid.map((r) => [r.userId, r._count]))
+  return new Map(
+    userIds.map((id) => {
+      const standing = { strikes: strikeOf.get(id) ?? 0, unpaidCount: unpaidOf.get(id) ?? 0 }
+      return [id, { ...standing, blocked: isBlocked(standing) }]
+    }),
+  )
+}

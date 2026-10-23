@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Link } from '@/i18n/routing'
 import { requireAdmin } from '@/lib/auth'
 import { listMembers } from '@/lib/members'
+import { getStandingsByUser } from '@/lib/payments'
 import { getSettings } from '@/lib/settings'
 import { daysBetween, romeDay } from '@/lib/time'
 import { renewAction, resetAccessAction, toggleAdminAction } from './actions'
@@ -21,6 +22,7 @@ export default async function MembersPage({ searchParams }: PageProps<'/[locale]
     getTranslations('admin.members'),
     getFormatter(),
   ])
+  const standings = await getStandingsByUser(admin, members.map((m) => m.id))
   const today = romeDay(new Date())
 
   return (
@@ -53,6 +55,7 @@ export default async function MembersPage({ searchParams }: PageProps<'/[locale]
               <TableHead>{t('col.card')}</TableHead>
               <TableHead>{t('col.expires')}</TableHead>
               <TableHead>{t('col.status')}</TableHead>
+              <TableHead>{t('col.standing')}</TableHead>
               <TableHead className="text-right">{t('col.actions')}</TableHead>
             </TableRow>
           </TableHeader>
@@ -67,6 +70,7 @@ export default async function MembersPage({ searchParams }: PageProps<'/[locale]
                         {m.lastName} {m.firstName}
                       </span>
                       {m.isAdmin && <Badge variant="secondary">{t('badge.admin')}</Badge>}
+                      {standings.get(m.id)?.blocked && <Badge variant="destructive">{t('badge.blocked')}</Badge>}
                     </div>
                     <div className="text-xs text-muted-foreground">{m.email}</div>
                   </TableCell>
@@ -84,8 +88,14 @@ export default async function MembersPage({ searchParams }: PageProps<'/[locale]
                     )}
                   </TableCell>
                   <TableCell>{m.activatedAt ? t('status.active') : t('status.pending')}</TableCell>
+                  <TableCell className="text-sm">
+                    {t('standing', { strikes: standings.get(m.id)?.strikes ?? 0, unpaid: standings.get(m.id)?.unpaidCount ?? 0 })}
+                  </TableCell>
                   <TableCell>
                     <div className="flex flex-wrap justify-end gap-1.5">
+                      <Button size="sm" variant="outline" render={<Link href={`/admin/members/${m.id}`} />}>
+                        {t('action.detail')}
+                      </Button>
                       <Button size="sm" variant="outline" render={<Link href={`/admin/members/${m.id}/edit`} />}>
                         {t('action.edit')}
                       </Button>

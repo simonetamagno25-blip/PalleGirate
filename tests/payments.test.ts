@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, test } from 'vitest'
 import { prisma } from '@/lib/db'
 import { isBlocked } from '@/lib/booking-rules'
 import { BookingError, createBooking, type Actor } from '@/lib/booking-service'
-import { getMemberLedger, listPendingPayments, registerPayment, setNoShow } from '@/lib/payments'
+import { getMemberLedger, getStandingsByUser, listPendingPayments, registerPayment, setNoShow } from '@/lib/payments'
 import { fromRome } from '@/lib/time'
 import { makeBooking, makeField, makeMember, NOW, resetDb } from './helpers'
 
@@ -225,5 +225,19 @@ describe('concorrenza e rapporto col servizio di prenotazione', () => {
     const input = { memberId: both.id, fieldId: field.id, start: fromRome('2026-10-20', '10:00'), slots: 1 }
     expect(await codesOf(createBooking({ id: both.id, isAdmin: false }, input, NOW))).toContain('BLOCKED')
     await expect(createBooking({ id: both.id, isAdmin: true }, input, NOW)).resolves.toMatchObject({ status: 'CONFIRMED' })
+  })
+})
+
+describe('getStandingsByUser', () => {
+  test('strike, insoluti e blocco per più soci in una chiamata, anche per chi non ha nulla', async () => {
+    const other = await makeMember()
+    const [b1, b2] = await Promise.all([1, 2].map((n) => past(member.id, field.id, n)))
+    await pay(b1.id, 'UNPAID')
+    expect((await getStandingsByUser(asActor(admin), [member.id, other.id])).get(member.id)).toEqual({ strikes: 1, unpaidCount: 1, blocked: false })
+    await pay(b2.id, 'UNPAID')
+    const map = await getStandingsByUser(asActor(admin), [member.id, other.id])
+    expect(map.get(member.id)).toEqual({ strikes: 2, unpaidCount: 2, blocked: true })
+    expect(map.get(other.id)).toEqual({ strikes: 0, unpaidCount: 0, blocked: false })
+    await expect(getStandingsByUser(asActor(member), [member.id])).rejects.toBeInstanceOf(BookingError)
   })
 })

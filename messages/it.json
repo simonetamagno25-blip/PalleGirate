@@ -92,7 +92,8 @@
   "admin": {
     "nav": {
       "members": "Soci e tessere",
-      "bookings": "Prenotazioni"
+      "bookings": "Prenotazioni",
+      "payments": "Pagamenti"
     },
     "bookings": {
       "title": "Prenotazioni",
@@ -113,7 +114,8 @@
         "payment": "Pagamento",
         "price": "Prezzo",
         "actions": "Azioni"
-      }
+      },
+      "noShow": "No-show"
     },
     "members": {
       "title": "Soci e tessere",
@@ -126,7 +128,8 @@
         "card": "Tessera",
         "expires": "Scadenza",
         "status": "Accesso",
-        "actions": "Azioni"
+        "actions": "Azioni",
+        "standing": "Pagamenti"
       },
       "status": {
         "active": "Attivo",
@@ -136,7 +139,8 @@
         "admin": "Admin",
         "expired": "Scaduta",
         "noCard": "Senza tessera",
-        "expiresIn": "Scade tra {days, plural, one {# giorno} other {# giorni}}"
+        "expiresIn": "Scade tra {days, plural, one {# giorno} other {# giorni}}",
+        "blocked": "Bloccato"
       },
       "action": {
         "edit": "Modifica",
@@ -145,7 +149,8 @@
         "makeAdmin": "Rendi admin",
         "removeAdmin": "Togli admin",
         "confirmRenew": "Rinnovare la tessera?",
-        "confirmReset": "Il socio dovrà riattivare l'account con numero tessera ed email. Continuare?"
+        "confirmReset": "Il socio dovrà riattivare l'account con numero tessera ed email. Continuare?",
+        "detail": "Scheda"
       },
       "form": {
         "titleNew": "Nuovo socio",
@@ -169,7 +174,39 @@
         "NOT_FOUND": "Socio non trovato.",
         "SELF_RESET": "Non puoi reimpostare il tuo stesso accesso: chiedi a un altro admin.",
         "NO_MEMBERSHIP": "Questo utente non ha una tessera, quindi non potrebbe riattivare l'account."
+      },
+      "standing": "{strikes, plural, one {# strike} other {# strike}}, {unpaid, plural, =0 {nessun insoluto} one {# insoluto} other {# insoluti}}"
+    },
+    "payments": {
+      "title": "Pagamenti da registrare",
+      "intro": "Prenotazioni concluse in attesa di esito. «Non pagata» assegna uno strike: dal secondo il socio viene bloccato.",
+      "empty": "Nessun pagamento da registrare.",
+      "lateCancel": "Cancellata a ridosso: da pagare",
+      "confirmUnpaid": "Segnare come non pagata? Verrà assegnato uno strike al socio.",
+      "noShow": "No-show",
+      "outcome": {
+        "PAID": "Pagata",
+        "UNPAID": "Non pagata",
+        "EXEMPT": "Esente"
+      },
+      "col": {
+        "when": "Quando",
+        "member": "Socio",
+        "field": "Campo",
+        "price": "Importo",
+        "actions": "Esito"
       }
+    },
+    "memberDetail": {
+      "card": "tessera {number}",
+      "blocked": "Bloccato",
+      "edit": "Modifica",
+      "strikes": "Strike totali",
+      "unpaid": "Insoluti",
+      "debt": "Debito",
+      "history": "Storico prenotazioni",
+      "emptyHistory": "Nessuna prenotazione.",
+      "noShow": "No-show"
     }
   },
   "auth": {

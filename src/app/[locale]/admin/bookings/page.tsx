@@ -97,6 +97,7 @@ export default async function AdminBookingsPage({ searchParams }: PageProps<'/[l
                 </TableCell>
                 <TableCell>
                   <Badge variant={b.status === 'CANCELLED' ? 'outline' : 'secondary'}>{tb(`status.${b.status}`)}</Badge>
+                  {b.noShow && <div className="mt-1 text-xs text-muted-foreground">{t('noShow')}</div>}
                   {b.cancelReason && <div className="mt-1 text-xs text-muted-foreground">{tb('reason', { reason: displayReason(b.cancelReason, (k) => tAll(k)) ?? '' })}</div>}
                 </TableCell>
                 <TableCell>{(b.status === 'CONFIRMED' || b.chargeable) && tb(`payment.${b.paymentStatus}`)}</TableCell>
