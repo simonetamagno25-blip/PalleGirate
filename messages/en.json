@@ -114,5 +114,56 @@
     "field": "Court",
     "time": "Time",
     "legend": "Tap a free slot to book it."
+  },
+  "wizard": {
+    "title": "Book",
+    "editTitle": "Change booking",
+    "stepField": "1. Court",
+    "stepDay": "2. Day",
+    "stepTime": "3. Time",
+    "stepDuration": "4. Duration",
+    "stepSummary": "5. Summary",
+    "noTimes": "No free times on this day.",
+    "slots": "{count, plural, one {1 slot} other {# slots}} · {minutes} min",
+    "summary": "{field}, {date} from {from} to {to}",
+    "price": "Price",
+    "confirm": "Confirm booking",
+    "confirmEdit": "Save changes",
+    "member": "Member",
+    "done": "Booking confirmed",
+    "doneEdit": "Booking changed"
+  },
+  "bookings": {
+    "title": "My bookings",
+    "upcoming": "Upcoming",
+    "history": "History",
+    "empty": "No bookings.",
+    "edit": "Change",
+    "cancel": "Cancel",
+    "cancelTitle": "Cancel this booking?",
+    "reason": "Reason (optional)",
+    "cancelled": "Cancelled",
+    "lateNotice": "Less than {hours} hours left: it can no longer be changed or cancelled.",
+    "status": {
+      "CONFIRMED": "Confirmed",
+      "CANCELLED": "Cancelled"
+    },
+    "payment": {
+      "PENDING": "To record",
+      "PAID": "Paid",
+      "UNPAID": "Unpaid",
+      "EXEMPT": "Exempt"
+    },
+    "done": "Booking cancelled"
+  },
+  "profile": {
+    "title": "Profile",
+    "card": "Membership card",
+    "number": "Number",
+    "expires": "Expires on {date}",
+    "daysLeft": "{days, plural, =0 {Expires today} one {1 day left} other {# days left}}",
+    "expired": "Expired on {date}",
+    "noCard": "No card registered",
+    "data": "Personal data"
   }
 }

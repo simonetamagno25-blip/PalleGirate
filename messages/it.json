@@ -114,5 +114,56 @@
     "field": "Campo",
     "time": "Ora",
     "legend": "Tocca uno slot libero per prenotare."
+  },
+  "wizard": {
+    "title": "Prenota",
+    "editTitle": "Modifica prenotazione",
+    "stepField": "1. Campo",
+    "stepDay": "2. Giorno",
+    "stepTime": "3. Orario",
+    "stepDuration": "4. Durata",
+    "stepSummary": "5. Riepilogo",
+    "noTimes": "Nessun orario libero in questo giorno.",
+    "slots": "{count, plural, one {1 slot} other {# slot}} · {minutes} min",
+    "summary": "{field}, {date} dalle {from} alle {to}",
+    "price": "Prezzo",
+    "confirm": "Conferma prenotazione",
+    "confirmEdit": "Salva modifiche",
+    "member": "Socio",
+    "done": "Prenotazione confermata",
+    "doneEdit": "Prenotazione modificata"
+  },
+  "bookings": {
+    "title": "Le mie prenotazioni",
+    "upcoming": "Prossime",
+    "history": "Storico",
+    "empty": "Nessuna prenotazione.",
+    "edit": "Modifica",
+    "cancel": "Cancella",
+    "cancelTitle": "Cancellare la prenotazione?",
+    "reason": "Motivo (facoltativo)",
+    "cancelled": "Cancellata",
+    "lateNotice": "Mancano meno di {hours} ore: non è più possibile modificarla o cancellarla.",
+    "status": {
+      "CONFIRMED": "Confermata",
+      "CANCELLED": "Cancellata"
+    },
+    "payment": {
+      "PENDING": "Da registrare",
+      "PAID": "Pagata",
+      "UNPAID": "Non pagata",
+      "EXEMPT": "Esente"
+    },
+    "done": "Prenotazione cancellata"
+  },
+  "profile": {
+    "title": "Profilo",
+    "card": "Tessera",
+    "number": "Numero",
+    "expires": "Scade il {date}",
+    "daysLeft": "{days, plural, =0 {Scade oggi} one {Manca 1 giorno} other {Mancano # giorni}}",
+    "expired": "Scaduta il {date}",
+    "noCard": "Nessuna tessera registrata",
+    "data": "Dati personali"
   }
 }
