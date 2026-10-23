@@ -1,0 +1,21 @@
+# Avvio:  docker compose up --build -d      →  http://localhost:3000
+# Variabili: si leggono dal file .env accanto a questo (vedi .env.example); quelle senza valore sono obbligatorie.
+services:
+  app:
+    build: .
+    image: palle-girate
+    container_name: palle-girate
+    ports:
+      - "3000:3000"
+    environment:
+      AUTH_SECRET: ${AUTH_SECRET:?imposta AUTH_SECRET nel file .env}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@pallegirate.local}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?imposta ADMIN_PASSWORD nel file .env}
+      TRUSTED_PROXY_HOPS: ${TRUSTED_PROXY_HOPS:-0}
+      SEED: ${SEED:-true}
+    volumes:
+      - palle-girate-data:/data
+    restart: unless-stopped
+
+volumes:
+  palle-girate-data:

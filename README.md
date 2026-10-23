@@ -56,6 +56,20 @@ In `.env`:
 | Mario Rossi (tessera `T0001`) | `mario.rossi@example.com` / `socio1234` |
 | Giulia Bianchi (`T0002`), Luca Verdi (`T0003`, tessera in scadenza) | da attivare: pagina "Prima volta? Attiva il tuo account" con numero tessera + email, poi scelgono la password |
 
+## Con Docker
+
+Un solo container con l'app e il database SQLite (in un volume, così i dati sopravvivono ai riavvii).
+
+```bash
+cp .env.example .env      # imposta AUTH_SECRET e ADMIN_PASSWORD
+docker compose up --build -d      # http://localhost:3000
+docker compose logs -f app        # log; Ctrl+C per uscire
+docker compose down               # ferma (i dati restano nel volume)
+docker compose down -v            # ferma e cancella anche i dati
+```
+
+All'avvio il container crea le tabelle (`prisma db push`) e carica il seed: stessi utenti di esempio della tabella qui sopra. Il seed è idempotente; con `SEED=false` nel `.env` non viene eseguito (per un'installazione vera, dopo aver creato i soci reali). Il database è in `/data/palle-girate.db` (volume `palle-girate-data`); l'app gira come utente non privilegiato e ha un controllo di salute (`docker ps` mostra `healthy`). Dietro un reverse proxy imposta `TRUSTED_PROXY_HOPS` (vedi sopra) e ricorda che il service worker della PWA richiede HTTPS fuori da `localhost`.
+
 ## Comandi
 
 | Comando | Cosa fa |

@@ -1,0 +1,16 @@
+node_modules
+.next
+.git
+.claude
+.superpowers
+.env
+.env.*
+!.env.example
+*.db
+*.db-journal
+docs
+*.odt
+README.md
+Dockerfile
+docker-compose.yml
+.dockerignore
