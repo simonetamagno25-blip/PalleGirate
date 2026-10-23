@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import type { ViolationCode } from "@/lib/booking-rules";
 import { romeInstant } from "@/lib/time/rome";
-import { prisma } from "./db";
+import { prisma, type Db, type Tx } from "./db";
 import { DomainError } from "./errors";
 import { cancelBooking, createBooking, updateBooking, type Actor } from "./bookings";
 import { makeAdmin, makeField, makeMember, makeSettings, resetDb } from "../../tests/helpers/db";
@@ -127,7 +127,7 @@ describe("booking service", () => {
     const far = await createBooking(prisma, asMember(m.id), m.id, { fieldId: f.id, start: at("2026-11-05", "11:00"), slots: 1 }, NOW);
     expect((await cancelBooking(prisma, asAdmin(admin.id), soon.id, "Campo allagato", NOW)).chargeable).toBe(true);
     expect((await cancelBooking(prisma, asAdmin(admin.id), far.id, undefined, NOW)).chargeable).toBe(false);
-    const n = await prisma.notification.findFirst({ where: { userId: m.id, type: "BOOKING_CANCELLED" }, orderBy: { createdAt: "asc" } });
+    const n = await prisma.notification.findFirst({ where: { userId: m.id, type: "BOOKING_CANCELLED", params: { contains: "Campo allagato" } } });
     expect(JSON.parse(n!.params)).toMatchObject({ by: "admin", reason: "Campo allagato", chargeable: 1 });
   });
 
@@ -161,5 +161,37 @@ describe("booking service", () => {
     const bk = await createBooking(prisma, asMember(b.id), b.id, { fieldId: f.id, start: at("2026-11-05", "10:00"), slots: 1 }, NOW);
     await expectCode(updateBooking(prisma, asMember(a.id), bk.id, { fieldId: f.id, start: at("2026-11-05", "12:00"), slots: 1 }, NOW), "FORBIDDEN");
     await expectCode(cancelBooking(prisma, asMember(a.id), bk.id, undefined, NOW), "FORBIDDEN");
+  });
+
+  it("maps the primary-key violation on FieldOccupancy to SLOT_TAKEN and rolls back", async () => {
+    const f = await makeField();
+    const a = await makeMember();
+    const b = await makeMember();
+    await createBooking(prisma, asMember(a.id), a.id, { fieldId: f.id, start: at("2026-11-05", "10:00"), slots: 1 }, NOW);
+    // Salta il controllo preventivo: l'unico argine rimasto è la chiave primaria (P2002).
+    const bind = <T extends object>(o: T, k: string | symbol) => {
+      const v = Reflect.get(o, k);
+      return typeof v === "function" ? v.bind(o) : v;
+    };
+    const proxyDb = new Proxy(prisma, {
+      get(target, prop) {
+        if (prop !== "$transaction") return bind(target, prop);
+        return (fn: (tx: Tx) => Promise<unknown>) =>
+          target.$transaction((tx) =>
+            fn(
+              new Proxy(tx, {
+                get(t, p) {
+                  if (p !== "fieldOccupancy") return bind(t, p);
+                  return new Proxy(t.fieldOccupancy, {
+                    get: (o, q) => (q === "findFirst" ? async () => null : bind(o, q)),
+                  });
+                },
+              }),
+            ),
+          );
+      },
+    }) as Db;
+    await expectCode(createBooking(proxyDb, asMember(b.id), b.id, { fieldId: f.id, start: at("2026-11-05", "10:30"), slots: 1 }, NOW), "SLOT_TAKEN");
+    expect(await prisma.booking.count()).toBe(1);
   });
 });

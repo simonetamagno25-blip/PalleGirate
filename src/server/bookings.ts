@@ -17,16 +17,30 @@ import { getSettings } from "./settings";
 export type Actor = { userId: string; mode: "member" | "admin" };
 export type BookingInput = { fieldId: string; start: Date; slots: number };
 
-/** Esegue in transazione e trasforma la violazione della chiave di occupazione in SLOT_TAKEN. */
+/**
+ * Esegue in transazione e traduce i conflitti di concorrenza in SLOT_TAKEN:
+ * - P2002 solo se riguarda FieldOccupancy (chiave primaria fieldId+quarterStart);
+ * - P2034 (write conflict / deadlock, es. su PostgreSQL tra create e update su quarti sovrapposti):
+ *   la transazione perdente è stata annullata, quindi lo slot è di fatto già preso dall'altra.
+ */
 async function inTx<T>(db: Db, fn: (tx: Tx) => Promise<T>): Promise<T> {
   try {
     return await db.$transaction(fn);
   } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002") {
-      throw new DomainError([{ code: "SLOT_TAKEN" }]);
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      if (e.code === "P2034" || (e.code === "P2002" && isOccupancyConflict(e))) {
+        throw new DomainError([{ code: "SLOT_TAKEN" }]);
+      }
     }
     throw e;
   }
+}
+
+function isOccupancyConflict(e: Prisma.PrismaClientKnownRequestError) {
+  const meta = (e.meta ?? {}) as { modelName?: unknown; target?: unknown };
+  if (meta.modelName === "FieldOccupancy") return true;
+  const target = Array.isArray(meta.target) ? meta.target.join(",") : String(meta.target ?? "");
+  return /quarterStart|FieldOccupancy/.test(target);
 }
 
 async function validate(tx: Tx, actor: Actor, memberId: string, input: BookingInput, now: Date, excludeBookingId?: string) {
@@ -88,10 +102,13 @@ export async function updateBooking(db: Db, actor: Actor, bookingId: string, inp
     }
     await releaseOccupancy(tx, booking.id);
     const { field, end } = await validate(tx, actor, booking.memberId, input, now, booking.id);
-    const updated = await tx.booking.update({
-      where: { id: booking.id },
+    // Scrittura condizionata: se nel frattempo è stata cancellata non si reinseriscono le occupazioni.
+    const res = await tx.booking.updateMany({
+      where: { id: booking.id, status: "CONFIRMED" },
       data: { fieldId: field.id, start: input.start, end, slots: input.slots, priceCents: bookingPrice(field.priceCents, input.slots) },
     });
+    if (res.count === 0) fail("ALREADY_CANCELLED");
+    const updated = await tx.booking.findUniqueOrThrow({ where: { id: booking.id } });
     await occupy(tx, booking.id, field.id, input.start, end);
     await notify(tx, booking.memberId, "BOOKING_UPDATED", { field: field.name, start: input.start.toISOString(), by: by(actor) });
     return updated;
@@ -108,10 +125,12 @@ export async function cancelBooking(db: Db, actor: Actor, bookingId: string, rea
     // Solo l'admin può cancellare in ritardo; in quel caso la prenotazione resta da pagare.
     const chargeable = actor.mode === "admin" && isLateCancellation(booking.start, now, settings);
     const cleanReason = reason?.trim() || null;
-    const cancelled = await tx.booking.update({
-      where: { id: booking.id },
+    const res = await tx.booking.updateMany({
+      where: { id: booking.id, status: "CONFIRMED" },
       data: { status: "CANCELLED", chargeable, cancelReason: cleanReason, cancelledById: actor.userId, cancelledAt: now },
     });
+    if (res.count === 0) fail("ALREADY_CANCELLED");
+    const cancelled = await tx.booking.findUniqueOrThrow({ where: { id: booking.id } });
     await releaseOccupancy(tx, booking.id);
     await notify(tx, booking.memberId, "BOOKING_CANCELLED", {
       field: booking.field.name,
