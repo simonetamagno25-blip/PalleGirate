@@ -21,17 +21,18 @@ enum PaymentStatus {
 }
 
 model User {
-  id           String    @id @default(cuid())
-  isAdmin      Boolean   @default(false)
-  firstName    String
-  lastName     String
-  birthDate    DateTime?
-  email        String    @unique
-  phone        String?
-  locale       String    @default("it")
-  passwordHash String?
-  activatedAt  DateTime?
-  createdAt    DateTime  @default(now())
+  id             String    @id @default(cuid())
+  isAdmin        Boolean   @default(false)
+  firstName      String
+  lastName       String
+  birthDate      DateTime?
+  email          String    @unique
+  phone          String?
+  locale         String    @default("it")
+  passwordHash   String?
+  activatedAt    DateTime?
+  sessionVersion Int       @default(0) // sale a ogni "reimposta accesso": invalida i JWT precedenti
+  createdAt      DateTime  @default(now())
 
   membership    Membership?
   bookings      Booking[]

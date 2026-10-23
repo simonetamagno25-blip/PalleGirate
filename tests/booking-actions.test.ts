@@ -28,7 +28,7 @@ async function activeMember(isAdmin = false) {
   const m = await makeMember({ isAdmin, expiresAt: validUntilNextYear() })
   return prisma.user.update({ where: { id: m.id }, data: { activatedAt: new Date() } })
 }
-const loginAs = (u: { id: string } | null) => authMock.mockResolvedValue(u ? { user: { id: u.id } } : null)
+const loginAs = (u: { id: string } | null) => authMock.mockResolvedValue(u ? { user: { id: u.id, sessionVersion: 0 } } : null)
 
 beforeEach(async () => {
   await resetDb()

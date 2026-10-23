@@ -2,6 +2,7 @@ import { getTranslations } from 'next-intl/server'
 import { BookingForm } from '@/components/BookingForm'
 import { requireMember } from '@/lib/auth'
 import { getBookingFormData } from '@/lib/booking-form-data'
+import { isValidDay } from '@/lib/time'
 
 const text = (v: string | string[] | undefined) => (typeof v === 'string' ? v : undefined)
 
@@ -13,7 +14,7 @@ export default async function NewBookingPage({ searchParams }: PageProps<'/[loca
 
   // Precompilato dal click sul calendario; valori non validi ricadono sui default.
   const fieldId = data.fields.find((f) => f.id === text(sp.fieldId))?.id ?? data.fields[0].id
-  const day = /^\d{4}-\d{2}-\d{2}$/.test(text(sp.day) ?? '') ? text(sp.day)! : data.today
+  const day = isValidDay(text(sp.day) ?? '') ? text(sp.day)! : data.today
   const time = /^\d{2}:\d{2}$/.test(text(sp.time) ?? '') ? text(sp.time)! : '18:00'
 
   return (

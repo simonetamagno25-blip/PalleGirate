@@ -25,6 +25,11 @@ export function fromRome(day: string, hhmm: string): Date {
   return t.toJSDate()
 }
 
+/** Vero se `s` è un giorno YYYY-MM-DD che esiste davvero (non 2026-02-30). */
+export function isValidDay(s: string): boolean {
+  return /^\d{4}-\d{2}-\d{2}$/.test(s) && DateTime.fromISO(s, { zone: ROME }).isValid
+}
+
 /** Giorno YYYY-MM-DD spostato di n giorni di calendario. */
 export function addDays(day: string, n: number): string {
   return DateTime.fromISO(day, { zone: ROME }).plus({ days: n }).toFormat('yyyy-MM-dd')

@@ -5,14 +5,14 @@ import { Link } from '@/i18n/routing'
 import { requireMember } from '@/lib/auth'
 import { getDayAvailability } from '@/lib/availability'
 import { getSettings } from '@/lib/settings'
-import { addDays, fromRome, romeDay } from '@/lib/time'
+import { addDays, fromRome, isValidDay, romeDay } from '@/lib/time'
 
 export default async function CalendarPage({ searchParams }: PageProps<'/[locale]/calendar'>) {
   const user = await requireMember()
   const sp = await searchParams
   const now = new Date()
   const today = romeDay(now)
-  const day = typeof sp.day === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(sp.day) ? sp.day : today
+  const day = typeof sp.day === 'string' && isValidDay(sp.day) ? sp.day : today
 
   const [settings, availability, t, format] = await Promise.all([
     getSettings(),

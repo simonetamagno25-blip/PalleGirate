@@ -264,7 +264,8 @@
     "alreadyActive": "Already have an account? Log in",
     "errors": {
       "ACTIVATION_FAILED": "We couldn't activate the account with these details. Check the card number and email, or ask the club to reset your access.",
-      "WEAK_PASSWORD": "The password must be at least 8 characters long."
+      "WEAK_PASSWORD": "The password must be at least 8 characters long.",
+      "tooMany": "Too many attempts. Try again in a few minutes."
     }
   },
   "errors": {
@@ -294,7 +295,11 @@
       "INVALID_FIELD": "Invalid field data: name and sport are required, duration a multiple of 15 minutes, price above zero.",
       "DUPLICATE_FIELD_NAME": "A field with this name already exists.",
       "HAS_FUTURE_BOOKINGS": "The field has future bookings: confirm their cancellation first (or wait, to change the duration)."
-    }
+    },
+    "retry": "Try again",
+    "notFound": "Page not found",
+    "notFoundHint": "The page you are looking for does not exist or is not available.",
+    "backHome": "Back to home"
   },
   "reasons": {
     "AUTO_BLOCK": "Blocked for unpaid bookings",

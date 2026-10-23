@@ -24,14 +24,20 @@ export async function setUserLocale(userId: string, locale: string): Promise<voi
   await prisma.user.update({ where: { id: userId }, data: { locale } })
 }
 
-export type SessionIdentity = { id: string; isAdmin: boolean; name: string; email: string }
+export type SessionIdentity = { id: string; isAdmin: boolean; name: string; email: string; sessionVersion: number }
 
 /** Login con email + password. Restituisce null per qualunque causa di rifiuto (anche account non attivato). */
 export async function verifyCredentials(email: string, password: string): Promise<SessionIdentity | null> {
   const user = await prisma.user.findUnique({ where: { email: email.trim().toLowerCase() } })
   if (!user?.passwordHash) return null
   if (!(await bcrypt.compare(password, user.passwordHash))) return null
-  return { id: user.id, isAdmin: user.isAdmin, name: `${user.firstName} ${user.lastName}`, email: user.email }
+  return {
+    id: user.id,
+    isAdmin: user.isAdmin,
+    name: `${user.firstName} ${user.lastName}`,
+    email: user.email,
+    sessionVersion: user.sessionVersion,
+  }
 }
 
 /**
@@ -178,7 +184,10 @@ export async function resetAccess(admin: Actor, userId: string): Promise<void> {
   assertAdmin(admin)
   if (admin.id === userId) throw new Error('SELF_RESET')
   if (!(await prisma.membership.findUnique({ where: { userId } }))) throw new Error('NO_MEMBERSHIP')
-  await prisma.user.update({ where: { id: userId }, data: { passwordHash: null, activatedAt: null } })
+  await prisma.user.update({
+    where: { id: userId },
+    data: { passwordHash: null, activatedAt: null, sessionVersion: { increment: 1 } },
+  })
 }
 
 export async function setAdmin(admin: Actor, userId: string, isAdmin: boolean): Promise<void> {

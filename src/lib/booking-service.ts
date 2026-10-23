@@ -62,6 +62,21 @@ async function guardOverlap<T>(run: () => Promise<T>): Promise<T> {
   }
 }
 
+/**
+ * Su PostgreSQL due creazioni simultanee dello stesso socio potrebbero superare il limite di prenotazioni attive:
+ * la transazione di creazione è Serializable e, se il database segnala un conflitto di scrittura (P2034), si ritenta.
+ */
+async function serializable<T>(run: (tx: Tx) => Promise<T>): Promise<T> {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return await prisma.$transaction(run, { isolationLevel: Prisma.TransactionIsolationLevel.Serializable })
+    } catch (e) {
+      const conflict = e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2034'
+      if (!conflict || attempt >= 3) throw e
+    }
+  }
+}
+
 type Target = { memberId: string; field: Field; start: Date; slots: number }
 
 /** Controlla le regole per il tipo di attore e restituisce fine e prezzo della prenotazione. */
@@ -144,7 +159,7 @@ export async function createBooking(
 ): Promise<Booking> {
   if (!actor.isAdmin && input.memberId !== actor.id) throw new BookingError(['FORBIDDEN'])
   return guardOverlap(() =>
-    prisma.$transaction(async (tx) => {
+    serializable(async (tx) => {
       const settings = await loadSettings(tx)
       const member = await tx.user.findUnique({ where: { id: input.memberId } })
       if (!member) throw new BookingError(['NOT_FOUND'])
@@ -190,10 +205,13 @@ export function updateBooking(
       )
       // Si libera prima l'occupazione vecchia: lo spostamento non confligge con sé stesso.
       await tx.occupancy.deleteMany({ where: { bookingId: booking.id } })
-      const updated = await tx.booking.update({
-        where: { id: booking.id },
+      // Compare-and-set sullo stato: se nel frattempo è stata cancellata, non si riscrive nulla.
+      const claimed = await tx.booking.updateMany({
+        where: { id: booking.id, status: 'CONFIRMED' },
         data: { fieldId: field.id, start: input.start, end, slots: input.slots, priceCents },
       })
+      if (claimed.count === 0) throw new BookingError(['ALREADY_CANCELLED'])
+      const updated = await tx.booking.findUniqueOrThrow({ where: { id: booking.id } })
       await tx.occupancy.createMany({ data: occupancyRows(booking.id, field.id, input.start, end) })
       await notifyBooking(tx, 'BOOKING_UPDATED', updated, field.name, actor)
       return updated
@@ -213,8 +231,8 @@ export function cancelBooking(
     const inWindow = canChangeOrCancel(booking.start, now, settings)
     if (!actor.isAdmin && !inWindow) throw new BookingError(['WINDOW_CLOSED'])
     await tx.occupancy.deleteMany({ where: { bookingId: booking.id } })
-    const cancelled = await tx.booking.update({
-      where: { id: booking.id },
+    const claimed = await tx.booking.updateMany({
+      where: { id: booking.id, status: 'CONFIRMED' },
       data: {
         status: 'CANCELLED',
         cancelReason: reason?.trim() || null,
@@ -222,8 +240,9 @@ export function cancelBooking(
         // Cancellazione dell'admin a meno di 2 ore dall'inizio: la prenotazione va pagata comunque (spec §7).
         chargeable: actor.isAdmin && !inWindow,
       },
-      include: { field: true },
     })
+    if (claimed.count === 0) throw new BookingError(['ALREADY_CANCELLED'])
+    const cancelled = await tx.booking.findUniqueOrThrow({ where: { id: booking.id }, include: { field: true } })
     await notifyBooking(tx, 'BOOKING_CANCELLED', cancelled, cancelled.field.name, actor, cancelled.cancelReason)
     return cancelled
   })

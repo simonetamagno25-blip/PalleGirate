@@ -264,7 +264,8 @@
     "alreadyActive": "Hai già un account? Accedi",
     "errors": {
       "ACTIVATION_FAILED": "Non riusciamo ad attivare l'account con questi dati. Controlla numero tessera ed email, oppure chiedi al centro di reimpostare il tuo accesso.",
-      "WEAK_PASSWORD": "La password deve avere almeno 8 caratteri."
+      "WEAK_PASSWORD": "La password deve avere almeno 8 caratteri.",
+      "tooMany": "Troppi tentativi. Riprova tra qualche minuto."
     }
   },
   "errors": {
@@ -294,7 +295,11 @@
       "INVALID_FIELD": "Dati del campo non validi: nome e sport obbligatori, durata multipla di 15 minuti, prezzo maggiore di zero.",
       "DUPLICATE_FIELD_NAME": "Esiste già un campo con questo nome.",
       "HAS_FUTURE_BOOKINGS": "Il campo ha prenotazioni future: servono la conferma di cancellazione o di attendere (per cambiare la durata)."
-    }
+    },
+    "retry": "Riprova",
+    "notFound": "Pagina non trovata",
+    "notFoundHint": "La pagina che cerchi non esiste o non è disponibile.",
+    "backHome": "Torna alla home"
   },
   "reasons": {
     "AUTO_BLOCK": "Blocco per mancato pagamento",

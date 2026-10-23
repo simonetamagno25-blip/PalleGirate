@@ -9,7 +9,7 @@ import { prisma } from '@/lib/db'
 import type { RuleParams } from '@/lib/booking-rules'
 import { ruleParams } from '@/lib/booking-rules'
 import { getSettings } from '@/lib/settings'
-import { fromRome } from '@/lib/time'
+import { fromRome, isValidDay } from '@/lib/time'
 
 /** `params`: i valori delle regole citati nei messaggi (orari, giorni, ore…), letti dalle impostazioni correnti. */
 export type ActionResult = { ok: true } | { ok: false; violations: string[]; params?: RuleParams }
@@ -17,13 +17,16 @@ export type CreateResult = { ok: true; id: string } | { ok: false; violations: s
 
 const INVALID: { ok: false; violations: string[] } = { ok: false, violations: ['INVALID_INPUT'] }
 
+const id = z.string().min(1).max(64)
+const reasonText = z.string().max(500).optional()
+
 const slotForm = z.object({
-  fieldId: z.string().min(1),
-  day: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  fieldId: id,
+  day: z.string().refine(isValidDay),
   time: z.string().regex(/^\d{2}:\d{2}$/),
   slots: z.number().int(),
 })
-const adminForm = slotForm.extend({ memberId: z.string().min(1) })
+const adminForm = slotForm.extend({ memberId: id })
 
 export type SlotForm = z.input<typeof slotForm>
 export type AdminSlotForm = z.input<typeof adminForm>
@@ -69,30 +72,31 @@ export async function createBookingAction(form: SlotForm): Promise<CreateResult>
   })
 }
 
-export async function updateBookingAction(id: string, form: SlotForm): Promise<ActionResult> {
+export async function updateBookingAction(bookingId: string, form: SlotForm): Promise<ActionResult> {
   const actor = await asMember()
   const f = parseSlot(slotForm, form)
-  if (!f) return INVALID
+  if (!f || !id.safeParse(bookingId).success) return INVALID
   return guarded(async () => {
-    await updateBooking(actor, id, { fieldId: f.fieldId, start: f.start, slots: f.slots })
+    await updateBooking(actor, bookingId, { fieldId: f.fieldId, start: f.start, slots: f.slots })
     return { ok: true }
   })
 }
 
-export async function cancelBookingAction(id: string, reason?: string): Promise<ActionResult> {
+export async function cancelBookingAction(bookingId: string, reason?: string): Promise<ActionResult> {
   const actor = await asMember()
+  if (!id.safeParse(bookingId).success || !reasonText.safeParse(reason).success) return INVALID
   return guarded(async () => {
-    await cancelBooking(actor, id, reason)
+    await cancelBooking(actor, bookingId, reason)
     return { ok: true }
   })
 }
 
-export async function adminUpdateBookingAction(id: string, form: SlotForm): Promise<ActionResult> {
+export async function adminUpdateBookingAction(bookingId: string, form: SlotForm): Promise<ActionResult> {
   const admin = await requireAdmin()
   const f = parseSlot(slotForm, form)
-  if (!f) return INVALID
+  if (!f || !id.safeParse(bookingId).success) return INVALID
   return guarded(async () => {
-    await updateBooking(admin, id, { fieldId: f.fieldId, start: f.start, slots: f.slots })
+    await updateBooking(admin, bookingId, { fieldId: f.fieldId, start: f.start, slots: f.slots })
     return { ok: true }
   })
 }
@@ -107,10 +111,11 @@ export async function adminCreateBookingAction(form: AdminSlotForm): Promise<Cre
   })
 }
 
-export async function adminCancelBookingAction(id: string, reason: string): Promise<ActionResult> {
+export async function adminCancelBookingAction(bookingId: string, reason: string): Promise<ActionResult> {
   const admin = await requireAdmin()
+  if (!id.safeParse(bookingId).success || !reasonText.safeParse(reason).success) return INVALID
   return guarded(async () => {
-    await cancelBooking(admin, id, reason)
+    await cancelBooking(admin, bookingId, reason)
     return { ok: true }
   })
 }
@@ -118,7 +123,7 @@ export async function adminCancelBookingAction(id: string, reason: string): Prom
 /** Prezzo in centesimi per l'anteprima del riepilogo (0 se campo o slot non validi). */
 export async function previewPriceAction(fieldId: string, slots: number): Promise<number> {
   await requireMember()
-  if (!Number.isInteger(slots) || slots < 1) return 0
+  if (!Number.isInteger(slots) || slots < 1 || !id.safeParse(fieldId).success) return 0
   const field = await prisma.field.findUnique({ where: { id: fieldId } })
   return field ? slots * field.pricePerSlot : 0
 }

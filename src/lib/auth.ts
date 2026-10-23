@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation'
 import { z } from 'zod'
 import { prisma } from '@/lib/db'
 import { verifyCredentials } from '@/lib/members'
+import { isSessionCurrent } from '@/lib/session-version'
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   trustHost: true,
@@ -24,11 +25,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
   callbacks: {
     jwt({ token, user }) {
-      if (user?.id) token.sub = user.id
+      if (user?.id) {
+        token.sub = user.id
+        token.sv = (user as { sessionVersion?: number }).sessionVersion
+      }
       return token
     },
     session({ session, token }) {
       if (token.sub) session.user.id = token.sub
+      ;(session.user as { sessionVersion?: unknown }).sessionVersion = token.sv
       return session
     },
   },
@@ -48,11 +53,14 @@ export async function getSessionUser(): Promise<SessionUser | null> {
   const session = await auth()
   const id = session?.user?.id
   if (!id) return null
+  const tokenVersion = (session.user as { sessionVersion?: unknown }).sessionVersion
   const user = await prisma.user.findUnique({
     where: { id },
-    select: { id: true, isAdmin: true, locale: true, activatedAt: true },
+    select: { id: true, isAdmin: true, locale: true, activatedAt: true, sessionVersion: true },
   })
   if (!user || !user.activatedAt) return null
+  // Token emesso prima di un "reimposta accesso" (o senza versione): non vale più.
+  if (!isSessionCurrent(tokenVersion, user.sessionVersion)) return null
   return { id: user.id, isAdmin: user.isAdmin, locale: user.locale === 'en' ? 'en' : 'it' }
 }
 

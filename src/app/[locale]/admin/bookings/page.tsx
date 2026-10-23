@@ -9,13 +9,14 @@ import { requireAdmin } from '@/lib/auth'
 import { listAllBookings } from '@/lib/booking-queries'
 import { prisma } from '@/lib/db'
 import { displayReason } from '@/lib/reasons'
+import { isValidDay } from '@/lib/time'
 
 const text = (v: string | string[] | undefined) => (typeof v === 'string' && v !== '' ? v : undefined)
 
 export default async function AdminBookingsPage({ searchParams }: PageProps<'/[locale]/admin/bookings'>) {
   const admin = await requireAdmin()
   const sp = await searchParams
-  const day = /^\d{4}-\d{2}-\d{2}$/.test(text(sp.day) ?? '') ? text(sp.day) : undefined
+  const day = isValidDay(text(sp.day) ?? '') ? text(sp.day) : undefined
   const filters = { fieldId: text(sp.field), day, q: text(sp.q) }
 
   const [bookings, fields, t, tb, tAll, format] = await Promise.all([
