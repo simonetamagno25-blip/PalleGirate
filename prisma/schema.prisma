@@ -127,10 +127,12 @@ model Notification {
   type      String
   params    String   @default("{}") // JSON serializzato, tradotto al momento della visualizzazione
   read      Boolean  @default(false)
+  dedupeKey String? // per le notifiche temporali: una sola per (utente, evento)
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@unique([userId, dedupeKey])
   @@index([userId, read])
 }
 

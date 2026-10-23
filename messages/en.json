@@ -212,5 +212,9 @@
       "FIELD_INACTIVE": "This field can't be booked at the moment.",
       "INVALID_INPUT": "Check your input: the day, time or duration is not valid."
     }
+  },
+  "reasons": {
+    "AUTO_BLOCK": "Blocked for unpaid bookings",
+    "FIELD_DEACTIVATED": "Field no longer available"
   }
 }

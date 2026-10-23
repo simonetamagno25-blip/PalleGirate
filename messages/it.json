@@ -212,5 +212,9 @@
       "FIELD_INACTIVE": "Questo campo al momento non è prenotabile.",
       "INVALID_INPUT": "Controlla i dati inseriti: giorno, orario o durata non sono validi."
     }
+  },
+  "reasons": {
+    "AUTO_BLOCK": "Blocco per mancato pagamento",
+    "FIELD_DEACTIVATED": "Campo non più disponibile"
   }
 }

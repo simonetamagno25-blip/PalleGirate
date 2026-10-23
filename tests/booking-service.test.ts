@@ -274,3 +274,53 @@ describe('cancelBooking', () => {
     expect(await occupancyCount(f.id)).toBe(0)
   })
 })
+
+describe('notifiche degli eventi di prenotazione', () => {
+  const notesOf = (userId: string) => prisma.notification.findMany({ where: { userId }, orderBy: [{ createdAt: 'asc' }, { id: 'asc' }] })
+
+  test('createBooking notifica il proprietario con BOOKING_CREATED', async () => {
+    const m = await makeMember()
+    const f = await makeField({ name: 'Tennis X' })
+    const b = await book(m, f.id, '10:00')
+    const [n] = await notesOf(m.id)
+    expect(n.type).toBe('BOOKING_CREATED')
+    expect(JSON.parse(n.params)).toMatchObject({
+      bookingId: b.id,
+      fieldName: 'Tennis X',
+      start: fromRome(DAY, '10:00').toISOString(),
+      by: 'member',
+      reason: null,
+    })
+  })
+
+  test('updateBooking fatto dall\'admin notifica il socio con BOOKING_UPDATED by admin', async () => {
+    const admin = await makeMember({ isAdmin: true })
+    const m = await makeMember()
+    const f = await makeField()
+    const b = await book(m, f.id, '10:00')
+    await updateBooking(asActor(admin), b.id, { fieldId: f.id, start: fromRome(DAY, '12:00'), slots: 1 }, NOW)
+    const notes = await notesOf(m.id)
+    expect(notes.map((n) => n.type)).toEqual(['BOOKING_CREATED', 'BOOKING_UPDATED'])
+    expect(JSON.parse(notes[1].params)).toMatchObject({ by: 'admin', start: fromRome(DAY, '12:00').toISOString() })
+    expect(await notesOf(admin.id)).toHaveLength(0)
+  })
+
+  test('cancelBooking dell\'admin con motivo notifica il socio con il motivo', async () => {
+    const admin = await makeMember({ isAdmin: true })
+    const m = await makeMember()
+    const f = await makeField()
+    const b = await book(m, f.id, '10:00')
+    await cancelBooking(asActor(admin), b.id, 'manutenzione', NOW)
+    const last = (await notesOf(m.id)).at(-1)!
+    expect(last.type).toBe('BOOKING_CANCELLED')
+    expect(JSON.parse(last.params)).toMatchObject({ by: 'admin', reason: 'manutenzione' })
+  })
+
+  test('una prenotazione fallita per OVERLAP non lascia notifiche', async () => {
+    const [a, b] = [await makeMember(), await makeMember()]
+    const f = await makeField()
+    await book(a, f.id, '10:00')
+    await violationsOf(book(b, f.id, '10:00'))
+    expect(await notesOf(b.id)).toHaveLength(0)
+  })
+})

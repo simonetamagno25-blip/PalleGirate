@@ -3,6 +3,7 @@
 // L'anti-sovrapposizione è garantita dall'indice univoco su Occupancy(fieldId, quarterStart).
 import { Prisma, type Booking, type Field } from '@prisma/client'
 import { prisma } from '@/lib/db'
+import { notify, type NotificationType } from '@/lib/notifications'
 import { getSettings } from '@/lib/settings'
 import {
   canChangeOrCancel,
@@ -107,6 +108,24 @@ async function loadOwnBooking(tx: Tx, actor: Actor, bookingId: string): Promise<
   return booking
 }
 
+/** Notifica al proprietario della prenotazione, qualunque sia l'attore (spec §9). */
+function notifyBooking(
+  tx: Tx,
+  type: NotificationType,
+  booking: Booking,
+  fieldName: string,
+  actor: Actor,
+  reason: string | null = null,
+) {
+  return notify(tx, booking.userId, type, {
+    bookingId: booking.id,
+    fieldName,
+    start: booking.start.toISOString(),
+    by: actor.isAdmin ? 'admin' : 'member',
+    reason,
+  })
+}
+
 function occupancyRows(bookingId: string, fieldId: string, start: Date, end: Date) {
   return quarterStarts(start, end).map((quarterStart) => ({ bookingId, fieldId, quarterStart }))
 }
@@ -134,6 +153,7 @@ export async function createBooking(
         data: { userId: member.id, fieldId: field.id, start: input.start, end, slots: input.slots, priceCents },
       })
       await tx.occupancy.createMany({ data: occupancyRows(booking.id, field.id, input.start, end) })
+      await notifyBooking(tx, 'BOOKING_CREATED', booking, field.name, actor)
       return booking
     }),
   )
@@ -168,6 +188,7 @@ export function updateBooking(
         data: { fieldId: field.id, start: input.start, end, slots: input.slots, priceCents },
       })
       await tx.occupancy.createMany({ data: occupancyRows(booking.id, field.id, input.start, end) })
+      await notifyBooking(tx, 'BOOKING_UPDATED', updated, field.name, actor)
       return updated
     }),
   )
@@ -185,7 +206,7 @@ export function cancelBooking(
     const inWindow = canChangeOrCancel(booking.start, now, settings)
     if (!actor.isAdmin && !inWindow) throw new BookingError(['WINDOW_CLOSED'])
     await tx.occupancy.deleteMany({ where: { bookingId: booking.id } })
-    return tx.booking.update({
+    const cancelled = await tx.booking.update({
       where: { id: booking.id },
       data: {
         status: 'CANCELLED',
@@ -194,6 +215,9 @@ export function cancelBooking(
         // Cancellazione dell'admin a meno di 2 ore dall'inizio: la prenotazione va pagata comunque (spec §7).
         chargeable: actor.isAdmin && !inWindow,
       },
+      include: { field: true },
     })
+    await notifyBooking(tx, 'BOOKING_CANCELLED', cancelled, cancelled.field.name, actor, cancelled.cancelReason)
+    return cancelled
   })
 }
