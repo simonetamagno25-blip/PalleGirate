@@ -1,0 +1,52 @@
+{
+  "app": {
+    "name": "Palle Girate",
+    "tagline": "Book the sports centre's courts"
+  },
+  "nav": {
+    "calendar": "Calendar",
+    "book": "Book",
+    "bookings": "My bookings",
+    "profile": "Profile",
+    "dashboard": "Dashboard",
+    "notifications": "Notifications",
+    "admin": "Administration",
+    "logout": "Log out",
+    "adminMembers": "Members",
+    "adminBookings": "Bookings",
+    "adminPayments": "Payments",
+    "adminSettings": "Settings",
+    "adminDashboard": "Statistics"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "back": "Back",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No",
+    "search": "Search",
+    "loading": "Loading…"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "START_NOT_ON_STEP": "The start time must be a multiple of {step} minutes.",
+    "BEFORE_OPENING": "The centre opens at {time}.",
+    "AFTER_CLOSING": "The booking must end by {time}.",
+    "INVALID_SLOTS": "You can book from 1 to {max} consecutive slots.",
+    "FIELD_INACTIVE": "This court cannot be booked right now.",
+    "IN_PAST": "You cannot book in the past.",
+    "TOO_FAR_AHEAD": "You can book at most {days} days ahead (until {lastDay}).",
+    "MEMBERSHIP_MISSING": "You need a valid membership card to book.",
+    "MEMBERSHIP_EXPIRED": "Your card expires on {expiry}: you cannot book after that date.",
+    "TOO_MANY_ACTIVE": "You already have {max} active bookings.",
+    "BLOCKED": "Your account is blocked for unpaid bookings. Settle them to book again.",
+    "SLOT_TAKEN": "This time slot is already taken.",
+    "CHANGE_WINDOW_CLOSED": "It is less than {hours} hours to the start: you can no longer change or cancel.",
+    "ALREADY_CANCELLED": "The booking is already cancelled.",
+    "NOT_FOUND": "Item not found.",
+    "FORBIDDEN": "You are not allowed to do this.",
+    "INVALID_INPUT": "Please check the data you entered."
+  }
+}

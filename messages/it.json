@@ -1,0 +1,52 @@
+{
+  "app": {
+    "name": "Palle Girate",
+    "tagline": "Prenota i campi del centro sportivo"
+  },
+  "nav": {
+    "calendar": "Calendario",
+    "book": "Prenota",
+    "bookings": "Le mie prenotazioni",
+    "profile": "Profilo",
+    "dashboard": "Dashboard",
+    "notifications": "Notifiche",
+    "admin": "Amministrazione",
+    "logout": "Esci",
+    "adminMembers": "Soci",
+    "adminBookings": "Prenotazioni",
+    "adminPayments": "Pagamenti",
+    "adminSettings": "Impostazioni",
+    "adminDashboard": "Statistiche"
+  },
+  "common": {
+    "save": "Salva",
+    "cancel": "Annulla",
+    "confirm": "Conferma",
+    "back": "Indietro",
+    "close": "Chiudi",
+    "yes": "Sì",
+    "no": "No",
+    "search": "Cerca",
+    "loading": "Caricamento…"
+  },
+  "errors": {
+    "generic": "Qualcosa è andato storto. Riprova.",
+    "START_NOT_ON_STEP": "L'orario di inizio deve essere un multiplo di {step} minuti.",
+    "BEFORE_OPENING": "Il centro apre alle {time}.",
+    "AFTER_CLOSING": "La prenotazione deve finire entro le {time}.",
+    "INVALID_SLOTS": "Puoi prenotare da 1 a {max} slot consecutivi.",
+    "FIELD_INACTIVE": "Questo campo non è al momento prenotabile.",
+    "IN_PAST": "Non puoi prenotare nel passato.",
+    "TOO_FAR_AHEAD": "Puoi prenotare al massimo {days} giorni in anticipo (fino al {lastDay}).",
+    "MEMBERSHIP_MISSING": "Serve una tessera valida per prenotare.",
+    "MEMBERSHIP_EXPIRED": "La tua tessera scade il {expiry}: non puoi prenotare dopo quella data.",
+    "TOO_MANY_ACTIVE": "Hai già {max} prenotazioni attive.",
+    "BLOCKED": "Il tuo account è bloccato per mancati pagamenti. Salda gli insoluti per tornare a prenotare.",
+    "SLOT_TAKEN": "Questo orario è già occupato.",
+    "CHANGE_WINDOW_CLOSED": "Mancano meno di {hours} ore all'inizio: non puoi più modificare o cancellare.",
+    "ALREADY_CANCELLED": "La prenotazione è già cancellata.",
+    "NOT_FOUND": "Elemento non trovato.",
+    "FORBIDDEN": "Non hai i permessi per questa operazione.",
+    "INVALID_INPUT": "Controlla i dati inseriti."
+  }
+}
