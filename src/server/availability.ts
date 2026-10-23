@@ -12,7 +12,12 @@ export type DayAvailability = {
 
 const dayRange = (day: string) => ({ gte: romeInstant(day, 0), lt: romeInstant(addDays(day, 1), 0) });
 // Le prenotazioni finiscono entro le 23:00, quindi la fine cade sempre nello stesso giorno.
-const toInterval = (b: { start: Date; end: Date }): BusyInterval => ({ startMin: romeMinutesOfDay(b.start), endMin: romeMinutesOfDay(b.end) });
+// Una prenotazione che finisce a mezzanotte ha endMin 0: la trattiamo come fine giornata (1440).
+const toInterval = (b: { start: Date; end: Date }): BusyInterval => {
+  const startMin = romeMinutesOfDay(b.start);
+  const end = romeMinutesOfDay(b.end);
+  return { startMin, endMin: end <= startMin ? 1440 : end };
+};
 
 export async function getDayAvailability(db: Db, day: string, viewer: Viewer): Promise<DayAvailability> {
   const [fields, bookings] = await Promise.all([

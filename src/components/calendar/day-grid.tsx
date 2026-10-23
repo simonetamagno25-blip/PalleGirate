@@ -28,7 +28,7 @@ export function DayGrid({ availability, rows, selectedField, isAdmin }: { availa
                 const b = at(f.id, minute);
                 const first = b && b.startMin === minute;
                 if (b) {
-                  const label = isAdmin ? b.memberName : b.mine ? t("mine") : t("busy");
+                  const label = isAdmin ? (b.memberName ?? t("busy")) : b.mine ? t("mine") : t("busy");
                   return (
                     <td key={f.id} className={cn("h-6 px-2 text-xs", hideOnMobile(f.id), b.mine ? "bg-primary/80 text-primary-foreground" : "bg-muted-foreground/25")}>
                       {first ? label : ""}
@@ -39,7 +39,7 @@ export function DayGrid({ availability, rows, selectedField, isAdmin }: { availa
                   <td key={f.id} className={cn("h-6 p-0", hideOnMobile(f.id))}>
                     <Link
                       href={`/book?field=${f.id}&day=${day}&time=${minute}`}
-                      className="block h-full w-full hover:bg-emerald-500/20 focus-visible:bg-emerald-500/30"
+                      className="block h-full w-full hover:bg-emerald-500/20 focus-visible:bg-emerald-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
                       aria-label={`${f.name} ${minutesToHHMM(minute)} ${t("free")}`}
                     />
                   </td>

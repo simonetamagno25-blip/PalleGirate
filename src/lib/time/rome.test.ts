@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addDays, diffDays, minutesToHHMM, romeDay, romeInstant, romeMinutesOfDay } from "./rome";
+import { addDays, diffDays, isValidDay, minutesToHHMM, romeDay, romeInstant, romeMinutesOfDay } from "./rome";
 
 describe("romeDay", () => {
   it("uses Rome's calendar day, not UTC", () => {
@@ -47,5 +47,19 @@ describe("day arithmetic", () => {
     expect(minutesToHHMM(480)).toBe("08:00");
     expect(minutesToHHMM(1380)).toBe("23:00");
     expect(minutesToHHMM(615)).toBe("10:15");
+  });
+});
+
+describe("isValidDay", () => {
+  it("accepts real calendar days", () => {
+    expect(isValidDay("2026-11-02")).toBe(true);
+    expect(isValidDay("2028-02-29")).toBe(true);
+  });
+  it("rejects impossible or malformed values", () => {
+    expect(isValidDay("2027-02-29")).toBe(false);
+    expect(isValidDay("2026-13-45")).toBe(false);
+    expect(isValidDay("abc")).toBe(false);
+    expect(isValidDay("")).toBe(false);
+    expect(isValidDay(undefined)).toBe(false);
   });
 });

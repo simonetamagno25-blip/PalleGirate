@@ -37,3 +37,11 @@ export function diffDays(from: string, to: string): number {
 export function minutesToHHMM(min: number): string {
   return `${String(Math.floor(min / 60)).padStart(2, "0")}:${String(min % 60).padStart(2, "0")}`;
 }
+
+/** True se `s` è un giorno di calendario reale nel formato YYYY-MM-DD (es. rifiuta 2026-13-45 e 2027-02-29). */
+export function isValidDay(s: string | undefined | null): s is string {
+  if (!s || !/^\d{4}-\d{2}-\d{2}$/.test(s)) return false;
+  const [y, m, d] = s.split("-").map(Number);
+  const dt = new Date(Date.UTC(y, m - 1, d));
+  return dt.getUTCFullYear() === y && dt.getUTCMonth() === m - 1 && dt.getUTCDate() === d;
+}
