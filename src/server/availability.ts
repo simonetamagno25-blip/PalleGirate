@@ -1,6 +1,8 @@
+import { freeStarts, pastLimit } from "@/lib/calendar/free-starts";
 import type { BusyInterval } from "@/lib/calendar/grid";
-import { addDays, romeInstant, romeMinutesOfDay } from "@/lib/time/rome";
+import { addDays, romeDay, romeInstant, romeMinutesOfDay } from "@/lib/time/rome";
 import type { Db } from "./db";
+import { getSettings } from "./settings";
 
 export type Viewer = { userId: string; isAdmin: boolean };
 export type DayBooking = { id: string; fieldId: string; startMin: number; endMin: number; mine: boolean; memberName?: string };
@@ -52,4 +54,25 @@ export async function busyForField(db: Db, fieldId: string, day: string, exclude
     select: { start: true, end: true },
   });
   return rows.map(toInterval);
+}
+
+export type BoardRow = DayAvailability["fields"][number] & { starts: number[]; bookings: DayBooking[] };
+export type DayBoard = { day: string; openMinutes: number; closeMinutes: number; rows: BoardRow[] };
+
+/**
+ * Il tabellone di un giorno: per ogni campo attivo gli orari di inizio liberi (con le stesse regole che il wizard
+ * applica a un socio: apertura, passo, slot che stanno prima della chiusura, niente orari passati) e le prenotazioni
+ * del campo. Le prenotazioni passano da `getDayAvailability`, quindi un socio non vede mai chi ha prenotato.
+ */
+export async function getDayBoard(db: Db, day: string, viewer: Viewer, now: Date): Promise<DayBoard> {
+  const [availability, settings] = await Promise.all([getDayAvailability(db, day, viewer), getSettings(db)]);
+  const limit = pastLimit({ admin: false, day, today: romeDay(now), nowMinute: romeMinutesOfDay(now) });
+  const rows = availability.fields.map((f) => {
+    const bookings = availability.bookings.filter((b) => b.fieldId === f.id);
+    const starts = limit.allowed
+      ? freeStarts({ slotMinutes: f.slotMinutes, settings, busy: bookings, notBeforeMinute: limit.notBeforeMinute }).map((s) => s.minute)
+      : [];
+    return { ...f, starts, bookings };
+  });
+  return { day, openMinutes: settings.openMinutes, closeMinutes: settings.closeMinutes, rows };
 }
