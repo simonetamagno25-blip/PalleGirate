@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { CalendarDays, ClipboardList, LayoutDashboard, LogOut, PlusCircle, Settings, User, Users, Wallet, BarChart3 } from "lucide-react";
+import { CalendarDays, ClipboardList, LayoutDashboard, LogOut, PlusCircle, Settings, User, Users, Wallet, BarChart3, Bell } from "lucide-react";
 import { signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 
@@ -11,6 +11,7 @@ export async function AppNav({ isAdmin, userName }: { isAdmin: boolean; userName
     { href: "/calendar", label: t("calendar"), icon: CalendarDays },
     { href: "/book", label: t("book"), icon: PlusCircle },
     { href: "/bookings", label: t("bookings"), icon: ClipboardList },
+    { href: "/notifications", label: t("notifications"), icon: Bell },
     { href: "/profile", label: t("profile"), icon: User },
   ];
   const admin = [

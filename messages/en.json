@@ -167,5 +167,25 @@
     "expired": "Expired on {date}",
     "noCard": "No card registered",
     "data": "Personal data"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "empty": "No notifications.",
+    "markAll": "Mark all as read",
+    "markRead": "Mark as read",
+    "unread": "{count, plural, one {1 unread} other {# unread}}",
+    "byAdmin": " (by the administrator)",
+    "reason": "Reason: {reason}",
+    "chargeable": "The booking must still be paid.",
+    "BOOKING_CREATED": "Booking confirmed: {field}, {start}.",
+    "BOOKING_UPDATED": "Booking changed: {field}, {start}.",
+    "BOOKING_CANCELLED": "Booking cancelled: {field}, {start}.",
+    "BOOKING_CANCELLED_BLOCK": "Booking cancelled because your account is blocked for non-payment: {field}, {start}.",
+    "STRIKE_WARNING": "Warning: a booking is recorded as unpaid. Next time your account will be blocked.",
+    "ACCOUNT_BLOCKED": "Account blocked for unpaid bookings. {cancelled, plural, =0 {} one {1 upcoming booking was cancelled.} other {# upcoming bookings were cancelled.}} Settle them to book again.",
+    "ACCOUNT_UNBLOCKED": "Payments recorded: your account is active again.",
+    "BOOKING_REMINDER": "Reminder: {field}, {start}.",
+    "MEMBERSHIP_EXPIRING": "Your card expires on {expiry} ({days, plural, =0 {today} one {in 1 day} other {in # days}}).",
+    "MEMBERSHIP_EXPIRED": "Your card expired on {expiry}. Renew it at the office to book."
   }
 }

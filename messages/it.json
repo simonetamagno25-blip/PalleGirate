@@ -167,5 +167,25 @@
     "expired": "Scaduta il {date}",
     "noCard": "Nessuna tessera registrata",
     "data": "Dati personali"
+  },
+  "notifications": {
+    "title": "Notifiche",
+    "empty": "Nessuna notifica.",
+    "markAll": "Segna tutte come lette",
+    "markRead": "Segna come letta",
+    "unread": "{count, plural, one {1 non letta} other {# non lette}}",
+    "byAdmin": " (dall'amministratore)",
+    "reason": "Motivo: {reason}",
+    "chargeable": "La prenotazione va comunque pagata.",
+    "BOOKING_CREATED": "Prenotazione confermata: {field}, {start}.",
+    "BOOKING_UPDATED": "Prenotazione modificata: {field}, {start}.",
+    "BOOKING_CANCELLED": "Prenotazione cancellata: {field}, {start}.",
+    "BOOKING_CANCELLED_BLOCK": "Prenotazione cancellata per blocco dovuto a mancato pagamento: {field}, {start}.",
+    "STRIKE_WARNING": "Attenzione: una prenotazione risulta non pagata. Al prossimo mancato pagamento l'account verrà bloccato.",
+    "ACCOUNT_BLOCKED": "Account bloccato per mancati pagamenti. {cancelled, plural, =0 {} one {È stata cancellata 1 prenotazione futura.} other {Sono state cancellate # prenotazioni future.}} Salda gli insoluti per tornare a prenotare.",
+    "ACCOUNT_UNBLOCKED": "Pagamenti registrati: il tuo account è di nuovo attivo.",
+    "BOOKING_REMINDER": "Promemoria: {field}, {start}.",
+    "MEMBERSHIP_EXPIRING": "La tua tessera scade il {expiry} ({days, plural, =0 {oggi} one {tra 1 giorno} other {tra # giorni}}).",
+    "MEMBERSHIP_EXPIRED": "La tua tessera è scaduta il {expiry}. Rinnovala in segreteria per prenotare."
   }
 }
