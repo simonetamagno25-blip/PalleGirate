@@ -7,7 +7,7 @@ import { romeDay } from "@/lib/time/rome";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Money } from "@/components/money";
+import { Money } from "@/components/common/money";
 import { MemberForm } from "@/components/admin/member-form";
 import { MemberActions } from "@/components/admin/member-actions";
 import { prisma } from "@/server/db";

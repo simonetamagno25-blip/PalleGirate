@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CancelButton } from "@/components/booking/cancel-button";
-import { Money } from "@/components/money";
+import { Money } from "@/components/common/money";
 import { prisma } from "@/server/db";
 import { requireUser } from "@/server/guards";
 import { getSettings } from "@/server/settings";

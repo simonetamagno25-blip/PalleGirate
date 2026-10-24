@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ViolationList } from "@/components/violation-list";
+import { ViolationList } from "@/components/common/violation-list";
 import { minutesToHHMM } from "@/lib/time/rome";
 import { saveSettingsAction } from "@/app/(app)/admin/settings/actions";
 

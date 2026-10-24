@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ViolationList } from "@/components/violation-list";
+import { ViolationList } from "@/components/common/violation-list";
 import { saveMemberAction } from "@/app/(app)/admin/members/actions";
 
 export type MemberFormValues = {

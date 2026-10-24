@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { CancelButton } from "@/components/booking/cancel-button";
-import { Money } from "@/components/money";
+import { Money } from "@/components/common/money";
 import { listBookings, parseBookingFilters } from "@/server/admin-bookings";
 import { prisma } from "@/server/db";
 import { requireAdmin } from "@/server/guards";

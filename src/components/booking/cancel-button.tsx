@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ViolationList } from "@/components/violation-list";
+import { ViolationList } from "@/components/common/violation-list";
 import type { Violation } from "@/lib/booking-rules";
 import { cancelBookingAction } from "@/app/(app)/book/actions";
 

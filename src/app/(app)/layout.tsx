@@ -2,11 +2,11 @@ import { getTranslations } from "next-intl/server";
 import { requireUser } from "@/server/guards";
 import { prisma } from "@/server/db";
 import { ensureTimedNotifications, listNotifications, unreadCount } from "@/server/notifications";
-import { AppNav } from "@/components/app-nav";
+import { AppNav } from "@/components/layout/app-nav";
 import { NotificationBell } from "@/components/notifications/bell";
-import { LocaleSwitcher } from "@/components/locale-switcher";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { MobileMenu } from "@/components/mobile-menu";
+import { LocaleSwitcher } from "@/components/layout/locale-switcher";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { MobileMenu } from "@/components/layout/mobile-menu";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const user = await requireUser();

@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ViolationList } from "@/components/violation-list";
+import { ViolationList } from "@/components/common/violation-list";
 import { loginAction } from "./actions";
 
 export function LoginForm() {

@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ViolationList } from "@/components/violation-list";
+import { ViolationList } from "@/components/common/violation-list";
 import type { Violation } from "@/lib/booking-rules";
 import { renewAction, resetAccessAction, setAdminAction } from "@/app/(app)/admin/members/actions";
 

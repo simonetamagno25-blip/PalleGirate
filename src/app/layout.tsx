@@ -3,8 +3,8 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Geist } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
-import { ServiceWorkerRegister } from "@/components/sw-register";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ServiceWorkerRegister } from "@/components/layout/sw-register";
+import { ThemeProvider } from "@/components/layout/theme-provider";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Money } from "@/components/money";
+import { Money } from "@/components/common/money";
 import { PaymentButtons } from "@/components/admin/payment-buttons";
 import { prisma } from "@/server/db";
 import { requireAdmin } from "@/server/guards";

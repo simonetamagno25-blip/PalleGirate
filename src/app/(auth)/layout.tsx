@@ -1,4 +1,4 @@
-import { LocaleSwitcher } from "@/components/locale-switcher";
+import { LocaleSwitcher } from "@/components/layout/locale-switcher";
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
