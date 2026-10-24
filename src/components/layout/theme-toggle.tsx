@@ -9,9 +9,15 @@ export function ThemeToggle() {
   const t = useTranslations("common");
   const { resolvedTheme, setTheme } = useTheme();
   return (
-    <Button variant="ghost" size="icon" className="size-9" aria-label={t("theme")} onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}>
-      <Sun className="size-5 dark:hidden" />
-      <Moon className="hidden size-5 dark:block" />
+    <Button
+      variant="ghost"
+      size="icon"
+      className="text-flap-ink hover:bg-flap hover:text-flap-ink"
+      aria-label={t("theme")}
+      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+    >
+      <Sun className="size-5 dark:hidden" aria-hidden />
+      <Moon className="hidden size-5 dark:block" aria-hidden />
     </Button>
   );
 }
