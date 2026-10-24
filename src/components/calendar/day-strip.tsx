@@ -26,7 +26,8 @@ export function DayStrip({
   const format = useFormatter();
   const scroller = useRef<HTMLUListElement>(null);
 
-  // Keep the selected day in view without scrolling the page vertically.
+  // Keep the selected day in view without scrolling the page vertically. The strip bleeds to the screen edge on
+  // phone but keeps the page gutter as padding and scroll-padding, so snapping never parks a day against the edge.
   useEffect(() => {
     const list = scroller.current;
     const el = list?.querySelector<HTMLElement>("[data-selected=true]");
@@ -35,7 +36,7 @@ export function DayStrip({
   }, [selected]);
 
   return (
-    <ul ref={scroller} aria-label={t("days")} className="relative -mx-4 flex snap-x gap-2 overflow-x-auto px-4 pt-0.5 pb-2 [scrollbar-width:thin] md:mx-0 md:px-0.5">
+    <ul ref={scroller} aria-label={t("days")} className="relative -mx-4 flex snap-x scroll-px-4 gap-2 overflow-x-auto px-4 pt-0.5 pb-2 [scrollbar-width:thin] md:mx-0 md:scroll-px-0.5 md:px-0.5">
       {days.map((d) => {
         const date = new Date(`${d}T12:00:00Z`);
         const isSelected = d === selected;

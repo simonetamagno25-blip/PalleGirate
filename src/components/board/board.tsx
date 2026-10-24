@@ -122,7 +122,7 @@ export function FlapButton({
       className={cn(
         cell,
         "w-full gap-0.5 transition-colors duration-150",
-        selected ? "bg-lamp-amber text-[#111111] after:hidden" : "hover:bg-[#262626] hover:text-lamp-amber",
+        selected ? "bg-lamp-amber text-[#111111]" : "hover:bg-[#262626] hover:text-lamp-amber",
         className,
       )}
     >
@@ -142,7 +142,7 @@ export function FlapMine({ time, mineLabel, href, label, className }: { time: st
       <span className="sr-only">{label}</span>
     </>
   );
-  const cls = cn(cell, "gap-1.5 bg-lamp-amber text-[#111111] after:hidden", className);
+  const cls = cn(cell, "gap-1.5 bg-lamp-amber text-[#111111]", className);
   return href ? (
     <Link href={href} className={cn(cls, "hover:bg-[color-mix(in_oklch,var(--lamp-amber),#000_10%)]")}>{content}</Link>
   ) : (
@@ -154,7 +154,7 @@ export function FlapMine({ time, mineLabel, href, label, className }: { time: st
 export function FlapTaken({ label, detail, className }: { label: string; detail?: string; className?: string }) {
   const spoken = detail ? label + ": " + detail : label;
   return (
-    <span title={detail} className={cn(cell, "min-w-12 bg-flap/60 font-sans text-base font-normal text-flap-ink-muted after:hidden", className)}>
+    <span title={detail} className={cn(cell, "min-w-12 bg-flap/60 font-sans text-base font-normal text-flap-ink-muted", className)}>
       <span aria-hidden>{detail ? <span className="block max-w-14 truncate text-sm">{detail}</span> : DASH}</span>
       <span className="sr-only">{spoken}</span>
     </span>

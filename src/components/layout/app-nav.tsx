@@ -101,7 +101,8 @@ export function BottomNav() {
                 )}
               >
                 <Icon className="size-6 shrink-0" strokeWidth={active ? 2.25 : 1.75} aria-hidden />
-                <span className="max-w-full">{t(item.key)}</span>
+                {/* The tab label must fit one line at 13px: "Le mie prenotazioni" gets its short form here only. */}
+                <span className="max-w-full">{t(item.key === "bookings" ? "bookingsShort" : item.key)}</span>
               </Link>
             </li>
           );

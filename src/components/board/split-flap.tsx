@@ -102,7 +102,7 @@ export function SplitFlap({
 }
 
 function Tile({ ch, old, size, tone, animate, reduce, delay }: { ch: string; old: string; size: Size; tone: Tone; animate: boolean; reduce: boolean; delay: number }) {
-  const face = cn("flap-face relative inline-grid place-items-center", TILE[size], TONE[tone]);
+  const face = cn("flap-face relative inline-grid place-items-center", size !== "sm" && "flap-hinge", TILE[size], TONE[tone]);
   if (!animate) return <span className={face}>{ch}</span>;
   if (reduce) {
     return (

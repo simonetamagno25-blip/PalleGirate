@@ -236,7 +236,7 @@
     color: var(--flap-ink);
   }
 
-  /* A single flap face: dark tile with a 1px hinge seam across the middle. */
+  /* A single flap face: a dark tile. */
   .flap-face {
     position: relative;
     isolation: isolate;
@@ -244,7 +244,11 @@
     border-radius: var(--radius-sm);
     color: var(--flap-ink);
   }
-  .flap-face::after {
+  /*
+   * The hinge seam across the middle, only on the big digit tiles (md/lg). On small cells and legend samples the
+   * seam passes through the glyphs and reads as a strikethrough ("cancelled"), so they never carry it.
+   */
+  .flap-hinge::after {
     content: "";
     position: absolute;
     inset-inline: 0;

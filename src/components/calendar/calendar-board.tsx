@@ -37,7 +37,7 @@ export async function CalendarBoard({ board, title, note, bookable }: { board: D
       const label = tb("mineAt", { field: row.name, from: minutesToHHMM(c.startMin), to: minutesToHHMM(c.endMin) });
       if (!compact) return <FlapMine href="/bookings" time={minutesToHHMM(c.startMin)} mineLabel={tb("mine")} label={label} />;
       return (
-        <span className="flap-face flex h-11 w-full flex-col items-center justify-center bg-lamp-amber leading-none text-[#111111] after:hidden">
+        <span className="flap-face flex h-11 w-full flex-col items-center justify-center bg-lamp-amber leading-none text-[#111111]">
           <span aria-hidden className="font-display text-base font-bold">{minutesToHHMM(c.startMin)}</span>
           <span aria-hidden className="flex items-center gap-0.5 text-xs font-semibold"><Check className="size-3" strokeWidth={3} />{tb("mine")}</span>
           <span className="sr-only">{label}</span>
@@ -101,10 +101,10 @@ function Legend({ free, mine, taken, title }: { free: string; mine: string; take
       <h3 className="sr-only">{title}</h3>
       <span className="inline-flex items-center gap-2"><span aria-hidden className={sample}>{SAMPLE_TIME}</span>{free}</span>
       <span className="inline-flex items-center gap-2">
-        <span aria-hidden className={cn(sample, "gap-1 bg-lamp-amber text-[#111111] after:hidden")}><Check className="size-3.5" strokeWidth={3} />{SAMPLE_TIME}</span>
+        <span aria-hidden className={cn(sample, "gap-1 bg-lamp-amber text-[#111111]")}><Check className="size-3.5" strokeWidth={3} />{SAMPLE_TIME}</span>
         {mine}
       </span>
-      <span className="inline-flex items-center gap-2"><span aria-hidden className={cn(sample, "min-w-9 bg-flap/60 font-sans font-normal text-flap-ink-muted after:hidden")}>{DASH}</span>{taken}</span>
+      <span className="inline-flex items-center gap-2"><span aria-hidden className={cn(sample, "min-w-9 bg-flap/60 font-sans font-normal text-flap-ink-muted")}>{DASH}</span>{taken}</span>
     </div>
   );
 }

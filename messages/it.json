@@ -16,7 +16,8 @@
     "adminBookings": "Prenotazioni",
     "adminPayments": "Pagamenti",
     "adminSettings": "Impostazioni",
-    "adminDashboard": "Statistiche"
+    "adminDashboard": "Statistiche",
+    "bookingsShort": "Le mie"
   },
   "common": {
     "save": "Salva",
