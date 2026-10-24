@@ -39,3 +39,31 @@ npm test
 ## Stack
 
 Next.js 15, Prisma + SQLite, Auth.js (credenziali, JWT), next-intl, Tailwind + shadcn/ui, Recharts, Vitest.
+
+## Funzioni
+
+- Socio: calendario disponibilità, prenotazione guidata (1–2 slot), modifica e cancellazione fino a 2 ore prima, dashboard, notifiche, profilo.
+- Admin: soci e tessere (rinnovo, reimposta accesso, promozione admin), prenotazioni senza vincoli, pagamenti e strike, impostazioni e campi, statistiche.
+- Lingue: italiano e inglese. Tema chiaro/scuro. Installabile come app (PWA).
+
+## Regole principali
+
+Vedi `docs/superpowers/specs/2026-10-13-palle-girate-design.md` §7–§8. Tutti i parametri si modificano da **Amministrazione → Impostazioni**.
+
+## Passare a PostgreSQL
+
+1. In `prisma/schema.prisma` imposta `provider = "postgresql"`.
+2. Imposta `DATABASE_URL="postgresql://utente:password@host:5432/pallegirate"` (senza `connection_limit=1`).
+3. `npx prisma migrate dev --name init` (in locale) oppure `npx prisma db push`, poi `npm run db:seed`.
+4. Nella ricerca soci (`src/app/(app)/admin/members/page.tsx`) aggiungi `mode: "insensitive"` ai filtri `contains`.
+
+Il resto dell'app non cambia: la tabella `FieldOccupancy` garantisce la non-sovrapposizione anche su PostgreSQL.
+
+## Produzione
+
+- Imposta `AUTH_SECRET` con un valore casuale lungo e cambia la password dell'admin dopo il primo accesso.
+- Le notifiche temporali (promemoria, tessere in scadenza) si generano quando l'utente apre l'app, quindi non serve un cron.
+- Le sessioni sono JWT: nessuno stato lato server oltre al database.
+- Prima di esporre l'app su Internet aggiungi un limite ai tentativi di login e di attivazione (oggi non c'è rate limiting).
+- Su PostgreSQL verifica che un doppio click sullo stesso slot restituisca "Questo orario è già occupato." (mappatura dell'errore P2002 in `src/server/bookings.ts`) e che due registrazioni "Non pagata" simultanee per lo stesso socio contino correttamente gli strike (su SQLite le scritture sono serializzate).
+- Controlla che `AUTH_SECRET` non sia il valore d'esempio `cambia-questa-stringa` di `.env.example`.
