@@ -125,7 +125,7 @@ export function BookingForm({ fields, settings, minDay, maxDay, initial, members
             <label
               key={f.id}
               className={cn(
-                'flex cursor-pointer flex-col rounded-lg border p-3 text-sm',
+                'flex cursor-pointer flex-col rounded-2xl border bg-card p-3 shadow-sm text-sm',
                 f.id === fieldId ? 'border-primary bg-primary/5 ring-1 ring-primary' : 'hover:bg-muted',
               )}
             >

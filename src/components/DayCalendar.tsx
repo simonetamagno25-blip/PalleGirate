@@ -35,6 +35,17 @@ export async function DayCalendar({
 
   return (
     <div className="flex flex-col gap-3">
+      <ul className="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs font-semibold text-muted-foreground" aria-hidden>
+        <li className="flex items-center gap-1.5">
+          <span className="size-3.5 rounded border bg-card" /> {t('free')}
+        </li>
+        <li className="flex items-center gap-1.5">
+          <span className="size-3.5 rounded border border-destructive/50 bg-destructive/20" /> {t('busy')}
+        </li>
+        <li className="flex items-center gap-1.5">
+          <span className="size-3.5 rounded border bg-muted" /> {t('past')}
+        </li>
+      </ul>
       <div className="flex flex-wrap items-center gap-2 md:hidden" role="group" aria-label={t('selectField')}>
         {fields.map((f) => (
           <Link
@@ -42,8 +53,8 @@ export async function DayCalendar({
             href={{ pathname: '/calendar', query: { day, field: f.id } }}
             aria-current={f.id === selectedFieldId}
             className={cn(
-              'rounded-md border px-3 py-1.5 text-sm',
-              f.id === selectedFieldId ? 'bg-primary text-primary-foreground' : 'hover:bg-muted',
+              'rounded-full border px-4 py-1.5 text-sm font-semibold transition-colors',
+              f.id === selectedFieldId ? 'border-primary bg-primary text-primary-foreground' : 'bg-card hover:bg-secondary',
             )}
           >
             {f.name}
@@ -51,9 +62,9 @@ export async function DayCalendar({
         ))}
       </div>
 
-      <div className="flex overflow-x-auto rounded-lg border">
-        <div className="w-12 shrink-0 border-r bg-muted/30 text-xs text-muted-foreground">
-          <div className="h-9 border-b" />
+      <div className="flex overflow-x-auto rounded-2xl border bg-card shadow-sm">
+        <div className="w-12 shrink-0 border-r bg-muted/40 text-xs text-muted-foreground">
+          <div className="h-10 border-b bg-primary" />
           <div className="relative" style={{ height }}>
             {Array.from({ length: rows }, (_, i) => settings.openMinutes + i * settings.stepMinutes)
               .filter((m) => m % 60 === 0)
@@ -76,7 +87,9 @@ export async function DayCalendar({
               key={f.id}
               className={cn('min-w-0 flex-1 border-r last:border-r-0 md:min-w-36', f.id !== selectedFieldId && 'hidden md:block')}
             >
-              <div className="flex h-9 items-center justify-center border-b px-2 text-sm font-medium">{f.name}</div>
+              <div className="flex h-10 items-center justify-center border-b bg-primary px-2 font-heading text-base font-bold tracking-wide text-primary-foreground uppercase">
+                {f.name}
+              </div>
               <div className="relative" style={{ height }}>
                 {Array.from({ length: rows }, (_, i) => {
                   const minutes = settings.openMinutes + i * settings.stepMinutes
@@ -90,7 +103,7 @@ export async function DayCalendar({
                       href={{ pathname: '/booking/new', query: { fieldId: f.id, day, time: hhmm(minutes) } }}
                       aria-label={t('bookSlot', { field: f.name, time: hhmm(minutes) })}
                       title={`${t('free')} · ${hhmm(minutes)}`}
-                      className={cn('block hover:bg-primary/15', line)}
+                      className={cn('block transition-colors hover:bg-accent/70', line)}
                       style={{ height: ROW_PX }}
                     />
                   )
@@ -101,7 +114,7 @@ export async function DayCalendar({
                   return (
                     <div
                       key={`${b.start}-${b.end}`}
-                      className="absolute inset-x-0.5 overflow-hidden rounded border border-destructive/40 bg-destructive/15 px-1.5 py-0.5 text-xs text-destructive"
+                      className="absolute inset-x-0.5 overflow-hidden rounded-md border border-destructive/50 bg-destructive/20 px-1.5 py-0.5 text-xs font-semibold text-destructive"
                       style={{
                         top: ((start - settings.openMinutes) / settings.stepMinutes) * ROW_PX,
                         height: (duration / settings.stepMinutes) * ROW_PX - 1,

@@ -60,7 +60,7 @@ export default async function AdminDashboardPage({ searchParams }: PageProps<'/[
       </section>
 
       <section className="grid gap-4 lg:grid-cols-2">
-        <div className="min-w-0 rounded-xl border bg-card p-4">
+        <div className="min-w-0 rounded-2xl border bg-card p-4 shadow-sm">
           <h2 className="mb-3 font-medium">{t('occupancyByField')}</h2>
           {d.occupancy.length === 0 ? (
             <p className="text-sm text-muted-foreground">{t('noData')}</p>
@@ -72,7 +72,7 @@ export default async function AdminDashboardPage({ searchParams }: PageProps<'/[
             />
           )}
         </div>
-        <div className="min-w-0 rounded-xl border bg-card p-4">
+        <div className="min-w-0 rounded-2xl border bg-card p-4 shadow-sm">
           <h2 className="mb-3 font-medium">{t('revenue')}</h2>
           <BarSeriesChart
             data={[
@@ -88,7 +88,7 @@ export default async function AdminDashboardPage({ searchParams }: PageProps<'/[
       </section>
 
       <section className="grid gap-4 lg:grid-cols-2">
-        <div className="min-w-0 rounded-xl border bg-card p-4">
+        <div className="min-w-0 rounded-2xl border bg-card p-4 shadow-sm">
           <h2 className="mb-1 font-medium">{t('popular')}</h2>
           <p className="mb-3 text-xs text-muted-foreground">{t('popularHint')}</p>
           <Heatmap
@@ -98,7 +98,7 @@ export default async function AdminDashboardPage({ searchParams }: PageProps<'/[
             cellLabel={(row, hour, count) => t('cell', { day: row, hour, count })}
           />
         </div>
-        <div className="min-w-0 rounded-xl border bg-card p-4">
+        <div className="min-w-0 rounded-2xl border bg-card p-4 shadow-sm">
           <h2 className="mb-3 font-medium">{t('trend')}</h2>
           <LineSeriesChart
             data={d.trend.map((m) => ({

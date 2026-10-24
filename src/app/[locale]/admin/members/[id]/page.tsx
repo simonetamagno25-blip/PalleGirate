@@ -51,7 +51,7 @@ export default async function MemberDetailPage({ params }: PageProps<'/[locale]/
             ['debt', money(ledger.debtCents)],
           ] as const
         ).map(([k, v]) => (
-          <div key={k} className="rounded-lg border p-4">
+          <div key={k} className="rounded-2xl border bg-card p-4 shadow-sm">
             <dt className="text-sm text-muted-foreground">{t(k)}</dt>
             <dd className="text-2xl font-semibold">{v}</dd>
           </div>
@@ -63,7 +63,7 @@ export default async function MemberDetailPage({ params }: PageProps<'/[locale]/
         {ledger.history.length === 0 && <p className="text-muted-foreground">{t('emptyHistory')}</p>}
         <ul className="flex flex-col gap-2">
           {ledger.history.map((b) => (
-            <li key={b.id} className="flex flex-wrap items-start justify-between gap-3 rounded-lg border p-3 text-sm">
+            <li key={b.id} className="flex flex-wrap items-start justify-between gap-3 rounded-2xl border bg-card p-3 shadow-sm text-sm">
               <div>
                 <p className="font-medium">{field.get(b.fieldId)}</p>
                 <p>

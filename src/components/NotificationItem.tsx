@@ -33,8 +33,8 @@ export async function NotificationItem({ notification }: { notification: Notific
 
   return (
     <li
-      className={`flex flex-wrap items-start justify-between gap-3 rounded-lg border p-4 ${
-        notification.read ? 'text-muted-foreground' : 'border-primary/40 bg-muted/40'
+      className={`flex flex-wrap items-start justify-between gap-3 rounded-2xl border bg-card p-4 shadow-sm ${
+        notification.read ? 'text-muted-foreground' : 'border-accent bg-secondary ring-1 ring-accent'
       }`}
     >
       <div className="flex flex-col gap-1">

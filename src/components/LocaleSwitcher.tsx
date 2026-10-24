@@ -21,7 +21,7 @@ export function LocaleSwitcher() {
   }
 
   return (
-    <div role="group" aria-label={t('language')} className="inline-flex rounded-md border text-sm">
+    <div role="group" aria-label={t('language')} className="inline-flex rounded-full border border-white/30 p-0.5 text-sm text-primary-foreground">
       {routing.locales.map((locale) => (
         <button
           key={locale}
@@ -30,8 +30,8 @@ export function LocaleSwitcher() {
           aria-pressed={locale === current}
           onClick={() => change(locale)}
           className={cn(
-            'px-2.5 py-1 uppercase first:rounded-l-md last:rounded-r-md',
-            locale === current ? 'bg-primary text-primary-foreground' : 'hover:bg-muted',
+            'rounded-full px-2.5 py-1 text-xs font-bold uppercase transition-colors',
+            locale === current ? 'bg-accent text-accent-foreground' : 'hover:bg-white/10',
           )}
         >
           {locale}

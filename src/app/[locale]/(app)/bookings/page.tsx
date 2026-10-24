@@ -39,7 +39,7 @@ export default async function MyBookingsPage() {
             // La finestra delle 2 ore è calcolata qui, sul server: il browser non decide nulla.
             const canChange = canChangeOrCancel(b.start, now, settings)
             return (
-              <li key={b.id} className="flex flex-wrap items-start justify-between gap-3 rounded-lg border p-4">
+              <li key={b.id} className="flex flex-wrap items-start justify-between gap-3 rounded-2xl border bg-card p-4 shadow-sm">
                 <div>
                   <p className="font-medium">{b.field.name}</p>
                   <p className="text-sm capitalize">{when(b)}</p>
@@ -67,7 +67,7 @@ export default async function MyBookingsPage() {
         {history.length === 0 && <p className="text-muted-foreground">{t('emptyHistory')}</p>}
         <ul className="flex flex-col gap-2">
           {history.map((b) => (
-            <li key={b.id} className="flex flex-wrap items-start justify-between gap-3 rounded-lg border p-3 text-sm">
+            <li key={b.id} className="flex flex-wrap items-start justify-between gap-3 rounded-2xl border bg-card p-3 shadow-sm text-sm">
               <div>
                 <p className="font-medium">{b.field.name}</p>
                 <p className="capitalize">{when(b)}</p>

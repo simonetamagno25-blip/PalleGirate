@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Link } from '@/i18n/routing'
 import { requireMember } from '@/lib/auth'
 import { canChangeOrCancel } from '@/lib/booking-rules'
+import { prisma } from '@/lib/db'
 import { getSettings } from '@/lib/settings'
 import { getMemberDashboard } from '@/lib/stats-member'
 
@@ -14,8 +15,9 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 export default async function MemberDashboardPage() {
   const user = await requireMember()
   const now = new Date()
-  const [d, settings, t, tb, format] = await Promise.all([
+  const [d, person, settings, t, tb, format] = await Promise.all([
     getMemberDashboard(user.id, now),
+    prisma.user.findUnique({ where: { id: user.id }, select: { firstName: true } }),
     getSettings(),
     getTranslations('dashboard'),
     getTranslations('bookings'),
@@ -30,10 +32,20 @@ export default async function MemberDashboardPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-xl font-semibold">{t('title')}</h1>
-        <Button render={<Link href="/booking/new" />}>{tb('newBooking')}</Button>
-      </div>
+      <section className="relative overflow-hidden rounded-3xl bg-primary p-6 text-primary-foreground shadow-md sm:p-8">
+        <div aria-hidden className="pointer-events-none absolute -top-16 -right-10 size-64 rounded-full bg-accent/30 blur-2xl" />
+        <div aria-hidden className="pointer-events-none absolute -right-8 -bottom-20 size-56 rounded-full bg-chart-2/40 blur-2xl" />
+        <div className="relative flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="text-sm font-bold tracking-widest text-accent uppercase">{t('title')}</p>
+            <h1 className="mt-1 text-4xl sm:text-5xl">{t('greeting', { name: person?.firstName ?? '' })}</h1>
+            <p className="mt-1 text-primary-foreground/80">{t('tagline')}</p>
+          </div>
+          <Button variant="accent" className="h-11 px-5 text-base" render={<Link href="/booking/new" />}>
+            {tb('newBooking')}
+          </Button>
+        </div>
+      </section>
 
       {d.blocked && (
         <div role="alert" className="rounded-xl border border-destructive/50 bg-destructive/10 p-4 text-sm">
@@ -57,7 +69,7 @@ export default async function MemberDashboardPage() {
             // La finestra di modifica è calcolata qui, sul server: il browser non decide nulla.
             const canChange = canChangeOrCancel(b.start, now, settings)
             return (
-              <li key={b.id} className="flex flex-wrap items-start justify-between gap-3 rounded-lg border p-4">
+              <li key={b.id} className="flex flex-wrap items-start justify-between gap-3 rounded-2xl border bg-card p-4 shadow-sm">
                 <div>
                   <p className="font-medium">{b.field.name}</p>
                   <p className="text-sm capitalize">
@@ -81,7 +93,7 @@ export default async function MemberDashboardPage() {
       </section>
 
       <section className="grid gap-4 lg:grid-cols-2">
-        <div className="min-w-0 rounded-xl border bg-card p-4">
+        <div className="min-w-0 rounded-2xl border bg-card p-4 shadow-sm">
           <h2 className="mb-3 font-medium">{t('hoursBySport')}</h2>
           {d.hoursBySport.length === 0 ? (
             <p className="text-sm text-muted-foreground">{t('noData')}</p>
@@ -94,7 +106,7 @@ export default async function MemberDashboardPage() {
             />
           )}
         </div>
-        <div className="min-w-0 rounded-xl border bg-card p-4">
+        <div className="min-w-0 rounded-2xl border bg-card p-4 shadow-sm">
           <h2 className="mb-3 font-medium">{t('bookingsByMonth')}</h2>
           {d.bookingsByMonth.every((m) => m.count === 0) ? (
             <p className="text-sm text-muted-foreground">{t('noData')}</p>
