@@ -38,7 +38,7 @@ export default async function MembersPage({ searchParams }: { searchParams: Prom
         {!m.passwordHash && <StatusLamp tone="amber">{t("toActivate")}</StatusLamp>}
         {expired && <StatusLamp tone="red">{t("expired")}</StatusLamp>}
         {m.passwordHash && !expired && <StatusLamp tone="green">{t("active")}</StatusLamp>}
-        {m.isAdmin && <StatusLamp tone="blue">{t("admin")}</StatusLamp>}
+        {m.isAdmin && <StatusLamp tone="neutral">{t("admin")}</StatusLamp>}
       </span>
     );
   };

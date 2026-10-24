@@ -11,7 +11,7 @@ export default async function Loading() {
         <span>{t("loading")}</span>
       </div>
       <div className="h-9 w-56 animate-pulse rounded-md bg-muted motion-reduce:animate-none" />
-      <div className="board-surface space-y-3 rounded-lg p-4 ring-1 ring-flap-seam md:p-5">
+      <div className="board-surface space-y-3 rounded-lg p-4 ring-1 ring-board-edge md:p-5">
         <div className="h-5 w-40 rounded-sm bg-flap" />
         <div className="flex gap-1">
           {[0, 1, 2, 3].map((i) => <div key={i} className="flap-face flap-hinge h-14 w-9" />)}

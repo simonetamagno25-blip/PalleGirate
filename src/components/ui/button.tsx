@@ -8,7 +8,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary font-semibold text-primary-foreground hover:bg-[color-mix(in_oklch,var(--primary),#000_10%)]",
+        // Amber only ever means live: disabled is a neutral fill with muted ink (seam grey on a board), never dim amber.
+        default: "bg-primary font-semibold text-primary-foreground hover:bg-[color-mix(in_oklch,var(--primary),#000_10%)] disabled:bg-muted disabled:text-muted-foreground disabled:opacity-100 in-[.board-surface]:disabled:bg-flap-seam in-[.board-surface]:disabled:text-flap-ink-muted",
         outline:
           "border-input bg-card text-foreground hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
         secondary:

@@ -5,15 +5,16 @@ import { Board } from "@/components/board/board";
 import { cn } from "@/lib/utils";
 
 /*
- * Busiest hours as a board: weekdays × opening hours on board black, each cell an amber step (4 levels of the
- * busiest cell) with the count written in it, so the reading never rests on color alone.
+ * Busiest hours as a board: weekdays × opening hours, each cell an off-white intensity step on the flap face
+ * (4 levels of the busiest cell; amber stays reserved for yours / primary / live) with the count written in it,
+ * so the reading never rests on color alone. Ink: light on steps 1–2 (9.8:1, 4.9:1), #111 on steps 3–4 (7.7:1, 13.7:1).
  */
 const STEPS = [
   "bg-flap text-flap-ink-muted",
-  "bg-[color-mix(in_srgb,var(--lamp-amber)_30%,var(--flap))] text-flap-ink",
-  "bg-[color-mix(in_srgb,var(--lamp-amber)_50%,var(--flap))] text-flap-ink",
-  "bg-[color-mix(in_srgb,var(--lamp-amber)_75%,var(--flap))] text-[#111111]",
-  "bg-lamp-amber text-[#111111]",
+  "bg-[color-mix(in_srgb,var(--flap-ink)_20%,var(--flap))] text-flap-ink",
+  "bg-[color-mix(in_srgb,var(--flap-ink)_40%,var(--flap))] text-flap-ink",
+  "bg-[color-mix(in_srgb,var(--flap-ink)_66%,var(--flap))] text-[#111111]",
+  "bg-[color-mix(in_srgb,var(--flap-ink)_90%,var(--flap))] text-[#111111]",
 ];
 
 const pad = (h: number) => String(h).padStart(2, "0");

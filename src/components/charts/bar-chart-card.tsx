@@ -4,7 +4,7 @@ import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxi
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { chartAxis, chartTooltip } from "./chart-style";
 
-export function BarChartCard({ title, data, xKey, yKey, empty, color = "var(--chart-1)", valueLabel }: { title: string; data: Record<string, string | number>[]; xKey: string; yKey: string; empty: string; color?: string; valueLabel?: string }) {
+export function BarChartCard({ title, data, xKey, yKey, empty, color = "var(--chart-3)", valueLabel }: { title: string; data: Record<string, string | number>[]; xKey: string; yKey: string; empty: string; color?: string; valueLabel?: string }) {
   const hasData = data.some((d) => Number(d[yKey]) > 0);
   return (
     <Card>

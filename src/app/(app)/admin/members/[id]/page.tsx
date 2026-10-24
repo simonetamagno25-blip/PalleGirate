@@ -83,7 +83,7 @@ export default async function MemberPage({ params }: { params: Promise<{ id: str
                 <DefRow label={t("login")}>
                   {user.passwordHash ? t("activated") : <StatusLamp tone="amber">{t("toActivate")}</StatusLamp>}
                 </DefRow>
-                {user.isAdmin && <DefRow label={t("role")}><StatusLamp tone="blue">{t("admin")}</StatusLamp></DefRow>}
+                {user.isAdmin && <DefRow label={t("role")}>{t("admin")}</DefRow>}
               </DefList>
             </CardContent>
           </Card>

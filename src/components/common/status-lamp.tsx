@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils";
 
-export type LampTone = "green" | "red" | "amber" | "blue" | "neutral";
+export type LampTone = "green" | "red" | "amber" | "neutral";
 
-/** Payment state → lamp: to register amber, paid green, unpaid red, exempt blue. Shared by member and admin views. */
-export const PAYMENT_TONE: Record<string, LampTone> = { PENDING: "amber", PAID: "green", UNPAID: "red", EXEMPT: "blue" };
+/** Payment state → lamp: to register amber (live), paid green, unpaid red, exempt neutral. Shared by member and admin views. */
+export const PAYMENT_TONE: Record<string, LampTone> = { PENDING: "amber", PAID: "green", UNPAID: "red", EXEMPT: "neutral" };
 /** Booking state → lamp: confirmed stays quiet, cancelled is red. */
 export const STATUS_TONE: Record<string, LampTone> = { CONFIRMED: "neutral", CANCELLED: "red" };
 
@@ -11,14 +11,12 @@ const PAGE: Record<LampTone, string> = {
   green: "bg-lamp-green",
   red: "bg-lamp-red",
   amber: "bg-amber-ink",
-  blue: "bg-lamp-blue",
   neutral: "bg-muted-foreground",
 };
 const BOARD: Record<LampTone, string> = {
   green: "bg-lamp-green-board",
   red: "bg-lamp-red-board",
   amber: "bg-lamp-amber",
-  blue: "bg-lamp-blue-board",
   neutral: "bg-flap-ink-muted",
 };
 

@@ -22,7 +22,7 @@ export function LineChartCard({ title, data, empty, valueLabel }: { title: strin
                 cursor={{ stroke: "var(--input)" }}
                 {...chartTooltip} />
               {/* Monthly counts: straight segments and a dot per month, no smoothing that invents values in between. */}
-              <Line type="linear" dataKey="count" stroke="var(--chart-1)" strokeWidth={2} dot={{ r: 3, fill: "var(--chart-1)", strokeWidth: 0 }} activeDot={{ r: 5, strokeWidth: 0 }} />
+              <Line type="linear" dataKey="count" stroke="var(--chart-3)" strokeWidth={2} dot={{ r: 3, fill: "var(--chart-3)", strokeWidth: 0 }} activeDot={{ r: 5, strokeWidth: 0 }} />
             </LineChart>
           </ResponsiveContainer>
         )}
