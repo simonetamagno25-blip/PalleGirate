@@ -47,6 +47,60 @@
         ],
         "createdAt": "2026-10-24T18:52:13.158Z",
         "reason": "Claude: throwaway decision-page sketch (first viewport preview), not shipped UI; padding is tuned in the real build"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-24T20:20:12.387Z",
+        "reason": "Claude: archived decision-round sketch of a non-chosen direction; its fonts are that direction's, not the shipped system"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-orienteering.html"
+        ],
+        "createdAt": "2026-10-24T20:20:12.465Z",
+        "reason": "Claude: archived decision-round sketch of a non-chosen direction; its fonts are that direction's, not the shipped system"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-10-24T20:20:12.570Z",
+        "reason": "Claude: archived decision-round sketch of a non-chosen direction; its fonts are that direction's, not the shipped system"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r1-assigned.html"
+        ],
+        "createdAt": "2026-10-24T20:20:12.694Z",
+        "reason": "Claude: archived decision-round sketch of a non-chosen direction; its fonts are that direction's, not the shipped system"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r1-pick.html"
+        ],
+        "createdAt": "2026-10-24T20:20:12.811Z",
+        "reason": "Claude: archived decision-round sketch of a non-chosen direction; its fonts are that direction's, not the shipped system"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r1-airport.html"
+        ],
+        "createdAt": "2026-10-24T20:20:12.931Z",
+        "reason": "Claude: archived decision-round sketch of a non-chosen direction; its fonts are that direction's, not the shipped system"
       }
     ]
   }
