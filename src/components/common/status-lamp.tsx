@@ -2,6 +2,11 @@ import { cn } from "@/lib/utils";
 
 export type LampTone = "green" | "red" | "amber" | "blue" | "neutral";
 
+/** Payment state → lamp: to register amber, paid green, unpaid red, exempt blue. Shared by member and admin views. */
+export const PAYMENT_TONE: Record<string, LampTone> = { PENDING: "amber", PAID: "green", UNPAID: "red", EXEMPT: "blue" };
+/** Booking state → lamp: confirmed stays quiet, cancelled is red. */
+export const STATUS_TONE: Record<string, LampTone> = { CONFIRMED: "neutral", CANCELLED: "red" };
+
 const PAGE: Record<LampTone, string> = {
   green: "bg-lamp-green",
   red: "bg-lamp-red",

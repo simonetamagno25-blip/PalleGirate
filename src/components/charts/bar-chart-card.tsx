@@ -1,14 +1,14 @@
 "use client";
 
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { chartAxis, chartTooltip } from "./chart-style";
 
 export function BarChartCard({ title, data, xKey, yKey, empty, color = "var(--chart-1)", valueLabel }: { title: string; data: Record<string, string | number>[]; xKey: string; yKey: string; empty: string; color?: string; valueLabel?: string }) {
   const hasData = data.some((d) => Number(d[yKey]) > 0);
   return (
     <Card>
-      <CardHeader><CardTitle>{title}</CardTitle></CardHeader>
+      <CardHeader><h2 className="text-lg leading-snug font-semibold">{title}</h2></CardHeader>
       <CardContent className="h-64">
         {!hasData ? (
           <p className="grid h-full place-items-center rounded-md border border-dashed text-base text-muted-foreground">{empty}</p>

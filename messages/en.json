@@ -107,7 +107,23 @@
     "debt": "Debt",
     "history": "Booking history",
     "renewals": "Renewal history",
-    "none": "No members found"
+    "none": "No members found",
+    "member": "Member",
+    "count": "{count, plural, =0 {No members} one {# member} other {# members}}",
+    "showAll": "Show all members",
+    "account": "Account",
+    "noCard": "No card",
+    "expiredOn": "Expired on {date}",
+    "login": "App access",
+    "activated": "Activated",
+    "role": "Role",
+    "access": "Card and access",
+    "details": "Member details",
+    "personal": "Personal details",
+    "cardSection": "Membership card",
+    "newExpiry": "New expiry date",
+    "newHint": "The member will activate the account with the card number and email.",
+    "searchShort": "Name, email or card"
   },
   "calendar": {
     "title": "Availability",
@@ -148,7 +164,8 @@
     "confirmed": "Confirmed",
     "timesLabel": "Free start times",
     "hourRow": "{hour}:00",
-    "when": "When"
+    "when": "When",
+    "noTimesHint": "Pick another day or another court above."
   },
   "bookings": {
     "title": "My bookings",
@@ -221,7 +238,11 @@
     "edit": "Change",
     "empty": "No bookings match these filters.",
     "adminReason": "Cancelled by the administration",
-    "system": "Cancelled because of an account block"
+    "system": "Cancelled because of an account block",
+    "reset": "Clear filters",
+    "filters": "Filters",
+    "actions": "Actions",
+    "count": "{count, plural, =0 {No bookings} one {# booking} other {# bookings}}"
   },
   "payments": {
     "title": "Payments to record",
@@ -234,7 +255,10 @@
     "saved": "Recorded",
     "unpaidTitle": "Unpaid",
     "noUnpaid": "Nothing unpaid.",
-    "unpaidConfirm": "Mark as unpaid? {wouldBlock, select, true {The member will be blocked and {count, plural, =0 {no upcoming bookings will be cancelled} one {1 upcoming booking will be cancelled} other {# upcoming bookings will be cancelled}}.} other {The member will receive a warning.}}"
+    "unpaidConfirm": "Mark as unpaid? {wouldBlock, select, true {The member will be blocked and {count, plural, =0 {no upcoming bookings will be cancelled} one {1 upcoming booking will be cancelled} other {# upcoming bookings will be cancelled}}.} other {The member will receive a warning.}}",
+    "intro": "Record cash payments after the games.",
+    "record": "Record payment",
+    "unpaidTotal": "{count, plural, one {# booking} other {# bookings}}, {total} in total"
   },
   "settings": {
     "title": "Settings",
@@ -265,7 +289,13 @@
       "TENNIS": "Tennis",
       "BASKETBALL": "Basketball",
       "BOCCE": "Bocce"
-    }
+    },
+    "groupHours": "Opening hours",
+    "groupLimits": "Limits per member",
+    "groupNotices": "Reminders",
+    "rulesHint": "They apply to the bookings members make.",
+    "fieldsHint": "An inactive court is hidden from members and cannot be booked.",
+    "inactive": "Inactive"
   },
   "dashboard": {
     "title": "Hi {name}",
@@ -324,7 +354,16 @@
     "heatCell": "{day} at {hour}:00: {count}",
     "weekdays": "Mon,Tue,Wed,Thu,Fri,Sat,Sun",
     "occupancyUnit": "Occupancy %",
-    "bookingsUnit": "Bookings"
+    "bookingsUnit": "Bookings",
+    "range": "Period",
+    "period": {
+      "day": "today",
+      "week": "this week",
+      "month": "this month"
+    },
+    "now": "right now",
+    "heatLess": "Fewer",
+    "heatMore": "More"
   },
   "board": {
     "free": "Free",

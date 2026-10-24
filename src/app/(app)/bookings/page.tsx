@@ -9,14 +9,13 @@ import { Board, boardButton } from "@/components/board/board";
 import { SplitFlap } from "@/components/board/split-flap";
 import { CancelButton } from "@/components/booking/cancel-button";
 import { Money } from "@/components/common/money";
-import { StatusLamp, type LampTone } from "@/components/common/status-lamp";
+import { PAYMENT_TONE, STATUS_TONE, StatusLamp } from "@/components/common/status-lamp";
 import { prisma } from "@/server/db";
 import { requireUser } from "@/server/guards";
 import { getSettings } from "@/server/settings";
 
 const LONG_DAY = { weekday: "long", day: "numeric", month: "long" } as const;
 const SHORT_DAY = { weekday: "short", day: "numeric", month: "short", year: "numeric" } as const;
-const PAYMENT_TONE: Record<string, LampTone> = { PENDING: "amber", PAID: "green", UNPAID: "red", EXEMPT: "blue" };
 
 export default async function MyBookingsPage() {
   const user = await requireUser();
@@ -92,7 +91,7 @@ export default async function MyBookingsPage() {
                   <p className="text-base text-muted-foreground">{range(b)}</p>
                 </div>
                 <div className="flex flex-col items-start gap-1 text-[0.9375rem] sm:items-end">
-                  <StatusLamp tone={b.status === "CANCELLED" ? "red" : "neutral"}>{t(`status.${b.status as "CONFIRMED" | "CANCELLED"}`)}</StatusLamp>
+                  <StatusLamp tone={STATUS_TONE[b.status] ?? "neutral"}>{t(`status.${b.status as "CONFIRMED" | "CANCELLED"}`)}</StatusLamp>
                   {b.chargeable && (
                     <StatusLamp tone={PAYMENT_TONE[b.paymentStatus] ?? "neutral"}>{t(`payment.${b.paymentStatus as "PENDING" | "PAID" | "UNPAID" | "EXEMPT"}`)}</StatusLamp>
                   )}

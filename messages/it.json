@@ -107,7 +107,23 @@
     "debt": "Debito",
     "history": "Storico prenotazioni",
     "renewals": "Storico rinnovi",
-    "none": "Nessun socio trovato"
+    "none": "Nessun socio trovato",
+    "member": "Socio",
+    "count": "{count, plural, =0 {Nessun socio} one {# socio} other {# soci}}",
+    "showAll": "Mostra tutti i soci",
+    "account": "Situazione",
+    "noCard": "Nessuna tessera",
+    "expiredOn": "Scaduta il {date}",
+    "login": "Accesso all'app",
+    "activated": "Attivato",
+    "role": "Ruolo",
+    "access": "Tessera e accesso",
+    "details": "Dati del socio",
+    "personal": "Dati personali",
+    "cardSection": "Tessera",
+    "newExpiry": "Nuova scadenza",
+    "newHint": "Il socio attiverà l'account da solo con il numero di tessera e l'email.",
+    "searchShort": "Nome, email o tessera"
   },
   "calendar": {
     "title": "Disponibilità",
@@ -148,7 +164,8 @@
     "confirmed": "Confermata",
     "timesLabel": "Orari di inizio liberi",
     "hourRow": "Ore {hour}",
-    "when": "Quando"
+    "when": "Quando",
+    "noTimesHint": "Scegli un altro giorno o un altro campo qui sopra."
   },
   "bookings": {
     "title": "Le mie prenotazioni",
@@ -221,7 +238,11 @@
     "edit": "Modifica",
     "empty": "Nessuna prenotazione con questi filtri.",
     "adminReason": "Cancellata dall'amministrazione",
-    "system": "Cancellata per blocco"
+    "system": "Cancellata per blocco",
+    "reset": "Azzera filtri",
+    "filters": "Filtri",
+    "actions": "Azioni",
+    "count": "{count, plural, =0 {Nessuna prenotazione} one {# prenotazione} other {# prenotazioni}}"
   },
   "payments": {
     "title": "Pagamenti da registrare",
@@ -234,7 +255,10 @@
     "saved": "Registrato",
     "unpaidTitle": "Insoluti",
     "noUnpaid": "Nessun insoluto.",
-    "unpaidConfirm": "Segnare come non pagata? {wouldBlock, select, true {Il socio verrà bloccato e {count, plural, =0 {nessuna prenotazione futura verrà cancellata} one {verrà cancellata 1 prenotazione futura} other {verranno cancellate # prenotazioni future}}.} other {Il socio riceverà un avviso.}}"
+    "unpaidConfirm": "Segnare come non pagata? {wouldBlock, select, true {Il socio verrà bloccato e {count, plural, =0 {nessuna prenotazione futura verrà cancellata} one {verrà cancellata 1 prenotazione futura} other {verranno cancellate # prenotazioni future}}.} other {Il socio riceverà un avviso.}}",
+    "intro": "Registra i pagamenti in contanti dopo le partite.",
+    "record": "Registra pagamento",
+    "unpaidTotal": "{count, plural, one {# prenotazione} other {# prenotazioni}} per {total}"
   },
   "settings": {
     "title": "Impostazioni",
@@ -265,7 +289,13 @@
       "TENNIS": "Tennis",
       "BASKETBALL": "Basket",
       "BOCCE": "Bocce"
-    }
+    },
+    "groupHours": "Orari",
+    "groupLimits": "Limiti per i soci",
+    "groupNotices": "Avvisi",
+    "rulesHint": "Valgono per le prenotazioni fatte dai soci.",
+    "fieldsHint": "Un campo non attivo non compare ai soci e non si può prenotare.",
+    "inactive": "Non attivo"
   },
   "dashboard": {
     "title": "Ciao {name}",
@@ -324,7 +354,16 @@
     "heatCell": "{day} ore {hour}: {count}",
     "weekdays": "Lun,Mar,Mer,Gio,Ven,Sab,Dom",
     "occupancyUnit": "Occupazione %",
-    "bookingsUnit": "Prenotazioni"
+    "bookingsUnit": "Prenotazioni",
+    "range": "Periodo",
+    "period": {
+      "day": "oggi",
+      "week": "questa settimana",
+      "month": "questo mese"
+    },
+    "now": "in questo momento",
+    "heatLess": "Meno",
+    "heatMore": "Più"
   },
   "board": {
     "free": "Libero",

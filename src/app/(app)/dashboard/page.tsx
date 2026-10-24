@@ -13,6 +13,7 @@ import { DeparturesBoard } from "@/components/board/departures-board";
 import { SplitFlap } from "@/components/board/split-flap";
 import { BarChartCard } from "@/components/charts/bar-chart-card";
 import { CancelButton } from "@/components/booking/cancel-button";
+import { DefList, DefRow } from "@/components/common/def-list";
 import { Money } from "@/components/common/money";
 import { StatusLamp } from "@/components/common/status-lamp";
 import { getDayBoard } from "@/server/availability";
@@ -129,9 +130,9 @@ export default async function DashboardPage() {
         <Card>
           <CardHeader><CardTitle>{t("account")}</CardTitle></CardHeader>
           <CardContent>
-            <dl className="divide-y">
-              <SummaryRow label={t("active")}>{activeCount}</SummaryRow>
-              <SummaryRow label={t("card")}>
+            <DefList>
+              <DefRow label={t("active")}>{activeCount}</DefRow>
+              <DefRow label={t("card")}>
                 {days === null ? (
                   <StatusLamp tone="red">{t("noCard")}</StatusLamp>
                 ) : days < 0 ? (
@@ -141,15 +142,15 @@ export default async function DashboardPage() {
                 ) : (
                   t("cardDays", { days })
                 )}
-              </SummaryRow>
-              <SummaryRow label={t("toPay")}>
+              </DefRow>
+              <DefRow label={t("toPay")}>
                 {account.debtCents > 0 ? <StatusLamp tone="red"><Money cents={account.debtCents} /></StatusLamp> : <Money cents={account.debtCents} />}
-              </SummaryRow>
-              <SummaryRow label={t("strikesLabel")}>{t("strikes", { count: account.strikes })}</SummaryRow>
-              <SummaryRow label={t("status")}>
+              </DefRow>
+              <DefRow label={t("strikesLabel")}>{t("strikes", { count: account.strikes })}</DefRow>
+              <DefRow label={t("status")}>
                 {account.blocked ? <StatusLamp tone="red">{t("blocked")}</StatusLamp> : <StatusLamp tone="green">{t("statusActive")}</StatusLamp>}
-              </SummaryRow>
-            </dl>
+              </DefRow>
+            </DefList>
           </CardContent>
         </Card>
         <BarChartCard
@@ -170,15 +171,6 @@ export default async function DashboardPage() {
           color="var(--chart-2)"
         />
       </div>
-    </div>
-  );
-}
-
-function SummaryRow({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div className="flex items-baseline justify-between gap-4 py-2.5 first:pt-0 last:pb-0">
-      <dt className="text-[0.9375rem] text-muted-foreground">{label}</dt>
-      <dd className="text-right text-base font-semibold">{children}</dd>
     </div>
   );
 }
