@@ -385,6 +385,8 @@
     "hoursSeries": "Hours",
     "bookingsByMonth": "Bookings per month",
     "bookingsSeries": "Bookings",
-    "noData": "No data yet."
+    "noData": "No data yet.",
+    "greeting": "Hi, {name}!",
+    "tagline": "Ready to hit the court?"
   }
 }
