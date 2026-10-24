@@ -9,6 +9,7 @@ import { Money } from "@/components/money";
 import { prisma } from "@/server/db";
 import { requireUser } from "@/server/guards";
 import { getSettings } from "@/server/settings";
+import { SHORT_DAY_TIME, TIME_ONLY } from "@/lib/time/formats";
 
 export default async function MyBookingsPage() {
   const user = await requireUser();
@@ -22,7 +23,7 @@ export default async function MyBookingsPage() {
   const upcoming = bookings.filter((b) => b.status === "CONFIRMED" && b.end > now).reverse();
   const history = bookings.filter((b) => !upcoming.includes(b));
   const when = (b: (typeof bookings)[number]) =>
-    `${format.dateTime(b.start, { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })} – ${format.dateTime(b.end, { hour: "2-digit", minute: "2-digit" })}`;
+    `${format.dateTime(b.start, SHORT_DAY_TIME)} – ${format.dateTime(b.end, TIME_ONLY)}`;
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-semibold">{t("title")}</h1>

@@ -27,7 +27,8 @@
     "yes": "Sì",
     "no": "No",
     "search": "Cerca",
-    "loading": "Caricamento…"
+    "loading": "Caricamento…",
+    "language": "Lingua"
   },
   "errors": {
     "generic": "Qualcosa è andato storto. Riprova.",

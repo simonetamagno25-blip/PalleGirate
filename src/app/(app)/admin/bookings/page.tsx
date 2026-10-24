@@ -9,6 +9,7 @@ import { Money } from "@/components/money";
 import { listBookings, parseBookingFilters } from "@/server/admin-bookings";
 import { prisma } from "@/server/db";
 import { requireAdmin } from "@/server/guards";
+import { DATE_TIME_SHORT } from "@/lib/time/formats";
 
 export default async function AdminBookingsPage({ searchParams }: { searchParams: Promise<Record<string, string | undefined>> }) {
   await requireAdmin();
@@ -59,7 +60,7 @@ export default async function AdminBookingsPage({ searchParams }: { searchParams
           {bookings.length === 0 && <TableRow><TableCell colSpan={6} className="text-muted-foreground">{t("empty")}</TableCell></TableRow>}
           {bookings.map((b) => (
             <TableRow key={b.id}>
-              <TableCell className="whitespace-nowrap">{format.dateTime(b.start, { dateStyle: "short", timeStyle: "short" })}</TableCell>
+              <TableCell className="whitespace-nowrap">{format.dateTime(b.start, DATE_TIME_SHORT)}</TableCell>
               <TableCell>{b.field.name}</TableCell>
               <TableCell><Link className="hover:underline" href={`/admin/members/${b.memberId}`}>{b.member.lastName} {b.member.firstName}</Link></TableCell>
               <TableCell className="hidden md:table-cell"><Money cents={b.priceCents} /></TableCell>

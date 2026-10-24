@@ -12,6 +12,7 @@ import { MemberForm } from "@/components/admin/member-form";
 import { MemberActions } from "@/components/admin/member-actions";
 import { prisma } from "@/server/db";
 import { memberAccount } from "@/server/payments";
+import { DATE_TIME_MEDIUM } from "@/lib/time/formats";
 
 export default async function MemberPage({ params }: { params: Promise<{ id: string }> }) {
   await requireAdmin();
@@ -69,7 +70,7 @@ export default async function MemberPage({ params }: { params: Promise<{ id: str
         <CardContent className="space-y-1 text-sm">
           {history.map((b) => (
             <div key={b.id} className="flex flex-wrap justify-between gap-2 border-b py-1 last:border-0">
-              <span>{b.field.name} · {format.dateTime(b.start, { dateStyle: "medium", timeStyle: "short" })}</span>
+              <span>{b.field.name} · {format.dateTime(b.start, DATE_TIME_MEDIUM)}</span>
               <span className="space-x-1">
                 <Badge variant="outline">{tb(`status.${b.status as "CONFIRMED" | "CANCELLED"}`)}</Badge>
                 {b.chargeable && <Badge variant={b.paymentStatus === "UNPAID" ? "destructive" : "secondary"}>{tb(`payment.${b.paymentStatus as "PENDING"}`)}</Badge>}

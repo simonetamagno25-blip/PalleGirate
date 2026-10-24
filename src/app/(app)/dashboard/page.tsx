@@ -15,6 +15,7 @@ import { prisma } from "@/server/db";
 import { requireUser } from "@/server/guards";
 import { memberAccount } from "@/server/payments";
 import { getSettings } from "@/server/settings";
+import { LONG_DAY_TIME } from "@/lib/time/formats";
 
 export default async function DashboardPage() {
   const user = await requireUser();
@@ -57,7 +58,7 @@ export default async function DashboardPage() {
             <div key={b.id} className="flex flex-wrap items-center justify-between gap-2 rounded-md border p-3">
               <div className="text-sm">
                 <p className="font-medium">{b.field.name}</p>
-                <p className="text-muted-foreground">{format.dateTime(b.start, { weekday: "long", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}</p>
+                <p className="text-muted-foreground">{format.dateTime(b.start, LONG_DAY_TIME)}</p>
               </div>
               {canMemberChange(b.start, now, settings) && (
                 <div className="flex gap-2">

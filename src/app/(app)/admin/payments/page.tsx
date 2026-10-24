@@ -7,6 +7,7 @@ import { PaymentButtons } from "@/components/admin/payment-buttons";
 import { prisma } from "@/server/db";
 import { requireAdmin } from "@/server/guards";
 import { pendingPayments } from "@/server/payments";
+import { DATE_TIME_MEDIUM } from "@/lib/time/formats";
 
 export default async function PaymentsPage() {
   await requireAdmin();
@@ -25,7 +26,7 @@ export default async function PaymentsPage() {
       <div className="text-sm">
         <Link href={`/admin/members/${b.memberId}`} className="font-medium hover:underline">{b.member.lastName} {b.member.firstName}</Link>
         <p className="text-muted-foreground">
-          {b.field.name} · {format.dateTime(b.start, { dateStyle: "medium", timeStyle: "short" })} · <Money cents={b.priceCents} />
+          {b.field.name} · {format.dateTime(b.start, DATE_TIME_MEDIUM)} · <Money cents={b.priceCents} />
         </p>
         {b.status === "CANCELLED" && <Badge variant="outline">{t("cancelledLate")}</Badge>}
       </div>

@@ -27,7 +27,8 @@
     "yes": "Yes",
     "no": "No",
     "search": "Search",
-    "loading": "Loading…"
+    "loading": "Loading…",
+    "language": "Language"
   },
   "errors": {
     "generic": "Something went wrong. Please try again.",
@@ -39,7 +40,7 @@
     "IN_PAST": "You cannot book in the past.",
     "TOO_FAR_AHEAD": "You can book at most {days} days ahead (until {lastDay}).",
     "MEMBERSHIP_MISSING": "You need a valid membership card to book.",
-    "MEMBERSHIP_EXPIRED": "Your card expires on {expiry}: you cannot book after that date.",
+    "MEMBERSHIP_EXPIRED": "Your membership card expires on {expiry}: you cannot book after that date.",
     "TOO_MANY_ACTIVE": "You already have {max} active bookings.",
     "BLOCKED": "Your account is blocked for unpaid bookings. Settle them to book again.",
     "SLOT_TAKEN": "This time slot is already taken.",
@@ -48,13 +49,13 @@
     "NOT_FOUND": "Item not found.",
     "FORBIDDEN": "You are not allowed to do this.",
     "INVALID_INPUT": "Please check the data you entered.",
-    "ACTIVATION_MISMATCH": "Card number and email do not match a registered member.",
+    "ACTIVATION_MISMATCH": "Membership card number and email do not match a registered member.",
     "ALREADY_ACTIVE": "This account is already active. Log in with your password.",
     "PASSWORD_TOO_SHORT": "The password must be at least {min} characters long.",
     "PASSWORD_TOO_LONG": "The password can be at most {max} characters long.",
     "INVALID_CREDENTIALS": "Wrong email or password.",
     "EMAIL_TAKEN": "A user with this email already exists.",
-    "CARD_TAKEN": "This card number is already assigned.",
+    "CARD_TAKEN": "This membership card number is already assigned.",
     "CANNOT_DEMOTE_SELF": "You cannot remove your own administrator rights.",
     "CANNOT_RESET_SELF": "You cannot reset your own access.",
     "NO_MEMBERSHIP": "This user has no membership card: they could not reactivate the account."
@@ -67,7 +68,7 @@
     "noAccount": "First time? Activate your account",
     "activateTitle": "Activate your account",
     "activateIntro": "Enter your membership card number and the email you gave the office, then choose a password.",
-    "cardNumber": "Card number",
+    "cardNumber": "Membership card number",
     "newPassword": "New password",
     "activate": "Activate",
     "forgot": "Forgot your password? Ask the administrator to reset your access.",
@@ -91,10 +92,10 @@
     "expired": "Card expired",
     "blocked": "Blocked",
     "admin": "Admin",
-    "renew": "Renew card",
+    "renew": "Renew membership card",
     "renewHint": "Proposed new expiry: {date}. You can change it.",
     "resetAccess": "Reset access",
-    "resetConfirm": "The member will have to activate the account again with card and email. Continue?",
+    "resetConfirm": "The member will have to activate the account again with their membership card number and email. Continue?",
     "makeAdmin": "Make administrator",
     "removeAdmin": "Remove administrator",
     "saved": "Saved",
@@ -185,13 +186,13 @@
     "ACCOUNT_BLOCKED": "Account blocked for unpaid bookings. {cancelled, plural, =0 {} one {1 upcoming booking was cancelled.} other {# upcoming bookings were cancelled.}} Settle them to book again.",
     "ACCOUNT_UNBLOCKED": "Payments recorded: your account is active again.",
     "BOOKING_REMINDER": "Reminder: {field}, {start}.",
-    "MEMBERSHIP_EXPIRING": "Your card expires on {expiry} ({days, plural, =0 {today} one {in 1 day} other {in # days}}).",
-    "MEMBERSHIP_EXPIRED": "Your card expired on {expiry}. Renew it at the office to book."
+    "MEMBERSHIP_EXPIRING": "Your membership card expires on {expiry} ({days, plural, =0 {today} one {in 1 day} other {in # days}}).",
+    "MEMBERSHIP_EXPIRED": "Your membership card expired on {expiry}. Renew it at the office to book."
   },
   "adminBookings": {
     "title": "Bookings", "new": "New booking", "filter": "Filter", "all": "All", "from": "From", "to": "To",
     "field": "Court", "member": "Member", "when": "When", "status": "Status", "payment": "Payment", "price": "Price",
-    "edit": "Change", "empty": "No bookings match these filters.", "adminReason": "Cancelled by the administration", "system": "Cancelled because of a block"
+    "edit": "Change", "empty": "No bookings match these filters.", "adminReason": "Cancelled by the administration", "system": "Cancelled because of an account block"
   },
   "payments": {
     "title": "Payments to record", "empty": "No payments to record.", "paid": "Paid", "unpaid": "Unpaid", "exempt": "Exempt",
@@ -201,7 +202,7 @@
     "title": "Settings", "rules": "Booking rules", "fields": "Courts", "addField": "Add court", "saved": "Saved",
     "openMinutes": "Opening", "closeMinutes": "Closing", "startStepMinutes": "Start time step (min)", "maxAdvanceDays": "Max days ahead",
     "maxActiveBookings": "Active bookings per member", "changeWindowMinutes": "Change/cancel window (min)", "maxSlotsPerBooking": "Max slots per booking",
-    "membershipWarningDays": "Card expiry warning (days)", "reminderHours": "Booking reminder (hours before)",
+    "membershipWarningDays": "Membership card expiry warning (days)", "reminderHours": "Booking reminder (hours before)",
     "name": "Name", "sport": "Sport", "slotMinutes": "Slot length (min)", "price": "Price per slot (€)", "sortOrder": "Order",
     "active": "Active", "deactivate": "Deactivate", "activate": "Reactivate",
     "deactivateConfirm": "{count, plural, =0 {Deactivate this court?} one {There is 1 upcoming booking: it will be cancelled and the member notified. Continue?} other {There are # upcoming bookings: they will be cancelled and the members notified. Continue?}}",
@@ -228,10 +229,10 @@
     "blocked": "Blocked members",
     "heatmap": "Busiest time slots (12 months)",
     "trend": "Bookings over time",
-    "expiring": "Cards expiring (30 days)",
-    "noExpiring": "No cards expiring.",
+    "expiring": "Membership cards expiring (30 days)",
+    "noExpiring": "No membership cards expiring.",
     "noData": "No data yet.",
-    "heatCell": "{day} at {hour}: {count}",
+    "heatCell": "{day} at {hour}:00: {count}",
     "weekdays": "Mon,Tue,Wed,Thu,Fri,Sat,Sun",
     "occupancyUnit": "Occupancy %",
     "bookingsUnit": "Bookings"
