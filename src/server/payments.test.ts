@@ -3,7 +3,7 @@ import { romeInstant } from "@/lib/time/rome";
 import { prisma } from "./db";
 import { DomainError } from "./errors";
 import { createBooking, cancelBooking } from "./bookings";
-import { memberAccount, pendingPayments, setPaymentStatus } from "./payments";
+import { memberAccount, pendingPayments, setNoShow, setPaymentStatus } from "./payments";
 import { makeAdmin, makeField, makeMember, makeSettings, resetDb } from "../../tests/helpers/db";
 
 const NOW = romeInstant("2026-11-10", 12 * 60);
@@ -16,6 +16,8 @@ async function pastBooking(memberId: string, day: string) {
   });
 }
 const types = async (userId: string) => (await prisma.notification.findMany({ where: { userId }, orderBy: { createdAt: "asc" } })).map((n) => n.type);
+/** Codici di violazione del rifiuto di dominio (o l'errore grezzo, se non è un DomainError). */
+const violationCodes = (p: Promise<unknown>) => p.then(() => null, (x) => (x instanceof DomainError ? x.violations.map((v) => v.code) : x));
 
 describe("payments and strikes", () => {
   beforeEach(async () => {
@@ -109,12 +111,54 @@ describe("payments and strikes", () => {
     expect(ids).toContain(late.id);
     expect(ids).not.toContain(free.id);
     expect((await pendingPayments(prisma, NOW)).map((b) => b.id)).not.toContain(late.id); // non ancora finita
+    const [row] = await pendingPayments(prisma, later); // il più vecchio è `ended`
+    expect(Object.keys(row.member).sort()).toEqual(["email", "firstName", "id", "lastName"]);
   });
 
-  it("refuses to record bookings that are not finished or not chargeable", async () => {
+  it("refuses to record bookings that are not finished, not chargeable, or missing", async () => {
     const m = await makeMember();
     const future = await createBooking(prisma, { userId: m.id, mode: "member" }, m.id, { fieldId, start: romeInstant("2026-11-12", 600), slots: 1 }, NOW);
-    const e = await setPaymentStatus(prisma, future.id, "PAID", NOW).then(() => null, (x) => x);
-    expect(e).toBeInstanceOf(DomainError);
+    const notChargeable = await pastBooking(m.id, "2026-11-01");
+    await prisma.booking.update({ where: { id: notChargeable.id }, data: { chargeable: false } });
+    expect(await violationCodes(setPaymentStatus(prisma, future.id, "PAID", NOW))).toEqual(["INVALID_INPUT"]);
+    expect(await violationCodes(setPaymentStatus(prisma, notChargeable.id, "PAID", NOW))).toEqual(["INVALID_INPUT"]);
+    expect(await violationCodes(setPaymentStatus(prisma, "missing-id", "PAID", NOW))).toEqual(["NOT_FOUND"]);
+  });
+
+  it("an already blocked member gets one ACCOUNT_BLOCKED, but later bookings are still cancelled", async () => {
+    const m = await makeMember();
+    const admin = await makeAdmin();
+    const [b1, b2, b3] = [await pastBooking(m.id, "2026-11-01"), await pastBooking(m.id, "2026-11-02"), await pastBooking(m.id, "2026-11-03")];
+    await setPaymentStatus(prisma, b1.id, "UNPAID", NOW);
+    await setPaymentStatus(prisma, b2.id, "UNPAID", NOW); // blocco: ACCOUNT_BLOCKED
+    // Prenotazione futura inserita dall'admin mentre il socio è già bloccato.
+    const later = await createBooking(prisma, { userId: admin.id, mode: "admin" }, m.id, { fieldId, start: romeInstant("2026-11-12", 600), slots: 1 }, NOW);
+    await setPaymentStatus(prisma, b3.id, "UNPAID", NOW);
+    expect((await types(m.id)).filter((t) => t === "ACCOUNT_BLOCKED")).toHaveLength(1);
+    expect((await prisma.booking.findUniqueOrThrow({ where: { id: later.id } })).status).toBe("CANCELLED");
+    expect(await memberAccount(prisma, m.id)).toMatchObject({ strikes: 3, blocked: true });
+  });
+
+  it("re-marking a strike-holding booking UNPAID after unblocking re-blocks without a second strike", async () => {
+    const m = await makeMember();
+    const b1 = await pastBooking(m.id, "2026-11-01");
+    const b2 = await pastBooking(m.id, "2026-11-02");
+    await setPaymentStatus(prisma, b1.id, "UNPAID", NOW);
+    await setPaymentStatus(prisma, b2.id, "UNPAID", NOW);
+    await setPaymentStatus(prisma, b1.id, "PAID", NOW);
+    await setPaymentStatus(prisma, b2.id, "PAID", NOW);
+    const future = await createBooking(prisma, { userId: m.id, mode: "member" }, m.id, { fieldId, start: romeInstant("2026-11-12", 600), slots: 1 }, NOW);
+    await setPaymentStatus(prisma, b1.id, "UNPAID", NOW);
+    expect(await memberAccount(prisma, m.id)).toMatchObject({ strikes: 2, unpaid: 1, blocked: true });
+    expect((await prisma.booking.findUniqueOrThrow({ where: { id: future.id } })).status).toBe("CANCELLED");
+    expect((await types(m.id)).filter((t) => t === "ACCOUNT_BLOCKED")).toHaveLength(2);
+  });
+
+  it("no-show on a missing booking is NOT_FOUND, otherwise it sets the flag", async () => {
+    const m = await makeMember();
+    const b = await pastBooking(m.id, "2026-11-01");
+    await setNoShow(prisma, b.id, true);
+    expect((await prisma.booking.findUniqueOrThrow({ where: { id: b.id } })).noShow).toBe(true);
+    expect(await violationCodes(setNoShow(prisma, "missing-id", true))).toEqual(["NOT_FOUND"]);
   });
 });

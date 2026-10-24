@@ -14,8 +14,12 @@ async function blockedState(tx: Tx | Db, memberId: string) {
   return { strikes, unpaid, blocked: isBlocked(strikes, unpaid) };
 }
 
-/** Blocco: cancella le prenotazioni future (non quelle in corso o passate). Non sono da pagare. */
-async function applyBlock(tx: Tx, memberId: string, now: Date) {
+/**
+ * Blocco: cancella le prenotazioni future (non quelle in corso o passate). Non sono da pagare.
+ * `announce` è true solo nella transizione non bloccato → bloccato: su un socio già bloccato
+ * le prenotazioni future residue vanno comunque cancellate, ma senza un secondo ACCOUNT_BLOCKED.
+ */
+async function applyBlock(tx: Tx, memberId: string, now: Date, announce: boolean) {
   const future = await tx.booking.findMany({ where: { memberId, status: "CONFIRMED", start: { gt: now } }, include: { field: true } });
   for (const b of future) {
     await tx.booking.update({
@@ -25,7 +29,7 @@ async function applyBlock(tx: Tx, memberId: string, now: Date) {
     await releaseOccupancy(tx, b.id);
     await notify(tx, memberId, "BOOKING_CANCELLED_BLOCK", { field: b.field.name, start: b.start.toISOString() });
   }
-  await notify(tx, memberId, "ACCOUNT_BLOCKED", { cancelled: future.length });
+  if (announce) await notify(tx, memberId, "ACCOUNT_BLOCKED", { cancelled: future.length });
 }
 
 export async function setPaymentStatus(db: Db, bookingId: string, status: PaymentStatus, now = new Date()) {
@@ -44,9 +48,9 @@ export async function setPaymentStatus(db: Db, bookingId: string, status: Paymen
         await tx.strike.create({ data: { memberId, bookingId: booking.id } });
         const after = await blockedState(tx, memberId);
         if (strikeConsequence(after.strikes) === "WARNING") await notify(tx, memberId, "STRIKE_WARNING", { strikes: after.strikes });
-        else await applyBlock(tx, memberId, now);
+        else await applyBlock(tx, memberId, now, !before.blocked);
       } else if (!before.blocked && (await blockedState(tx, memberId)).blocked) {
-        await applyBlock(tx, memberId, now);
+        await applyBlock(tx, memberId, now, true);
       }
       return;
     }
@@ -58,13 +62,15 @@ export async function setPaymentStatus(db: Db, bookingId: string, status: Paymen
 }
 
 export async function setNoShow(db: Db, bookingId: string, noShow: boolean) {
-  await db.booking.update({ where: { id: bookingId }, data: { noShow } });
+  const res = await db.booking.updateMany({ where: { id: bookingId }, data: { noShow } });
+  if (res.count === 0) fail("NOT_FOUND");
 }
 
+/** Il socio è esposto solo con i campi necessari alla lista: niente hash password né sessionVersion. */
 export function pendingPayments(db: Db, now = new Date()) {
   return db.booking.findMany({
     where: { paymentStatus: "PENDING", chargeable: true, end: { lte: now } },
-    include: { field: true, member: true },
+    include: { field: true, member: { select: { id: true, firstName: true, lastName: true, email: true } } },
     orderBy: { start: "asc" },
   });
 }
