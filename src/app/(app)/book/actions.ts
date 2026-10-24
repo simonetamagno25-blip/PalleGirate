@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { freeStarts } from "@/lib/calendar/free-starts";
+import { freeStarts, pastLimit } from "@/lib/calendar/free-starts";
 import { romeDay, romeInstant, romeMinutesOfDay } from "@/lib/time/rome";
 import { runAction } from "@/server/action-result";
 import { busyForField } from "@/server/availability";
@@ -13,19 +13,20 @@ import { getSettings } from "@/server/settings";
 import { daySchema, submitSchema } from "./schema";
 import type { z } from "zod";
 
-export async function freeStartsAction(p: { fieldId: string; day: string; excludeBookingId?: string }) {
-  await requireUser();
+export async function freeStartsAction(p: { fieldId: string; day: string; excludeBookingId?: string; mode?: "member" | "admin" }) {
+  const user = await requireUser();
   if (!daySchema.safeParse(p.day).success) return [];
   const [field, settings] = await Promise.all([prisma.field.findUnique({ where: { id: p.fieldId } }), getSettings(prisma)]);
   if (!field) return [];
   const now = new Date();
-  const today = romeDay(now);
-  if (p.day < today) return [];
+  // Solo un admin in modalità admin può scegliere orari nel passato (il server salta IN_PAST per lui).
+  const limit = pastLimit({ admin: p.mode === "admin" && user.isAdmin, day: p.day, today: romeDay(now), nowMinute: romeMinutesOfDay(now) });
+  if (!limit.allowed) return [];
   return freeStarts({
     slotMinutes: field.slotMinutes,
     settings,
     busy: await busyForField(prisma, field.id, p.day, p.excludeBookingId),
-    notBeforeMinute: p.day === today ? romeMinutesOfDay(now) : undefined,
+    notBeforeMinute: limit.notBeforeMinute,
   });
 }
 

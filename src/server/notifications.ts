@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { daysUntilExpiry } from "@/lib/membership";
 import { romeDay } from "@/lib/time/rome";
 import type { Db, Tx } from "./db";
@@ -32,6 +33,14 @@ export async function notify(db: Db | Tx, userId: string, type: NotificationType
  * in locale non c'è un cron. Le chiavi di deduplica le rendono idempotenti.
  */
 export async function ensureTimedNotifications(db: Db, userId: string, now = new Date()) {
+  // Due render concorrenti possono tentare lo stesso upsert di deduplica: P2002 significa "già creata", si ignora.
+  const notifyOnce = async (...args: Parameters<typeof notify>) => {
+    try {
+      await notify(...args);
+    } catch (e) {
+      if (!(e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002")) throw e;
+    }
+  };
   const [settings, membership] = await Promise.all([getSettings(db), db.membership.findUnique({ where: { userId } })]);
   const reminders = await db.booking.findMany({
     where: { memberId: userId, status: "CONFIRMED", start: { gt: now, lte: new Date(now.getTime() + settings.reminderHours * 3_600_000) } },
@@ -39,14 +48,14 @@ export async function ensureTimedNotifications(db: Db, userId: string, now = new
   });
   for (const b of reminders) {
     const start = b.start.toISOString();
-    await notify(db, userId, "BOOKING_REMINDER", { field: b.field.name, start }, `reminder:${b.id}:${start}`);
+    await notifyOnce(db, userId, "BOOKING_REMINDER", { field: b.field.name, start }, `reminder:${b.id}:${start}`);
   }
   if (membership) {
     const days = daysUntilExpiry(membership.expiryDate, romeDay(now));
     if (days < 0) {
-      await notify(db, userId, "MEMBERSHIP_EXPIRED", { expiry: membership.expiryDate }, `expired:${membership.expiryDate}`);
+      await notifyOnce(db, userId, "MEMBERSHIP_EXPIRED", { expiry: membership.expiryDate }, `expired:${membership.expiryDate}`);
     } else if (days <= settings.membershipWarningDays) {
-      await notify(db, userId, "MEMBERSHIP_EXPIRING", { expiry: membership.expiryDate, days }, `expiring:${membership.expiryDate}`);
+      await notifyOnce(db, userId, "MEMBERSHIP_EXPIRING", { expiry: membership.expiryDate, days }, `expiring:${membership.expiryDate}`);
     }
   }
 }

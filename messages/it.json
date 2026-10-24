@@ -148,6 +148,7 @@
     "cancelTitle": "Cancellare la prenotazione?",
     "reason": "Motivo (facoltativo)",
     "cancelled": "Cancellata",
+    "cancelledBlocked": "Cancellata per blocco (mancato pagamento)",
     "lateNotice": "Mancano meno di {hours} ore: non è più possibile modificarla o cancellarla.",
     "status": {
       "CONFIRMED": "Confermata",
@@ -198,7 +199,8 @@
   },
   "payments": {
     "title": "Pagamenti da registrare", "empty": "Nessun pagamento da registrare.", "paid": "Pagata", "unpaid": "Non pagata", "exempt": "Esente",
-    "noShow": "No-show", "cancelledLate": "Cancellata in ritardo", "saved": "Registrato", "unpaidTitle": "Insoluti", "noUnpaid": "Nessun insoluto."
+    "noShow": "No-show", "cancelledLate": "Cancellata in ritardo", "saved": "Registrato", "unpaidTitle": "Insoluti", "noUnpaid": "Nessun insoluto.",
+    "unpaidConfirm": "Segnare come non pagata? {wouldBlock, select, true {Il socio verrà bloccato e {count, plural, =0 {nessuna prenotazione futura verrà cancellata} one {verrà cancellata 1 prenotazione futura} other {verranno cancellate # prenotazioni future}}.} other {Il socio riceverà un avviso.}}"
   },
   "settings": {
     "title": "Impostazioni", "rules": "Regole di prenotazione", "fields": "Campi", "addField": "Aggiungi campo", "saved": "Salvato",

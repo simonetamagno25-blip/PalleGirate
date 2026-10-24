@@ -62,6 +62,7 @@ export default async function MyBookingsPage() {
                 <Badge variant={b.status === "CANCELLED" ? "outline" : "secondary"}>{t(`status.${b.status as "CONFIRMED" | "CANCELLED"}`)}</Badge>
                 {b.chargeable && <Badge variant={b.paymentStatus === "UNPAID" ? "destructive" : "secondary"}>{t(`payment.${b.paymentStatus as "PENDING" | "PAID" | "UNPAID" | "EXEMPT"}`)}</Badge>}
               </span>
+              {b.status === "CANCELLED" && b.cancelledById === null && <p className="w-full text-xs text-muted-foreground">{t("cancelledBlocked")}</p>}
               {b.cancelReason && <p className="w-full text-xs text-muted-foreground">{b.cancelReason}</p>}
             </div>
           ))}

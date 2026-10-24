@@ -32,7 +32,8 @@ export function FieldRow({ field }: { field: FieldRowValue }) {
         const count = await futureCountAction(field.id!);
         if (!confirm(t("deactivateConfirm", { count }))) return;
       }
-      await toggleFieldAction(field.id!, !field.active);
+      const r = await toggleFieldAction(field.id!, !field.active);
+      if (!r.ok) toast.error(te(r.violations[0].code));
     });
   return (
     <div className="grid grid-cols-2 items-end gap-2 border-b py-3 last:border-0 sm:grid-cols-[2fr_1.5fr_1fr_1fr_0.7fr_auto]">

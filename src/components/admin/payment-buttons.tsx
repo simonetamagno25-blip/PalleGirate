@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { setNoShowAction, setPaymentAction } from "@/app/(app)/admin/payments/actions";
+import { setNoShowAction, setPaymentAction, unpaidImpactAction } from "@/app/(app)/admin/payments/actions";
 
 export function PaymentButtons({ bookingId, noShow, showNoShow = true }: { bookingId: string; noShow: boolean; showNoShow?: boolean }) {
   const t = useTranslations("payments");
@@ -14,6 +14,11 @@ export function PaymentButtons({ bookingId, noShow, showNoShow = true }: { booki
   const [pending, start] = useTransition();
   const set = (status: "PAID" | "UNPAID" | "EXEMPT") =>
     start(async () => {
+      // "Non pagata" può bloccare il socio e cancellare le sue prenotazioni future: serve conferma.
+      if (status === "UNPAID") {
+        const { wouldBlock, futureCount } = await unpaidImpactAction(bookingId);
+        if (!confirm(t("unpaidConfirm", { wouldBlock: String(wouldBlock), count: futureCount }))) return;
+      }
       const r = await setPaymentAction(bookingId, status);
       if (r.ok) toast.success(t("saved"));
       else toast.error(te(r.violations[0].code));

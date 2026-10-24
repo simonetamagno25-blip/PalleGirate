@@ -26,6 +26,7 @@ describe("fields and settings", () => {
     expect(await prisma.booking.findUniqueOrThrow({ where: { id: fut.id } })).toMatchObject({ status: "CANCELLED", chargeable: false, cancelledById: admin.id });
     expect((await prisma.booking.findUniqueOrThrow({ where: { id: past.id } })).status).toBe("CONFIRMED");
     expect(await prisma.notification.count({ where: { userId: m.id, type: "BOOKING_CANCELLED" } })).toBe(1);
+    expect(await prisma.fieldOccupancy.count({ where: { bookingId: fut.id } })).toBe(0);
   });
 
   it("validates settings", async () => {

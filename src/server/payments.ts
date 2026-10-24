@@ -61,6 +61,23 @@ export async function setPaymentStatus(db: Db, bookingId: string, status: Paymen
   });
 }
 
+/**
+ * Anteprima di "Non pagata": dice se il socio verrebbe bloccato e quante prenotazioni future
+ * (CONFIRMED) verrebbero cancellate. Specchio della logica di setPaymentStatus, senza scrivere nulla.
+ */
+export async function unpaidImpact(db: Db, bookingId: string, now = new Date()): Promise<{ wouldBlock: boolean; futureCount: number }> {
+  const booking = await db.booking.findUnique({ where: { id: bookingId }, include: { strike: true } });
+  if (!booking || !booking.chargeable || booking.paymentStatus === "UNPAID") return { wouldBlock: false, futureCount: 0 };
+  const before = await blockedState(db, booking.memberId);
+  const strikes = before.strikes + (booking.strike ? 0 : 1);
+  const unpaid = before.unpaid + 1;
+  const wouldBlock = booking.strike ? !before.blocked && isBlocked(strikes, unpaid) : strikeConsequence(strikes) === "BLOCK";
+  const futureCount = wouldBlock
+    ? await db.booking.count({ where: { memberId: booking.memberId, status: "CONFIRMED", start: { gt: now } } })
+    : 0;
+  return { wouldBlock, futureCount };
+}
+
 export async function setNoShow(db: Db, bookingId: string, noShow: boolean) {
   const res = await db.booking.updateMany({ where: { id: bookingId }, data: { noShow } });
   if (res.count === 0) fail("NOT_FOUND");

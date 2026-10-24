@@ -34,7 +34,7 @@ export default async function AdminDashboardPage({ searchParams }: { searchParam
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
         <KpiCard label={t("expected")} value={<Money cents={d.revenue.expectedCents} />} hint={t("last12")} />
         <KpiCard label={t("collected")} value={<Money cents={d.revenue.collectedCents} />} hint={t("last12")} />
-        <KpiCard label={t("unpaid")} value={<Money cents={d.revenue.unpaidCents} />} tone={d.revenue.unpaidCents > 0 ? "warning" : "default"} />
+        <KpiCard label={t("unpaid")} value={<Money cents={d.revenue.unpaidCents} />} tone={d.revenue.unpaidCents > 0 ? "warning" : "default"} hint={t("last12")} />
         <KpiCard label={t("noShows")} value={d.noShows} />
         <KpiCard label={t("blocked")} value={d.blockedMembers} tone={d.blockedMembers > 0 ? "danger" : "default"} />
       </div>

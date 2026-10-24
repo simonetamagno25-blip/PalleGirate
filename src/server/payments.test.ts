@@ -3,7 +3,7 @@ import { romeInstant } from "@/lib/time/rome";
 import { prisma } from "./db";
 import { DomainError } from "./errors";
 import { createBooking, cancelBooking } from "./bookings";
-import { memberAccount, pendingPayments, setNoShow, setPaymentStatus } from "./payments";
+import { memberAccount, pendingPayments, setNoShow, setPaymentStatus, unpaidImpact } from "./payments";
 import { makeAdmin, makeField, makeMember, makeSettings, resetDb } from "../../tests/helpers/db";
 
 const NOW = romeInstant("2026-11-10", 12 * 60);
@@ -53,6 +53,21 @@ describe("payments and strikes", () => {
     expect(await prisma.fieldOccupancy.count({ where: { bookingId: future.id } })).toBe(0);
     expect((await prisma.booking.findUniqueOrThrow({ where: { id: ongoing.id } })).status).toBe("CONFIRMED");
     expect(await types(m.id)).toEqual(expect.arrayContaining(["ACCOUNT_BLOCKED", "BOOKING_CANCELLED_BLOCK"]));
+  });
+
+  it("previews the impact of marking unpaid without writing anything", async () => {
+    const m = await makeMember();
+    const b1 = await pastBooking(m.id, "2026-11-01");
+    const b2 = await pastBooking(m.id, "2026-11-02");
+    await createBooking(prisma, { userId: m.id, mode: "member" }, m.id, { fieldId, start: romeInstant("2026-11-12", 600), slots: 1 }, NOW);
+    await createBooking(prisma, { userId: m.id, mode: "member" }, m.id, { fieldId, start: romeInstant("2026-11-13", 600), slots: 1 }, NOW);
+    expect(await unpaidImpact(prisma, b1.id, NOW)).toEqual({ wouldBlock: false, futureCount: 0 });
+    await setPaymentStatus(prisma, b1.id, "UNPAID", NOW);
+    expect(await unpaidImpact(prisma, b2.id, NOW)).toEqual({ wouldBlock: true, futureCount: 2 });
+    expect(await memberAccount(prisma, m.id)).toMatchObject({ strikes: 1, unpaid: 1, blocked: false });
+    expect(await prisma.booking.count({ where: { memberId: m.id, status: "CONFIRMED", start: { gt: NOW } } })).toBe(2);
+    // Già segnata non pagata: nessun effetto.
+    expect(await unpaidImpact(prisma, b1.id, NOW)).toEqual({ wouldBlock: false, futureCount: 0 });
   });
 
   it("unblocks only when every unpaid booking is paid, strikes stay", async () => {

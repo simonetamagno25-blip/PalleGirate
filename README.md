@@ -65,5 +65,5 @@ Il resto dell'app non cambia: la tabella `FieldOccupancy` garantisce la non-sovr
 - Le notifiche temporali (promemoria, tessere in scadenza) si generano quando l'utente apre l'app, quindi non serve un cron.
 - Le sessioni sono JWT: nessuno stato lato server oltre al database.
 - Prima di esporre l'app su Internet aggiungi un limite ai tentativi di login e di attivazione (oggi non c'è rate limiting).
-- Su PostgreSQL verifica che un doppio click sullo stesso slot restituisca "Questo orario è già occupato." (mappatura dell'errore P2002 in `src/server/bookings.ts`) e che due registrazioni "Non pagata" simultanee per lo stesso socio contino correttamente gli strike (su SQLite le scritture sono serializzate).
+- Su PostgreSQL verifica che un doppio click sullo stesso slot restituisca "Questo orario è già occupato." (mappatura dell'errore P2002 in `src/server/bookings.ts`) e che due registrazioni "Non pagata" simultanee per lo stesso socio contino correttamente gli strike (su SQLite le scritture sono serializzate). Anche `deactivateField` e il blocco (`applyBlock`) leggono le prenotazioni future e poi scrivono: con read committed una prenotazione creata nel frattempo potrebbe sopravvivere, quindi controlla o blocca le righe su PostgreSQL.
 - Controlla che `AUTH_SECRET` non sia il valore d'esempio `cambia-questa-stringa` di `.env.example`.

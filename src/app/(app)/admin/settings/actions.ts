@@ -44,7 +44,11 @@ export async function futureCountAction(fieldId: string) {
 
 export async function toggleFieldAction(fieldId: string, active: boolean) {
   const admin = await requireAdmin();
-  if (active) await activateField(prisma, fieldId);
-  else await deactivateField(prisma, admin.id, fieldId);
+  const r = await runAction(async () => {
+    if (active) await activateField(prisma, fieldId);
+    else await deactivateField(prisma, admin.id, fieldId);
+    return null;
+  });
   revalidatePath("/", "layout");
+  return r;
 }

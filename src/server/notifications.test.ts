@@ -14,6 +14,14 @@ describe("timed notifications", () => {
     await makeSettings({ reminderHours: 24, membershipWarningDays: 15 });
   });
 
+  it("tolerates concurrent runs of the lazy generation", async () => {
+    const f = await makeField();
+    const m = await makeMember();
+    await createBooking(prisma, { userId: m.id, mode: "member" }, m.id, { fieldId: f.id, start: romeInstant("2026-11-11", 540), slots: 1 }, NOW);
+    await Promise.all([ensureTimedNotifications(prisma, m.id, NOW), ensureTimedNotifications(prisma, m.id, NOW), ensureTimedNotifications(prisma, m.id, NOW)]);
+    expect(await count(m.id, "BOOKING_REMINDER")).toBe(1);
+  });
+
   it("creates one reminder per booking within the reminder window, idempotently", async () => {
     const f = await makeField();
     const m = await makeMember();

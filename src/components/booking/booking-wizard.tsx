@@ -48,10 +48,10 @@ export function BookingWizard(props: {
 
   useEffect(() => {
     startLoading(async () => {
-      setStarts(await freeStartsAction({ fieldId, day, excludeBookingId: props.bookingId }));
+      setStarts(await freeStartsAction({ fieldId, day, excludeBookingId: props.bookingId, mode: props.mode }));
       setLoadedFor(`${fieldId}|${day}`);
     });
-  }, [fieldId, day, props.bookingId]);
+  }, [fieldId, day, props.bookingId, props.mode]);
 
   // Se l'orario scelto non è libero per il campo e il giorno appena caricati, si toglie la selezione.
   // Prima del primo caricamento non si tocca nulla, così l'orario arrivato dal calendario resta selezionato.
@@ -70,7 +70,7 @@ export function BookingWizard(props: {
         router.push(props.mode === "admin" ? "/admin/bookings" : "/bookings");
       } else {
         setErrors(r.violations);
-        setStarts(await freeStartsAction({ fieldId, day, excludeBookingId: props.bookingId }));
+        setStarts(await freeStartsAction({ fieldId, day, excludeBookingId: props.bookingId, mode: props.mode }));
       }
     });
 

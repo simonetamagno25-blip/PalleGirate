@@ -19,3 +19,14 @@ export function freeStarts(p: { slotMinutes: number; settings: RuleSettings; bus
   }
   return out;
 }
+
+/**
+ * Limite "nel passato" per gli orari di inizio proposti.
+ * Un socio non vede giorni passati né orari già trascorsi oggi; un admin può scegliere qualsiasi orario
+ * (il server salta IN_PAST per lui). Orari di apertura, passo e occupazione restano sempre rispettati.
+ */
+export function pastLimit(p: { admin: boolean; day: string; today: string; nowMinute: number }): { allowed: boolean; notBeforeMinute?: number } {
+  if (p.admin) return { allowed: true };
+  if (p.day < p.today) return { allowed: false };
+  return { allowed: true, notBeforeMinute: p.day === p.today ? p.nowMinute : undefined };
+}

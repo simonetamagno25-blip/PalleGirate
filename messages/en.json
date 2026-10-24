@@ -148,6 +148,7 @@
     "cancelTitle": "Cancel this booking?",
     "reason": "Reason (optional)",
     "cancelled": "Cancelled",
+    "cancelledBlocked": "Cancelled: account blocked for non-payment",
     "lateNotice": "Less than {hours} hours left: it can no longer be changed or cancelled.",
     "status": {
       "CONFIRMED": "Confirmed",
@@ -198,7 +199,8 @@
   },
   "payments": {
     "title": "Payments to record", "empty": "No payments to record.", "paid": "Paid", "unpaid": "Unpaid", "exempt": "Exempt",
-    "noShow": "No-show", "cancelledLate": "Cancelled late", "saved": "Recorded", "unpaidTitle": "Unpaid", "noUnpaid": "Nothing unpaid."
+    "noShow": "No-show", "cancelledLate": "Cancelled late", "saved": "Recorded", "unpaidTitle": "Unpaid", "noUnpaid": "Nothing unpaid.",
+    "unpaidConfirm": "Mark as unpaid? {wouldBlock, select, true {The member will be blocked and {count, plural, =0 {no upcoming bookings will be cancelled} one {1 upcoming booking will be cancelled} other {# upcoming bookings will be cancelled}}.} other {The member will receive a warning.}}"
   },
   "settings": {
     "title": "Settings", "rules": "Booking rules", "fields": "Courts", "addField": "Add court", "saved": "Saved",

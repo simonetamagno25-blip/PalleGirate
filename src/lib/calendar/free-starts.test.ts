@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { RuleSettings } from "@/lib/booking-rules";
-import { freeStarts } from "./free-starts";
+import { freeStarts, pastLimit } from "./free-starts";
 
 const S: RuleSettings = { openMinutes: 480, closeMinutes: 1380, startStepMinutes: 15, maxAdvanceDays: 14, maxActiveBookings: 3, changeWindowMinutes: 120, maxSlotsPerBooking: 2 };
 
@@ -22,5 +22,20 @@ describe("freeStarts", () => {
   it("hides starts already passed today", () => {
     const r = freeStarts({ slotMinutes: 60, settings: S, busy: [], notBeforeMinute: 600 });
     expect(r[0].minute).toBe(615);
+  });
+});
+
+describe("pastLimit", () => {
+  const base = { day: "2026-10-20", today: "2026-10-24", nowMinute: 600 };
+  it("hides past days and past minutes today for members", () => {
+    expect(pastLimit({ ...base, admin: false })).toEqual({ allowed: false });
+    expect(pastLimit({ ...base, admin: false, day: "2026-10-24" })).toEqual({ allowed: true, notBeforeMinute: 600 });
+    expect(pastLimit({ ...base, admin: false, day: "2026-10-25" })).toEqual({ allowed: true, notBeforeMinute: undefined });
+  });
+  it("lets admins pick past days and earlier times today", () => {
+    expect(pastLimit({ ...base, admin: true })).toEqual({ allowed: true });
+    expect(pastLimit({ ...base, admin: true, day: "2026-10-24" })).toEqual({ allowed: true });
+    const lim = pastLimit({ ...base, admin: true, day: "2026-10-24" });
+    expect(freeStarts({ slotMinutes: 60, settings: S, busy: [], notBeforeMinute: lim.notBeforeMinute })[0].minute).toBe(480);
   });
 });
