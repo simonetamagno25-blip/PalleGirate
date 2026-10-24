@@ -211,6 +211,7 @@
     "title": "Hi {name}", "next": "Upcoming bookings", "none": "No upcoming bookings.", "bookNow": "Book a court",
     "active": "Active bookings", "card": "Membership card", "cardDays": "{days, plural, =0 {expires today} one {1 day} other {# days}}", "cardExpired": "Expired", "noCard": "None",
     "toPay": "To pay", "strikes": "{count, plural, =0 {No strikes} one {1 strike} other {# strikes}}", "blocked": "Account blocked",
-    "hoursBySport": "Hours played by sport", "byMonth": "Bookings per month", "noData": "No data yet."
+    "hoursBySport": "Hours played by sport", "byMonth": "Bookings per month", "noData": "No data yet.",
+    "hoursUnit": "Hours", "bookingsUnit": "Bookings"
   }
 }

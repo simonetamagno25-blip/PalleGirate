@@ -211,6 +211,7 @@
     "title": "Ciao {name}", "next": "Prossime prenotazioni", "none": "Nessuna prenotazione in arrivo.", "bookNow": "Prenota un campo",
     "active": "Prenotazioni attive", "card": "Tessera", "cardDays": "{days, plural, =0 {scade oggi} one {1 giorno} other {# giorni}}", "cardExpired": "Scaduta", "noCard": "Nessuna",
     "toPay": "Da saldare", "strikes": "{count, plural, =0 {Nessuno strike} one {1 strike} other {# strike}}", "blocked": "Account bloccato",
-    "hoursBySport": "Ore giocate per sport", "byMonth": "Prenotazioni per mese", "noData": "Ancora nessun dato."
+    "hoursBySport": "Ore giocate per sport", "byMonth": "Prenotazioni per mese", "noData": "Ancora nessun dato.",
+    "hoursUnit": "Ore", "bookingsUnit": "Prenotazioni"
   }
 }

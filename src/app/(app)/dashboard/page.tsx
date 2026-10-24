@@ -3,7 +3,8 @@ import { getFormatter, getTranslations } from "next-intl/server";
 import { canMemberChange } from "@/lib/booking-rules";
 import { daysUntilExpiry } from "@/lib/membership";
 import { bookingsByMonth, hoursBySport, lastMonths } from "@/lib/stats/member";
-import { romeDay } from "@/lib/time/rome";
+import { Ban } from "lucide-react";
+import { romeDay, romeInstant } from "@/lib/time/rome";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChartCard } from "@/components/charts/bar-chart-card";
@@ -27,7 +28,7 @@ export default async function DashboardPage() {
   const [settings, account, bookings] = await Promise.all([
     getSettings(prisma),
     memberAccount(prisma, user.id),
-    prisma.booking.findMany({ where: { memberId: user.id, start: { gte: new Date(`${months[0]}-01T00:00:00Z`) } }, include: { field: true }, orderBy: { start: "asc" } }),
+    prisma.booking.findMany({ where: { memberId: user.id, start: { gte: romeInstant(`${months[0]}-01`, 0) } }, include: { field: true }, orderBy: { start: "asc" } }),
   ]);
   const upcoming = bookings.filter((b) => b.status === "CONFIRMED" && b.start > now);
   const stats = bookings.map((b) => ({ ...b, sport: b.field.sport }));
@@ -46,7 +47,7 @@ export default async function DashboardPage() {
           tone={days === null || days < 0 ? "danger" : days <= settings.membershipWarningDays ? "warning" : "default"}
         />
         <KpiCard label={t("toPay")} value={<Money cents={account.debtCents} />} hint={t("strikes", { count: account.strikes })} tone={account.debtCents > 0 ? "warning" : "default"} />
-        {account.blocked && <KpiCard label={t("blocked")} value="!" tone="danger" />}
+        {account.blocked && <KpiCard label={t("blocked")} value={<Ban className="size-8" aria-hidden />} tone="danger" />}
       </div>
       <Card>
         <CardHeader><CardTitle>{t("next")}</CardTitle></CardHeader>
@@ -75,6 +76,7 @@ export default async function DashboardPage() {
           data={hoursBySport(stats, now).map((r) => ({ sport: ts(`sports.${r.sport as "TENNIS"}`), hours: r.hours }))}
           xKey="sport"
           yKey="hours"
+          valueLabel={t("hoursUnit")}
         />
         <BarChartCard
           title={t("byMonth")}
@@ -82,6 +84,7 @@ export default async function DashboardPage() {
           data={bookingsByMonth(stats, months).map((r) => ({ month: format.dateTime(new Date(`${r.month}-15T12:00:00Z`), { month: "short" }), count: r.count }))}
           xKey="month"
           yKey="count"
+          valueLabel={t("bookingsUnit")}
           color="var(--chart-2)"
         />
       </div>

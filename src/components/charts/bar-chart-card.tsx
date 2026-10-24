@@ -3,7 +3,7 @@
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export function BarChartCard({ title, data, xKey, yKey, empty, color = "var(--chart-1)" }: { title: string; data: Record<string, string | number>[]; xKey: string; yKey: string; empty: string; color?: string }) {
+export function BarChartCard({ title, data, xKey, yKey, empty, color = "var(--chart-1)", valueLabel }: { title: string; data: Record<string, string | number>[]; xKey: string; yKey: string; empty: string; color?: string; valueLabel?: string }) {
   const hasData = data.some((d) => Number(d[yKey]) > 0);
   return (
     <Card>
@@ -17,7 +17,9 @@ export function BarChartCard({ title, data, xKey, yKey, empty, color = "var(--ch
               <CartesianGrid vertical={false} strokeDasharray="3 3" className="stroke-border" />
               <XAxis dataKey={xKey} tickLine={false} axisLine={false} fontSize={12} />
               <YAxis tickLine={false} axisLine={false} fontSize={12} allowDecimals={false} />
-              <Tooltip cursor={{ fill: "var(--muted)" }} contentStyle={{ background: "var(--popover)", border: "1px solid var(--border)", borderRadius: 8 }} />
+              <Tooltip
+                formatter={(value) => [typeof value === "number" ? Math.round(value * 10) / 10 : value, valueLabel ?? yKey]}
+                cursor={{ fill: "var(--muted)" }} contentStyle={{ background: "var(--popover)", border: "1px solid var(--border)", borderRadius: 8 }} />
               <Bar dataKey={yKey} fill={color} radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>

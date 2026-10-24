@@ -15,7 +15,7 @@ export type StatBooking = {
 export function hoursBySport(bookings: StatBooking[], now: Date) {
   const acc = new Map<string, number>();
   for (const x of bookings) {
-    if (x.status !== "CONFIRMED" || x.end > now) continue;
+    if (x.status !== "CONFIRMED" || x.noShow || x.end > now) continue;
     acc.set(x.sport, (acc.get(x.sport) ?? 0) + (x.end.getTime() - x.start.getTime()) / 3_600_000);
   }
   return [...acc].map(([sport, hours]) => ({ sport, hours })).sort((a, b) => b.hours - a.hours);

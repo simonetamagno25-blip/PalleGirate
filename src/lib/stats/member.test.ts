@@ -13,6 +13,14 @@ describe("member stats", () => {
     const r = hoursBySport([b("TENNIS", "2026-11-01", 60), b("TENNIS", "2026-11-02", 120), b("FOOTBALL", "2026-11-03", 90), b("TENNIS", "2026-11-04", 60, { status: "CANCELLED" }), b("BOCCE", "2026-11-20", 60)], NOW);
     expect(r).toEqual([{ sport: "TENNIS", hours: 3 }, { sport: "FOOTBALL", hours: 1.5 }]);
   });
+  it("ignores no-show bookings", () => {
+    expect(hoursBySport([b("TENNIS", "2026-11-01", 60), b("TENNIS", "2026-11-02", 120, { noShow: true })], NOW)).toEqual([{ sport: "TENNIS", hours: 1 }]);
+  });
+  it("ignores a booking still in progress", () => {
+    // starts 10:00, lasts 120 min, now is 11:00 -> not finished yet
+    const inProgress = b("TENNIS", "2026-11-10", 120);
+    expect(hoursBySport([inProgress], romeInstant("2026-11-10", 660))).toEqual([]);
+  });
   it("counts bookings per Rome month, with empty months as 0", () => {
     // 01/11 00:30 a Roma è già novembre, anche se in UTC è ancora il 31/10 alle 23:30.
     const earlyNov = { ...b("TENNIS", "2026-11-01", 30), start: romeInstant("2026-11-01", 30) };
