@@ -2,6 +2,7 @@ import { getFormatter, getTranslations } from "next-intl/server";
 import { daysUntilExpiry } from "@/lib/membership";
 import { romeDay } from "@/lib/time/rome";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { StatusLamp } from "@/components/common/status-lamp";
 import { requireUser } from "@/server/guards";
 
 export default async function ProfilePage() {
@@ -13,27 +14,49 @@ export default async function ProfilePage() {
   const date = (d: string) => format.dateTime(new Date(`${d}T12:00:00Z`), { dateStyle: "long" });
   const days = m ? daysUntilExpiry(m.expiryDate, romeDay(new Date())) : null;
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">{t("title")}</h1>
+    <div className="max-w-3xl space-y-6">
+      <h1 className="font-display text-2xl font-bold md:text-3xl">{t("title")}</h1>
       <Card>
         <CardHeader><CardTitle>{t("card")}</CardTitle></CardHeader>
-        <CardContent className="space-y-1 text-sm">
-          {!m && <p>{t("noCard")}</p>}
-          {m && <p>{t("number")}: <span className="font-mono">{m.number}</span></p>}
-          {m && days !== null && days >= 0 && <p>{t("expires", { date: date(m.expiryDate) })} · {t("daysLeft", { days })}</p>}
-          {m && days !== null && days < 0 && <p className="text-destructive">{t("expired", { date: date(m.expiryDate) })}</p>}
+        <CardContent>
+          {!m && <StatusLamp tone="red">{t("noCard")}</StatusLamp>}
+          {m && (
+            <dl className="divide-y">
+              <Row label={t("number")}><span className="font-display text-xl font-bold tracking-[0.04em]">{m.number}</span></Row>
+              {days !== null && days >= 0 && (
+                <Row label={tm("expiryDate")}>
+                  <span className="block">{t("expires", { date: date(m.expiryDate) })}</span>
+                  <span className="block font-normal text-muted-foreground">{t("daysLeft", { days })}</span>
+                </Row>
+              )}
+              {days !== null && days < 0 && (
+                <Row label={tm("expiryDate")}><StatusLamp tone="red">{t("expired", { date: date(m.expiryDate) })}</StatusLamp></Row>
+              )}
+            </dl>
+          )}
         </CardContent>
       </Card>
       <Card>
         <CardHeader><CardTitle>{t("data")}</CardTitle></CardHeader>
-        <CardContent className="grid gap-1 text-sm sm:grid-cols-2">
-          <p>{tm("firstName")}: {user.firstName}</p>
-          <p>{tm("lastName")}: {user.lastName}</p>
-          <p>{tm("email")}: {user.email}</p>
-          {user.phone && <p>{tm("phone")}: {user.phone}</p>}
-          {user.birthDate && <p>{tm("birthDate")}: {date(user.birthDate)}</p>}
+        <CardContent>
+          <dl className="divide-y">
+            <Row label={tm("firstName")}>{user.firstName}</Row>
+            <Row label={tm("lastName")}>{user.lastName}</Row>
+            <Row label={tm("email")}><span className="break-all">{user.email}</span></Row>
+            {user.phone && <Row label={tm("phone")}>{user.phone}</Row>}
+            {user.birthDate && <Row label={tm("birthDate")}>{date(user.birthDate)}</Row>}
+          </dl>
         </CardContent>
       </Card>
+    </div>
+  );
+}
+
+function Row({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="grid gap-0.5 py-3 first:pt-0 last:pb-0 sm:grid-cols-[12rem_1fr] sm:gap-4">
+      <dt className="text-[0.9375rem] text-muted-foreground">{label}</dt>
+      <dd className="text-base font-medium">{children}</dd>
     </div>
   );
 }
