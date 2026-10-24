@@ -11,6 +11,7 @@ import { Board, FlapButton } from "@/components/board/board";
 import { SplitFlap } from "@/components/board/split-flap";
 import { DayStrip } from "@/components/calendar/day-strip";
 import { Money } from "@/components/common/money";
+import { NativeSelect } from "@/components/common/native-select";
 import { StatusLamp } from "@/components/common/status-lamp";
 import { ViolationList } from "@/components/common/violation-list";
 import type { Violation } from "@/lib/booking-rules";
@@ -109,14 +110,9 @@ export function BookingWizard(props: {
       <ol className="space-y-6">
         {props.members && (
           <Step n={++step} title={t("member")} id="step-member">
-            <select
-              aria-labelledby="step-member"
-              className="h-11 w-full rounded-md border border-input bg-card px-3 text-base"
-              value={memberId}
-              onChange={(e) => setMemberId(e.target.value)}
-            >
+            <NativeSelect aria-labelledby="step-member" value={memberId} onChange={(e) => setMemberId(e.target.value)} className="sm:max-w-md">
               {props.members.map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
-            </select>
+            </NativeSelect>
           </Step>
         )}
 
@@ -157,7 +153,12 @@ export function BookingWizard(props: {
 
         <Step n={++step} title={t("stepTime")} id="step-time">
           <div className="board-surface rounded-lg p-3 ring-1 ring-flap-seam sm:p-4" aria-busy={loading}>
-            {!loading && starts.length === 0 && <p className="py-2 text-base text-flap-ink">{t("noTimes")}</p>}
+            {!loading && starts.length === 0 && (
+              <div className="space-y-1 py-2">
+                <p className="text-base text-flap-ink">{t("noTimes")}</p>
+                <p className="text-[0.9375rem] text-flap-ink-muted">{t("noTimesHint")}</p>
+              </div>
+            )}
             <div role="group" aria-label={t("timesLabel")} className={cn("space-y-1.5 transition-opacity duration-150", loading && "opacity-50")}>
               {[...byHour.entries()].map(([hour, list]) => (
                 <div key={hour} className="grid grid-cols-[2.25rem_repeat(4,minmax(0,1fr))] items-center gap-1.5">
