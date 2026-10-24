@@ -6,8 +6,8 @@ import { useFormatter, useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 /**
- * Horizontal strip of bookable days (today … today + horizon). Today is outlined, the selected day is filled black
- * with amber text. Works as links (calendar: `basePath`) or as buttons (wizard: `onSelect`).
+ * Horizontal strip of bookable days (today … today + horizon) as flap date tiles. Today reads "Oggi" in words, the
+ * selected day has amber ink and an amber outline. Works as links (calendar: `basePath`) or as buttons (wizard: `onSelect`).
  */
 export function DayStrip({
   days,
@@ -41,17 +41,19 @@ export function DayStrip({
         const date = new Date(`${d}T12:00:00Z`);
         const isSelected = d === selected;
         const isToday = d === today;
+        // A flap-style date tile: board face in both themes. Selected = amber ink and an amber outline; today says "Oggi".
         const cls = cn(
-          "flex h-16 w-14 shrink-0 snap-start flex-col items-center justify-center rounded-md transition-colors duration-150",
-          isSelected ? "bg-board text-lamp-amber ring-1 ring-flap-seam dark:ring-2 dark:ring-lamp-amber" : "bg-card text-foreground ring-1 ring-border hover:bg-accent",
-          isToday && !isSelected && "ring-2 ring-foreground",
+          "flex h-16 w-14 shrink-0 snap-start flex-col items-center justify-center gap-1 rounded-sm bg-flap transition-colors duration-150",
+          isSelected ? "text-lamp-amber ring-2 ring-lamp-amber ring-inset" : "text-flap-ink ring-1 ring-board-edge ring-inset hover:bg-[#262828]",
         );
         const content = (
           <>
-            <span className={cn("text-sm leading-tight", isSelected ? "text-lamp-amber" : "text-muted-foreground")}>{format.dateTime(date, { weekday: "short" })}</span>
+            <span className={cn("text-sm leading-none", isSelected ? "text-lamp-amber" : "text-flap-ink-muted", isToday && "font-semibold")}>
+              {isToday ? t("today") : format.dateTime(date, { weekday: "short" })}
+            </span>
             <span className="font-display text-2xl leading-none font-bold">{format.dateTime(date, { day: "numeric" })}</span>
+            {isToday && <span className="sr-only">{format.dateTime(date, { weekday: "long" })}</span>}
             <span className="sr-only">{format.dateTime(date, { month: "long" })}</span>
-            {isToday && <span className="sr-only">{t("today")}</span>}
           </>
         );
         return (

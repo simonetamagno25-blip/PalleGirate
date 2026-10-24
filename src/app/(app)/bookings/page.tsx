@@ -41,7 +41,7 @@ export default async function MyBookingsPage() {
         {upcoming.length === 0 ? (
           <div className="space-y-4">
             <p className="text-base text-flap-ink-muted">{t("empty")}</p>
-            <Button asChild size="lg" className="w-full sm:w-auto"><Link href="/book"><CirclePlus className="size-5" aria-hidden /> {td("bookNow")}</Link></Button>
+            <Button asChild size="lg" className="w-full font-display text-xl font-bold tracking-[0.04em] uppercase sm:w-auto"><Link href="/book"><CirclePlus className="size-5" aria-hidden /> {td("bookNow")}</Link></Button>
           </div>
         ) : (
           <ul>

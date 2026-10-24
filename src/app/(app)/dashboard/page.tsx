@@ -3,17 +3,14 @@ import { getFormatter, getTranslations } from "next-intl/server";
 import { CirclePlus } from "lucide-react";
 import { canMemberChange } from "@/lib/booking-rules";
 import { daysUntilExpiry } from "@/lib/membership";
-import { bookingsByMonth, hoursBySport, lastMonths } from "@/lib/stats/member";
-import { addDays, minutesToHHMM, romeDay, romeInstant, romeMinutesOfDay } from "@/lib/time/rome";
+import { addDays, isValidDay, minutesToHHMM, romeDay, romeMinutesOfDay } from "@/lib/time/rome";
 import { SHORT_DAY_TIME, TIME_ONLY } from "@/lib/time/formats";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Board, boardButton } from "@/components/board/board";
-import { DeparturesBoard } from "@/components/board/departures-board";
+import { HomeDepartures } from "@/components/board/home-departures";
 import { SplitFlap } from "@/components/board/split-flap";
-import { BarChartCard } from "@/components/charts/bar-chart-card";
 import { CancelButton } from "@/components/booking/cancel-button";
-import { DefList, DefRow } from "@/components/common/def-list";
 import { Money } from "@/components/common/money";
 import { StatusLamp } from "@/components/common/status-lamp";
 import { getDayBoard } from "@/server/availability";
@@ -24,26 +21,32 @@ import { getSettings } from "@/server/settings";
 
 const LONG_DAY = { weekday: "long", day: "numeric", month: "long" } as const;
 
-export default async function DashboardPage() {
+export default async function DashboardPage({ searchParams }: { searchParams: Promise<{ day?: string }> }) {
   const user = await requireUser();
   const t = await getTranslations("dashboard");
   const tb = await getTranslations("bookings");
-  const ts = await getTranslations("settings");
   const format = await getFormatter();
+  const sp = await searchParams;
   const now = new Date();
   const today = romeDay(now);
-  const months = lastMonths(today, 6);
-  const [settings, account, bookings, board] = await Promise.all([
-    getSettings(prisma),
+  const settings = await getSettings(prisma);
+  const lastDay = addDays(today, settings.maxAdvanceDays);
+  // The departures day comes from the strip (?day=), only inside the booking horizon.
+  const boardDay = isValidDay(sp.day) && sp.day >= today && sp.day <= lastDay ? sp.day : today;
+  const viewer = { userId: user.id, isAdmin: false }; // The home board is always the member view: no names, even for an admin.
+  const [account, upcoming, firstBoard] = await Promise.all([
     memberAccount(prisma, user.id),
-    prisma.booking.findMany({ where: { memberId: user.id, start: { gte: romeInstant(`${months[0]}-01`, 0) } }, include: { field: true }, orderBy: { start: "asc" } }),
-    // The home board is always the member view: no names, even for an admin.
-    getDayBoard(prisma, today, { userId: user.id, isAdmin: false }, now),
+    prisma.booking.findMany({ where: { memberId: user.id, status: "CONFIRMED", start: { gt: now } }, include: { field: true }, orderBy: { start: "asc" } }),
+    getDayBoard(prisma, boardDay, viewer, now),
   ]);
-  const upcoming = bookings.filter((b) => b.status === "CONFIRMED" && b.start > now);
+  // After closing time today's board has nothing left: open on tomorrow instead of an empty panel ("Oggi" stays marked).
+  const nowMinute = romeMinutesOfDay(now);
+  const shortestSlot = Math.min(...firstBoard.rows.map((r) => r.slotMinutes));
+  const closedToday = boardDay === today && firstBoard.rows.every((r) => r.starts.length === 0) && nowMinute + shortestSlot > firstBoard.closeMinutes;
+  const board = closedToday && !sp.day && settings.maxAdvanceDays > 0 ? await getDayBoard(prisma, addDays(today, 1), viewer, now) : firstBoard;
   const [next, ...later] = upcoming;
-  const stats = bookings.map((b) => ({ ...b, sport: b.field.sport }));
   const days = user.membership ? daysUntilExpiry(user.membership.expiryDate, today) : null;
+  const stripDays = Array.from({ length: settings.maxAdvanceDays + 1 }, (_, i) => addDays(today, i));
 
   const dayWords = (d: Date) => {
     const date = format.dateTime(d, LONG_DAY);
@@ -56,8 +59,9 @@ export default async function DashboardPage() {
   const changeable = next ? canMemberChange(next.start, now, settings) : false;
   const activeCount = upcoming.length + "/" + settings.maxActiveBookings;
 
+  // The primary action speaks in the board's voice: condensed caps.
   const bookCta = (
-    <Button asChild size="lg" className="h-[3.75rem] w-full text-xl">
+    <Button asChild size="lg" className="h-[3.75rem] w-full font-display text-2xl font-bold tracking-[0.04em] uppercase">
       <Link href="/book"><CirclePlus className="size-6" aria-hidden /> {t("bookNow")}</Link>
     </Button>
   );
@@ -66,10 +70,11 @@ export default async function DashboardPage() {
     <div className="space-y-8">
       <h1 className="font-display text-2xl font-bold md:text-3xl">{t("title", { name: user.firstName })}</h1>
 
-      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
-        <div className="space-y-4">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+        {/* Left column: next game, then the CTA at the column's foot, so both columns end on one line. */}
+        <div className="flex flex-col gap-4">
           {/* (a) Next game: the one big flap time on the page. */}
-          <Board id="next-game" title={t("nextGame")}>
+          <Board id="next-game" title={t("nextGame")} className="flex-1">
             {next ? (
               <div className="space-y-4">
                 <div className="space-y-2">
@@ -112,65 +117,54 @@ export default async function DashboardPage() {
               <div className="space-y-4">
                 <p className="font-display text-2xl leading-tight font-bold">{t("noGame")}</p>
                 <p className="text-base text-flap-ink-muted">{t("noGameHint")}</p>
-                {bookCta}
               </div>
             )}
           </Board>
 
-          {/* (b) The primary action, one tap away. */}
-          {next && bookCta}
+          {/* (b) The primary action, one tap away, on the full measure of the column. */}
+          {bookCta}
         </div>
 
-        {/* (c) Today's departures. */}
-        <DeparturesBoard board={board} nowMinute={romeMinutesOfDay(now)} />
+        {/* (c) Day strip and that day's departures; picking a day flips the board in place. */}
+        <HomeDepartures initial={board} days={stripDays} today={today} nowMinute={nowMinute} />
       </div>
 
-      <div className="grid items-start gap-6 lg:grid-cols-3">
-        {/* (d) Account summary as a definition list, not hero metrics. */}
-        <Card>
-          <CardHeader><CardTitle>{t("account")}</CardTitle></CardHeader>
-          <CardContent>
-            <DefList>
-              <DefRow label={t("active")}>{activeCount}</DefRow>
-              <DefRow label={t("card")}>
-                {days === null ? (
-                  <StatusLamp tone="red">{t("noCard")}</StatusLamp>
-                ) : days < 0 ? (
-                  <StatusLamp tone="red">{t("cardExpired")}</StatusLamp>
-                ) : days <= settings.membershipWarningDays ? (
-                  <StatusLamp tone="amber">{t("cardDays", { days })}</StatusLamp>
-                ) : (
-                  t("cardDays", { days })
-                )}
-              </DefRow>
-              <DefRow label={t("toPay")}>
-                {account.debtCents > 0 ? <StatusLamp tone="red"><Money cents={account.debtCents} /></StatusLamp> : <Money cents={account.debtCents} />}
-              </DefRow>
-              <DefRow label={t("strikesLabel")}>{t("strikes", { count: account.strikes })}</DefRow>
-              <DefRow label={t("status")}>
-                {account.blocked ? <StatusLamp tone="red">{t("blocked")}</StatusLamp> : <StatusLamp tone="green">{t("statusActive")}</StatusLamp>}
-              </DefRow>
-            </DefList>
-          </CardContent>
-        </Card>
-        <BarChartCard
-          title={t("hoursBySport")}
-          empty={t("noData")}
-          data={hoursBySport(stats, now).map((r) => ({ sport: ts(`sports.${r.sport as "TENNIS"}`), hours: r.hours }))}
-          xKey="sport"
-          yKey="hours"
-          valueLabel={t("hoursUnit")}
-        />
-        <BarChartCard
-          title={t("byMonth")}
-          empty={t("noData")}
-          data={bookingsByMonth(stats, months).map((r) => ({ month: format.dateTime(new Date(`${r.month}-15T12:00:00Z`), { month: "short" }), count: r.count }))}
-          xKey="month"
-          yKey="count"
-          valueLabel={t("bookingsUnit")}
-          color="var(--chart-2)"
-        />
-      </div>
+      {/* (d) Account summary: one compact definition list across the page, not hero metrics. */}
+      <Card>
+        <CardHeader><h2 className="text-lg leading-snug font-semibold">{t("account")}</h2></CardHeader>
+        <CardContent>
+          <dl className="grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3 lg:grid-cols-5">
+            <SummaryItem label={t("active")}>{activeCount}</SummaryItem>
+            <SummaryItem label={t("card")}>
+              {days === null ? (
+                <StatusLamp tone="red">{t("noCard")}</StatusLamp>
+              ) : days < 0 ? (
+                <StatusLamp tone="red">{t("cardExpired")}</StatusLamp>
+              ) : days <= settings.membershipWarningDays ? (
+                <StatusLamp tone="amber">{t("cardDays", { days })}</StatusLamp>
+              ) : (
+                t("cardDays", { days })
+              )}
+            </SummaryItem>
+            <SummaryItem label={t("toPay")}>
+              {account.debtCents > 0 ? <StatusLamp tone="red"><Money cents={account.debtCents} /></StatusLamp> : <Money cents={account.debtCents} />}
+            </SummaryItem>
+            <SummaryItem label={t("strikesLabel")}>{t("strikes", { count: account.strikes })}</SummaryItem>
+            <SummaryItem label={t("status")}>
+              {account.blocked ? <StatusLamp tone="red">{t("blocked")}</StatusLamp> : <StatusLamp tone="green">{t("statusActive")}</StatusLamp>}
+            </SummaryItem>
+          </dl>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+function SummaryItem({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="space-y-0.5">
+      <dt className="text-[0.9375rem] text-muted-foreground">{label}</dt>
+      <dd className="text-base font-semibold">{children}</dd>
     </div>
   );
 }

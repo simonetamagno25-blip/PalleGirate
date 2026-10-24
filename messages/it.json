@@ -75,7 +75,8 @@
     "newPassword": "Nuova password",
     "activate": "Attiva",
     "forgot": "Password dimenticata? Chiedi all'amministratore di reimpostare l'accesso.",
-    "haveAccount": "Hai già un account? Accedi"
+    "haveAccount": "Hai già un account? Accedi",
+    "clock": "Ora al centro: {time}"
   },
   "members": {
     "title": "Soci",
@@ -199,7 +200,8 @@
     "daysLeft": "{days, plural, =0 {Scade oggi} one {Manca 1 giorno} other {Mancano # giorni}}",
     "expired": "Scaduta il {date}",
     "noCard": "Nessuna tessera registrata",
-    "data": "Dati personali"
+    "data": "Dati personali",
+    "numbers": "I tuoi numeri"
   },
   "notifications": {
     "title": "Notifiche",
@@ -332,7 +334,8 @@
     "account": "Il tuo account",
     "strikesLabel": "Strike",
     "status": "Stato",
-    "statusActive": "Attivo, puoi prenotare"
+    "statusActive": "Attivo, puoi prenotare",
+    "departuresOn": "Partenze di {date}"
   },
   "adminDashboard": {
     "title": "Statistiche",

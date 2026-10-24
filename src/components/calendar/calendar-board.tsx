@@ -45,7 +45,8 @@ export async function CalendarBoard({ board, title, note, bookable }: { board: D
       );
     }
     if (c.kind === "taken") return <FlapTaken label={tb("taken")} detail={c.memberName} className={compact ? "w-full min-w-0" : undefined} />;
-    return <span className="sr-only">{tb("unavailable")}</span>;
+    // Past or too late to fit a slot: a visible dim dash on the grid (spoken as "non disponibile"), never an empty hole.
+    return compact ? <FlapTaken label={tb("unavailable")} className="w-full min-w-0" /> : <span className="sr-only">{tb("unavailable")}</span>;
   };
 
   return (
@@ -58,11 +59,17 @@ export async function CalendarBoard({ board, title, note, bookable }: { board: D
         <BoardTable
           caption={t("boardCaption", { date: title })}
           className="table-fixed"
-          headers={[{ key: "court", label: tb("court"), className: "sticky left-0 z-10 w-32 bg-board" }, ...hours.map((h) => ({ key: String(h), label: pad(h), className: "text-center" }))]}
+          headers={[{ key: "court", label: tb("court"), className: "sticky left-0 z-10 w-44 bg-board" }, ...hours.map((h) => ({ key: String(h), label: pad(h), className: "text-center" }))]}
         >
           {rows.map(({ row, cells }) => (
             <tr key={row.id} className="border-t border-flap-seam">
-              <BoardRowHeader className="sticky left-0 z-10 bg-board">{row.name}</BoardRowHeader>
+              <BoardRowHeader className="sticky left-0 z-10 bg-board">
+                <span className="block">{row.name}</span>
+                {/* Same state as phone and home: a row with nothing left to book says so in red flaps. */}
+                {bookable && !cells.some((c) => c.kind === "free" || c.kind === "mine") && (
+                  <SplitFlap value={tb("full")} label={tb("fullSpoken")} size="sm" tone="red" className="mt-1" />
+                )}
+              </BoardRowHeader>
               {cells.map((c) => (
                 <BoardCell key={c.hour} className="px-0.5 text-center">{renderCell(row, c, true)}</BoardCell>
               ))}

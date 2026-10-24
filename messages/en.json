@@ -75,7 +75,8 @@
     "newPassword": "New password",
     "activate": "Activate",
     "forgot": "Forgot your password? Ask the administrator to reset your access.",
-    "haveAccount": "Already have an account? Log in"
+    "haveAccount": "Already have an account? Log in",
+    "clock": "Time at the club: {time}"
   },
   "members": {
     "title": "Members",
@@ -199,7 +200,8 @@
     "daysLeft": "{days, plural, =0 {Expires today} one {1 day left} other {# days left}}",
     "expired": "Expired on {date}",
     "noCard": "No card registered",
-    "data": "Personal data"
+    "data": "Personal data",
+    "numbers": "Your numbers"
   },
   "notifications": {
     "title": "Notifications",
@@ -332,7 +334,8 @@
     "account": "Your account",
     "strikesLabel": "Strikes",
     "status": "Status",
-    "statusActive": "Active, you can book"
+    "statusActive": "Active, you can book",
+    "departuresOn": "Departures on {date}"
   },
   "adminDashboard": {
     "title": "Statistics",

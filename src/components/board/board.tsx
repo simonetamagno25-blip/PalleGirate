@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { SplitFlap } from "./split-flap";
 
 /*
  * Board primitives: the black departures-board panel and its cells. The board is black in both themes;
@@ -11,7 +12,7 @@ const DASH = "—";
 
 /** Secondary button on a board (e.g. Modifica). */
 export const boardButton =
-  "border-flap-seam bg-flap text-flap-ink hover:bg-[#222222] hover:text-flap-ink aria-expanded:bg-[#222222] aria-expanded:text-flap-ink";
+  "border-flap-seam bg-flap text-flap-ink hover:bg-[#2a2c2b] hover:text-flap-ink aria-expanded:bg-[#2a2c2b] aria-expanded:text-flap-ink";
 /** Quiet outline button on a board, for the separated destructive action (e.g. Cancella). */
 export const boardOutlineButton =
   "border-flap-seam bg-transparent text-flap-ink hover:border-lamp-red-board hover:bg-transparent hover:text-lamp-red-board aria-expanded:bg-transparent aria-expanded:text-flap-ink";
@@ -30,10 +31,11 @@ export function Board({
   className?: string;
 }) {
   return (
-    <section aria-labelledby={title && id ? id : undefined} className={cn("board-surface rounded-lg p-4 ring-1 ring-flap-seam md:p-5", className)}>
+    <section aria-labelledby={title && id ? id : undefined} className={cn("board-surface rounded-lg p-4 ring-1 ring-board-edge md:p-5", className)}>
       {(title || meta) && (
-        <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-          {title && <h2 id={id} className="text-lg font-semibold text-flap-ink">{title}</h2>}
+        // The board's header strip: the title in the board voice (condensed caps), a seam under it.
+        <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-flap-seam pb-2.5">
+          {title && <h2 id={id} className="font-display text-xl leading-tight font-bold tracking-[0.04em] text-flap-ink uppercase">{title}</h2>}
           {meta && <div className="text-[0.9375rem] text-flap-ink-muted">{meta}</div>}
         </div>
       )}
@@ -90,11 +92,11 @@ export function BoardCell({ children, className }: { children?: React.ReactNode;
 
 const cell = "flap-face inline-flex h-11 min-w-16 shrink-0 items-center justify-center px-2.5 font-display text-xl leading-none font-bold";
 
-/** A free start time: a flap cell that links to the booking wizard (44px target). */
-export function FlapLink({ href, time, label, className }: { href: string; time: string; label: string; className?: string }) {
+/** A free start time: a flap cell that links to the booking wizard (44px target). `flip`: the time flips when it changes. */
+export function FlapLink({ href, time, label, flip = false, className }: { href: string; time: string; label: string; flip?: boolean; className?: string }) {
   return (
-    <Link href={href} aria-label={label} className={cn(cell, "transition-colors duration-150 hover:bg-[#262626] hover:text-lamp-amber", className)}>
-      {time}
+    <Link href={href} aria-label={label} className={cn(cell, "transition-colors duration-150 hover:bg-[#262828] hover:text-lamp-amber", className)}>
+      {flip ? <SplitFlap value={time} bare /> : time}
     </Link>
   );
 }
@@ -122,7 +124,7 @@ export function FlapButton({
       className={cn(
         cell,
         "w-full gap-0.5 transition-colors duration-150",
-        selected ? "bg-lamp-amber text-[#111111]" : "hover:bg-[#262626] hover:text-lamp-amber",
+        selected ? "bg-lamp-amber text-[#111111]" : "hover:bg-[#262828] hover:text-lamp-amber",
         className,
       )}
     >

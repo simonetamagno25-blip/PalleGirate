@@ -152,7 +152,7 @@ export function BookingWizard(props: {
         </Step>
 
         <Step n={++step} title={t("stepTime")} id="step-time">
-          <div className="board-surface rounded-lg p-3 ring-1 ring-flap-seam sm:p-4" aria-busy={loading}>
+          <div className="board-surface rounded-lg p-3 ring-1 ring-board-edge sm:p-4" aria-busy={loading}>
             {!loading && starts.length === 0 && (
               <div className="space-y-1 py-2">
                 <p className="text-base text-flap-ink">{t("noTimes")}</p>
@@ -234,13 +234,19 @@ export function BookingWizard(props: {
               </dl>
               {confirmed > 0 && <StatusLamp tone="green" onBoard className="text-base font-semibold">{t("confirmed")}</StatusLamp>}
             </div>
-          ) : (
-            <p className="text-base text-flap-ink-muted">{t("pickFirst")}</p>
-          )}
+          ) : null}
           {errors.length > 0 && <div className="mt-4"><ViolationList violations={errors} /></div>}
-          <Button size="lg" className="mt-5 w-full" disabled={minute === undefined || submitting || confirmed > 0} onClick={submit}>
+          <Button
+            size="lg"
+            className={cn("w-full", minute !== undefined && "mt-5")}
+            disabled={minute === undefined || submitting || confirmed > 0}
+            aria-describedby={minute === undefined ? "confirm-reason" : undefined}
+            onClick={submit}
+          >
             {props.bookingId ? t("confirmEdit") : t("confirm")}
           </Button>
+          {/* Disabled is neutral grey, never dim amber; the reason sits right under it. */}
+          {minute === undefined && <p id="confirm-reason" className="mt-2 text-[0.9375rem] text-flap-ink-muted">{t("pickFirst")}</p>}
         </Board>
       </div>
     </div>

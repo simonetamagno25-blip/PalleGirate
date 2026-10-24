@@ -39,6 +39,7 @@ export function SplitFlap({
   tone = "default",
   label,
   flipKey,
+  bare = false,
   className,
 }: {
   value: string;
@@ -47,6 +48,8 @@ export function SplitFlap({
   /** Accessible text, when it should differ from the visible value. */
   label?: string;
   flipKey?: string | number;
+  /** No tiles of its own: the characters flip inside an existing flap cell (they take the cell's face and size). */
+  bare?: boolean;
   className?: string;
 }) {
   const prevValue = useRef(value);
@@ -77,9 +80,9 @@ export function SplitFlap({
   let tileIndex = 0;
 
   return (
-    <span className={cn("inline-flex items-center align-middle", className)}>
+    <span className={cn("inline-flex items-center align-middle", bare && "bg-inherit", className)}>
       <span className="sr-only">{label ?? value}</span>
-      <span aria-hidden className={cn("inline-flex items-center font-display leading-none font-bold", GAP[size], TEXT[size])}>
+      <span aria-hidden className={cn("inline-flex items-center font-display leading-none font-bold", bare ? "bg-inherit" : [GAP[size], TEXT[size]])}>
         {chars.map((ch, i) => {
           if (ch === " ") return <span key={i} className={size === "sm" ? "w-1" : "w-2"} />;
           if (SEPARATORS.has(ch)) {
@@ -93,7 +96,7 @@ export function SplitFlap({
           const animate = run !== null && (run.all || old !== ch);
           const delay = tileIndex++ * STAGGER_MS;
           return (
-            <Tile key={animate ? `${i}-${run.id}` : i} ch={ch} old={old} size={size} tone={tone} animate={animate} reduce={run?.reduce ?? false} delay={delay} />
+            <Tile key={animate ? `${i}-${run.id}` : i} ch={ch} old={old} size={size} tone={tone} bare={bare} animate={animate} reduce={run?.reduce ?? false} delay={delay} />
           );
         })}
       </span>
@@ -101,8 +104,10 @@ export function SplitFlap({
   );
 }
 
-function Tile({ ch, old, size, tone, animate, reduce, delay }: { ch: string; old: string; size: Size; tone: Tone; animate: boolean; reduce: boolean; delay: number }) {
-  const face = cn("flap-face relative inline-grid place-items-center", size !== "sm" && "flap-hinge", TILE[size], TONE[tone]);
+function Tile({ ch, old, size, tone, bare, animate, reduce, delay }: { ch: string; old: string; size: Size; tone: Tone; bare: boolean; animate: boolean; reduce: boolean; delay: number }) {
+  const face = bare
+    ? "relative inline-grid place-items-center bg-inherit"
+    : cn("flap-face relative inline-grid place-items-center", size !== "sm" && "flap-hinge", TILE[size], TONE[tone]);
   if (!animate) return <span className={face}>{ch}</span>;
   if (reduce) {
     return (
