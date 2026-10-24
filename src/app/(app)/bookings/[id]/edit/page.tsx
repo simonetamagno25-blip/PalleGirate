@@ -15,8 +15,8 @@ export default async function EditBookingPage({ params }: { params: Promise<{ id
   const [fields, settings] = await Promise.all([prisma.field.findMany({ where: { active: true }, orderBy: { sortOrder: "asc" } }), getSettings(prisma)]);
   const today = romeDay(new Date());
   return (
-    <div className="space-y-4">
-      <h1 className="text-2xl font-semibold">{t("editTitle")}</h1>
+    <div className="space-y-6">
+      <h1 className="font-display text-2xl font-bold md:text-3xl">{t("editTitle")}</h1>
       <BookingWizard
         fields={fields}
         initial={{ fieldId: booking.fieldId, day: romeDay(booking.start), minute: romeMinutesOfDay(booking.start), slots: booking.slots }}

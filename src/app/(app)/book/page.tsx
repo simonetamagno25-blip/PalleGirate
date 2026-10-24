@@ -13,8 +13,8 @@ export default async function BookPage({ searchParams }: { searchParams: Promise
   const today = romeDay(new Date());
   const minute = sp.time ? Number(sp.time) : undefined;
   return (
-    <div className="space-y-4">
-      <h1 className="text-2xl font-semibold">{t("title")}</h1>
+    <div className="space-y-6">
+      <h1 className="font-display text-2xl font-bold md:text-3xl">{t("title")}</h1>
       <BookingWizard
         fields={fields}
         initial={{ fieldId: sp.field, day: isValidDay(sp.day) && sp.day >= today ? sp.day : today, minute: Number.isInteger(minute) ? minute : undefined }}
