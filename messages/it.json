@@ -213,5 +213,27 @@
     "toPay": "Da saldare", "strikes": "{count, plural, =0 {Nessuno strike} one {1 strike} other {# strike}}", "blocked": "Account bloccato",
     "hoursBySport": "Ore giocate per sport", "byMonth": "Prenotazioni per mese", "noData": "Ancora nessun dato.",
     "hoursUnit": "Ore", "bookingsUnit": "Prenotazioni"
+  },
+  "adminDashboard": {
+    "title": "Statistiche",
+    "day": "Oggi",
+    "week": "Settimana",
+    "month": "Mese",
+    "occupancy": "Occupazione per campo",
+    "expected": "Incasso atteso",
+    "collected": "Incassato",
+    "unpaid": "Insoluto",
+    "last12": "ultimi 12 mesi",
+    "noShows": "No-show nel periodo",
+    "blocked": "Soci bloccati",
+    "heatmap": "Fasce orarie più richieste (12 mesi)",
+    "trend": "Andamento prenotazioni",
+    "expiring": "Tessere in scadenza (30 giorni)",
+    "noExpiring": "Nessuna tessera in scadenza.",
+    "noData": "Ancora nessun dato.",
+    "heatCell": "{day} ore {hour}: {count}",
+    "weekdays": "Lun,Mar,Mer,Gio,Ven,Sab,Dom",
+    "occupancyUnit": "Occupazione %",
+    "bookingsUnit": "Prenotazioni"
   }
 }
