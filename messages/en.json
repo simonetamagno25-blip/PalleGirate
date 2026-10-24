@@ -196,5 +196,15 @@
   "payments": {
     "title": "Payments to record", "empty": "No payments to record.", "paid": "Paid", "unpaid": "Unpaid", "exempt": "Exempt",
     "noShow": "No-show", "cancelledLate": "Cancelled late", "saved": "Recorded", "unpaidTitle": "Unpaid", "noUnpaid": "Nothing unpaid."
+  },
+  "settings": {
+    "title": "Settings", "rules": "Booking rules", "fields": "Courts", "addField": "Add court", "saved": "Saved",
+    "openMinutes": "Opening", "closeMinutes": "Closing", "startStepMinutes": "Start time step (min)", "maxAdvanceDays": "Max days ahead",
+    "maxActiveBookings": "Active bookings per member", "changeWindowMinutes": "Change/cancel window (min)", "maxSlotsPerBooking": "Max slots per booking",
+    "membershipWarningDays": "Card expiry warning (days)", "reminderHours": "Booking reminder (hours before)",
+    "name": "Name", "sport": "Sport", "slotMinutes": "Slot length (min)", "price": "Price per slot (€)", "sortOrder": "Order",
+    "active": "Active", "deactivate": "Deactivate", "activate": "Reactivate",
+    "deactivateConfirm": "{count, plural, =0 {Deactivate this court?} one {There is 1 upcoming booking: it will be cancelled and the member notified. Continue?} other {There are # upcoming bookings: they will be cancelled and the members notified. Continue?}}",
+    "sports": { "FOOTBALL": "Football", "TENNIS": "Tennis", "BASKETBALL": "Basketball", "BOCCE": "Bocce" }
   }
 }
