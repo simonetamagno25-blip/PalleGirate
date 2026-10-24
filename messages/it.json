@@ -187,5 +187,14 @@
     "BOOKING_REMINDER": "Promemoria: {field}, {start}.",
     "MEMBERSHIP_EXPIRING": "La tua tessera scade il {expiry} ({days, plural, =0 {oggi} one {tra 1 giorno} other {tra # giorni}}).",
     "MEMBERSHIP_EXPIRED": "La tua tessera è scaduta il {expiry}. Rinnovala in segreteria per prenotare."
+  },
+  "adminBookings": {
+    "title": "Prenotazioni", "new": "Nuova prenotazione", "filter": "Filtra", "all": "Tutti", "from": "Dal", "to": "Al",
+    "field": "Campo", "member": "Socio", "when": "Quando", "status": "Stato", "payment": "Pagamento", "price": "Prezzo",
+    "edit": "Modifica", "empty": "Nessuna prenotazione con questi filtri.", "adminReason": "Cancellata dall'amministrazione", "system": "Cancellata per blocco"
+  },
+  "payments": {
+    "title": "Pagamenti da registrare", "empty": "Nessun pagamento da registrare.", "paid": "Pagata", "unpaid": "Non pagata", "exempt": "Esente",
+    "noShow": "No-show", "cancelledLate": "Cancellata in ritardo", "saved": "Registrato", "unpaidTitle": "Insoluti", "noUnpaid": "Nessun insoluto."
   }
 }

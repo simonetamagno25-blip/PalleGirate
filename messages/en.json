@@ -187,5 +187,14 @@
     "BOOKING_REMINDER": "Reminder: {field}, {start}.",
     "MEMBERSHIP_EXPIRING": "Your card expires on {expiry} ({days, plural, =0 {today} one {in 1 day} other {in # days}}).",
     "MEMBERSHIP_EXPIRED": "Your card expired on {expiry}. Renew it at the office to book."
+  },
+  "adminBookings": {
+    "title": "Bookings", "new": "New booking", "filter": "Filter", "all": "All", "from": "From", "to": "To",
+    "field": "Court", "member": "Member", "when": "When", "status": "Status", "payment": "Payment", "price": "Price",
+    "edit": "Change", "empty": "No bookings match these filters.", "adminReason": "Cancelled by the administration", "system": "Cancelled because of a block"
+  },
+  "payments": {
+    "title": "Payments to record", "empty": "No payments to record.", "paid": "Paid", "unpaid": "Unpaid", "exempt": "Exempt",
+    "noShow": "No-show", "cancelledLate": "Cancelled late", "saved": "Recorded", "unpaidTitle": "Unpaid", "noUnpaid": "Nothing unpaid."
   }
 }
