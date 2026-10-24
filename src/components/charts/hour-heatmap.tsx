@@ -10,7 +10,7 @@ export function HourHeatmap({ title, cells, fromHour, toHour, weekdayLabels }: {
   const get = (w: number, h: number) => cells.find((c) => c.weekday === w && c.hour === h)?.count ?? 0;
   return (
     <Card>
-      <CardHeader><CardTitle className="text-base">{title}</CardTitle></CardHeader>
+      <CardHeader><CardTitle>{title}</CardTitle></CardHeader>
       <CardContent className="overflow-x-auto">
         <table className="border-separate border-spacing-0.5 text-[10px]">
           <thead>

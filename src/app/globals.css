@@ -4,9 +4,15 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+ * "Tabellone delle partenze": the board panels are always black (both themes); everything around them
+ * is quiet neutral UI. Amber is the one lamp for "yours", the primary action and live state.
+ */
+
 @theme inline {
     --font-heading: var(--font-sans);
     --font-sans: var(--font-sans);
+    --font-display: var(--font-display);
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -38,92 +44,230 @@
     --color-card: var(--card);
     --color-foreground: var(--foreground);
     --color-background: var(--background);
-    --radius-sm: calc(var(--radius) * 0.6);
-    --radius-md: calc(var(--radius) * 0.8);
+
+    /* Board (identical in both themes). */
+    --color-board: var(--board);
+    --color-flap: var(--flap);
+    --color-flap-seam: var(--flap-seam);
+    --color-flap-ink: var(--flap-ink);
+    --color-flap-ink-muted: var(--flap-ink-muted);
+    --color-nav-active: var(--nav-active);
+
+    /* Lamps. "-board" variants are for black surfaces; the plain ones follow the page theme. */
+    --color-lamp-amber: var(--lamp-amber);
+    --color-amber-ink: var(--amber-ink);
+    --color-lamp-green: var(--lamp-green);
+    --color-lamp-red: var(--lamp-red);
+    --color-lamp-blue: var(--lamp-blue);
+    --color-lamp-green-board: var(--lamp-green-board);
+    --color-lamp-red-board: var(--lamp-red-board);
+    --color-lamp-blue-board: var(--lamp-blue-board);
+
+    /* 6px for controls and cards, 4px for flap tiles. */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.375rem;
     --radius-lg: var(--radius);
-    --radius-xl: calc(var(--radius) * 1.4);
-    --radius-2xl: calc(var(--radius) * 1.8);
-    --radius-3xl: calc(var(--radius) * 2.2);
-    --radius-4xl: calc(var(--radius) * 2.6);
+    --radius-xl: var(--radius);
+    --radius-2xl: 0.5rem;
+    --radius-3xl: 0.5rem;
+    --radius-4xl: 0.25rem;
+}
+
+/* Product type scale: 14 / 16 / 18 / 22 / 28 / 36, flap digits 44 / 56. */
+@theme {
+    --text-xs: 0.8125rem;
+    --text-xs--line-height: 1.25rem;
+    --text-sm: 0.875rem;
+    --text-sm--line-height: 1.3rem;
+    --text-base: 1rem;
+    --text-base--line-height: 1.5rem;
+    --text-lg: 1.125rem;
+    --text-lg--line-height: 1.6rem;
+    --text-xl: 1.375rem;
+    --text-xl--line-height: 1.75rem;
+    --text-2xl: 1.75rem;
+    --text-2xl--line-height: 2rem;
+    --text-3xl: 2.25rem;
+    --text-3xl--line-height: 2.5rem;
+    --text-4xl: 2.75rem;
+    --text-4xl--line-height: 1;
+    --text-5xl: 3.5rem;
+    --text-5xl--line-height: 1;
+    --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.52 0.10 186);
-    --chart-2: oklch(0.64 0.16 65);
-    --chart-3: oklch(0.48 0.13 250);
-    --chart-4: oklch(0.56 0.19 25);
-    --chart-5: oklch(0.46 0.15 305);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
+    color-scheme: light;
+    --board: #000000;
+    --flap: #161616;
+    --flap-seam: #2a2a2a;
+    --flap-ink: #f3f3ee;
+    --flap-ink-muted: #b9b9b0;
+    --lamp-amber: #f5a524;
+    --lamp-green-board: #3fb26b;
+    --lamp-red-board: #ef5b52;
+    --lamp-blue-board: #6aa8ff;
+
+    /* Light theme UI. */
+    --background: #f3f3f1;
+    --foreground: #141414;
+    --card: #ffffff;
+    --card-foreground: #141414;
+    --popover: #ffffff;
+    --popover-foreground: #141414;
+    --primary: #f5a524;
+    --primary-foreground: #111111;
+    --secondary: #e9e9e5;
+    --secondary-foreground: #141414;
+    --muted: #e9e9e5;
+    --muted-foreground: #55554f;
+    --accent: #ebebe7;
+    --accent-foreground: #141414;
+    --destructive: #b42318;
+    --border: #d9d9d4;
+    /* Input outlines need 3:1 against the card (#8a8a83 on #fff = 3.47:1). */
+    --input: #8a8a83;
+    /* Amber on light grounds is 1.8:1, so text, rings and chart marks use a deeper amber (4.62:1 on #f3f3f1). */
+    --amber-ink: #a35c00;
+    --ring: #a35c00;
+    --lamp-green: #15803d;
+    --lamp-red: #b42318;
+    --lamp-blue: #1d4ed8;
+    --nav-active: #161616;
+    --chart-1: #b36500;
+    --chart-2: #15803d;
+    --chart-3: #1d4ed8;
+    --chart-4: #b42318;
+    --chart-5: #8c8c85;
+    --radius: 0.375rem;
+    --sidebar: #ffffff;
+    --sidebar-foreground: #141414;
+    --sidebar-primary: #161616;
+    --sidebar-primary-foreground: #f3f3ee;
+    --sidebar-accent: #ebebe7;
+    --sidebar-accent-foreground: #141414;
+    --sidebar-border: #d9d9d4;
+    --sidebar-ring: #a35c00;
 }
 
 .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.74 0.12 182);
-    --chart-2: oklch(0.84 0.16 88);
-    --chart-3: oklch(0.72 0.13 245);
-    --chart-4: oklch(0.72 0.17 30);
-    --chart-5: oklch(0.76 0.12 305);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
+    color-scheme: dark;
+    --background: #000000;
+    --foreground: #f3f3ee;
+    --card: #121212;
+    --card-foreground: #f3f3ee;
+    --popover: #161616;
+    --popover-foreground: #f3f3ee;
+    --primary: #f5a524;
+    --primary-foreground: #111111;
+    --secondary: #1f1f1f;
+    --secondary-foreground: #f3f3ee;
+    --muted: #1c1c1c;
+    --muted-foreground: #b0b0a8;
+    --accent: #222222;
+    --accent-foreground: #f3f3ee;
+    --destructive: #ef5b52;
+    --border: #2a2a2a;
+    --input: #6b6b65;
+    --amber-ink: #f5a524;
+    --ring: #f5a524;
+    --lamp-green: #3fb26b;
+    --lamp-red: #ef5b52;
+    --lamp-blue: #6aa8ff;
+    --nav-active: #2a2a2a;
+    --chart-1: #f5a524;
+    --chart-2: #3fb26b;
+    --chart-3: #6aa8ff;
+    --chart-4: #ef5b52;
+    --chart-5: #8c8c85;
+    --sidebar: #121212;
+    --sidebar-foreground: #f3f3ee;
+    --sidebar-primary: #2a2a2a;
+    --sidebar-primary-foreground: #f3f3ee;
+    --sidebar-accent: #222222;
+    --sidebar-accent-foreground: #f3f3ee;
+    --sidebar-border: #2a2a2a;
+    --sidebar-ring: #f5a524;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
-    }
-  body {
-    @apply bg-background text-foreground;
-    }
+    @apply border-border;
+  }
   html {
     @apply font-sans;
-    }
+    font-variant-numeric: tabular-nums;
+    accent-color: var(--lamp-amber);
+    caret-color: var(--amber-ink);
+    scrollbar-color: var(--input) transparent;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  ::selection {
+    background: var(--lamp-amber);
+    color: #111111;
+  }
+  a {
+    text-underline-offset: 0.2em;
+  }
+  /* One focus treatment everywhere: a 2px amber outline with a 2px gap, never a soft halo. */
+  :focus-visible {
+    outline: 2px solid var(--ring) !important;
+    outline-offset: 2px !important;
+    --tw-ring-shadow: 0 0 #0000 !important;
+  }
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline-offset: 1px !important;
+  }
+}
+
+@layer components {
+  /* Board surfaces: black in both themes, amber focus, dark native controls and scrollbars. */
+  .board-surface {
+    --ring: var(--lamp-amber);
+    color-scheme: dark;
+    caret-color: var(--lamp-amber);
+    scrollbar-color: var(--flap-seam) var(--board);
+    background: var(--board);
+    color: var(--flap-ink);
+  }
+
+  /* A single flap face: dark tile with a 1px hinge seam across the middle. */
+  .flap-face {
+    position: relative;
+    isolation: isolate;
+    background: var(--flap);
+    border-radius: var(--radius-sm);
+    color: var(--flap-ink);
+  }
+  .flap-face::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 50%;
+    height: 1px;
+    background: var(--board);
+    opacity: 0.85;
+    pointer-events: none;
+    /* Behind the ink: the seam shows around the glyphs but never reads as a strikethrough. */
+    z-index: -1;
+  }
+}
+
+/* Split-flap motion: the old top half folds down, then the new bottom half drops into place. */
+@keyframes flap-fold-top {
+  from { transform: rotateX(0deg); }
+  to { transform: rotateX(-90deg); }
+}
+@keyframes flap-fold-bottom {
+  from { transform: rotateX(90deg); }
+  to { transform: rotateX(0deg); }
+}
+@keyframes flap-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
