@@ -23,7 +23,7 @@ export function HourHeatmap({ title, cells, fromHour, toHour, weekdayLabels }: {
                 {hours.map((h) => {
                   const c = get(w, h);
                   return (
-                    <td key={h} title={t("heatCell", { day: label, hour: h, count: c })} className="size-6 rounded-sm" style={{ background: c ? `color-mix(in oklab, var(--chart-1) ${Math.round((c / max) * 90) + 10}%, transparent)` : "var(--muted)" }} />
+                    <td key={h} title={t("heatCell", { day: label, hour: h, count: c })} className="size-6 rounded-sm" style={{ background: c ? `color-mix(in oklab, var(--chart-1) ${Math.round((c / max) * 75) + 25}%, transparent)` : "var(--muted)" }} />
                   );
                 })}
               </tr>

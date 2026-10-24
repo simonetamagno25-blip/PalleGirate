@@ -28,7 +28,9 @@
     "no": "No",
     "search": "Search",
     "loading": "Loading…",
-    "language": "Language"
+    "language": "Language",
+    "theme": "Light/dark theme",
+    "menu": "Menu"
   },
   "errors": {
     "generic": "Something went wrong. Please try again.",

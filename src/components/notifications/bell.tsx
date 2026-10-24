@@ -16,7 +16,7 @@ export function NotificationBell({ unread, items }: { unread: number; items: Bel
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative" aria-label={`${t("title")} · ${t("unread", { count: unread })}`}>
+        <Button variant="ghost" size="icon" className="relative size-9" aria-label={`${t("title")} · ${t("unread", { count: unread })}`}>
           <Bell className="size-5" />
           {unread > 0 && (
             <span className="absolute -right-0.5 -top-0.5 grid min-w-5 place-items-center rounded-full bg-destructive px-1 text-[10px] font-semibold text-white">

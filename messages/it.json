@@ -28,7 +28,9 @@
     "no": "No",
     "search": "Cerca",
     "loading": "Caricamento…",
-    "language": "Lingua"
+    "language": "Lingua",
+    "theme": "Tema chiaro/scuro",
+    "menu": "Menu"
   },
   "errors": {
     "generic": "Qualcosa è andato storto. Riprova.",

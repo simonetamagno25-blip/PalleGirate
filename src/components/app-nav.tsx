@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { CalendarDays, ClipboardList, LayoutDashboard, LogOut, PlusCircle, Settings, User, Users, Wallet, BarChart3, Bell } from "lucide-react";
-import { signOut } from "@/auth";
+import { logoutAction } from "@/app/(app)/auth-actions";
 import { Button } from "@/components/ui/button";
 
 export async function AppNav({ isAdmin, userName }: { isAdmin: boolean; userName: string }) {
@@ -21,10 +21,6 @@ export async function AppNav({ isAdmin, userName }: { isAdmin: boolean; userName
     { href: "/admin/payments", label: t("adminPayments"), icon: Wallet },
     { href: "/admin/settings", label: t("adminSettings"), icon: Settings },
   ];
-  async function logout() {
-    "use server";
-    await signOut({ redirectTo: "/login" });
-  }
   const item = (l: (typeof member)[number]) => (
     <Link key={l.href} href={l.href} className="flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-accent">
       <l.icon className="size-4" aria-hidden /> <span>{l.label}</span>
@@ -37,7 +33,7 @@ export async function AppNav({ isAdmin, userName }: { isAdmin: boolean; userName
         {member.map(item)}
         {isAdmin && <p className="mt-4 px-3 text-xs uppercase text-muted-foreground">{t("admin")}</p>}
         {isAdmin && admin.map(item)}
-        <form action={logout} className="mt-auto">
+        <form action={logoutAction} className="mt-auto">
           <Button variant="ghost" className="w-full justify-start" type="submit"><LogOut className="size-4" aria-hidden /> {t("logout")}</Button>
         </form>
       </aside>
