@@ -11,8 +11,25 @@ import { Textarea } from "@/components/ui/textarea";
 import { ViolationList } from "@/components/common/violation-list";
 import type { Violation } from "@/lib/booking-rules";
 import { cancelBookingAction } from "@/app/(app)/book/actions";
+import { boardOutlineButton } from "@/components/board/board";
+import { cn } from "@/lib/utils";
 
-export function CancelButton({ bookingId, mode, defaultReason = "" }: { bookingId: string; mode: "member" | "admin"; defaultReason?: string }) {
+/** `onBoard`: trigger styled for the black board (quiet outline); `size` follows the surrounding buttons. */
+export function CancelButton({
+  bookingId,
+  mode,
+  defaultReason = "",
+  onBoard = false,
+  size = "sm",
+  className,
+}: {
+  bookingId: string;
+  mode: "member" | "admin";
+  defaultReason?: string;
+  onBoard?: boolean;
+  size?: "sm" | "default";
+  className?: string;
+}) {
   const t = useTranslations("bookings");
   const tc = useTranslations("common");
   const router = useRouter();
@@ -22,7 +39,7 @@ export function CancelButton({ bookingId, mode, defaultReason = "" }: { bookingI
   const [pending, start] = useTransition();
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild><Button size="sm" variant="outline">{t("cancel")}</Button></DialogTrigger>
+      <DialogTrigger asChild><Button size={size} variant="outline" className={cn(onBoard && boardOutlineButton, className)}>{t("cancel")}</Button></DialogTrigger>
       <DialogContent>
         <DialogHeader><DialogTitle>{t("cancelTitle")}</DialogTitle></DialogHeader>
         <div className="space-y-2">
