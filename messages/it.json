@@ -76,7 +76,8 @@
     "activate": "Attiva",
     "forgot": "Password dimenticata? Chiedi all'amministratore di reimpostare l'accesso.",
     "haveAccount": "Hai già un account? Accedi",
-    "clock": "Ora al centro: {time}"
+    "clock": "Ora al centro: {time}",
+    "welcome": "Benvenuto"
   },
   "members": {
     "title": "Soci",
@@ -378,6 +379,7 @@
     "bookAt": "{field}, {time}: libero, prenota",
     "mineAt": "{field}, dalle {from} alle {to}: la tua prenotazione",
     "court": "Campo",
-    "nextTimes": "Prossimi orari liberi"
+    "nextTimes": "Prossimi orari liberi",
+    "unavailableSpoken": "Non disponibile: orario passato o fuori dalla finestra di prenotazione"
   }
 }

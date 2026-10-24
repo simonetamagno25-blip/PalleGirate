@@ -21,8 +21,8 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
         </div>
       </header>
       <main className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center px-4 py-10 sm:py-16">
-        {/* The board on the way in: club name and the club's time in flap tiles, above a standard form. */}
-        <ClockBoard name={t("name")} initial={minutesToHHMM(romeMinutesOfDay(new Date()))} />
+        {/* The board on the way in: a greeting and the club's time in flap tiles, above a standard form. */}
+        <ClockBoard initial={minutesToHHMM(romeMinutesOfDay(new Date()))} />
         <div className="mt-8">{children}</div>
       </main>
     </div>

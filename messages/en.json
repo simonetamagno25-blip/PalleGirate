@@ -76,7 +76,8 @@
     "activate": "Activate",
     "forgot": "Forgot your password? Ask the administrator to reset your access.",
     "haveAccount": "Already have an account? Log in",
-    "clock": "Time at the club: {time}"
+    "clock": "Time at the club: {time}",
+    "welcome": "Welcome"
   },
   "members": {
     "title": "Members",
@@ -378,6 +379,7 @@
     "bookAt": "{field}, {time}: free, book it",
     "mineAt": "{field}, {from} to {to}: your booking",
     "court": "Court",
-    "nextTimes": "Next free times"
+    "nextTimes": "Next free times",
+    "unavailableSpoken": "Not available: past time or outside the booking window"
   }
 }

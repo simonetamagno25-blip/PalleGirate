@@ -39,9 +39,9 @@ export function DeparturesBoard({ board, today, nowMinute, busy = false, onSelec
       ) : (
         <BoardTable
           caption={title}
-          className="transition-opacity duration-150"
+          className="table-fixed transition-opacity duration-150"
           headers={[
-            { key: "court", label: tb("court"), className: "w-[34%] sm:w-40" },
+            { key: "court", label: tb("court"), className: "w-24 sm:w-40" },
             { key: "times", label: tb("nextTimes") },
           ]}
         >
@@ -53,7 +53,8 @@ export function DeparturesBoard({ board, today, nowMinute, busy = false, onSelec
               <BoardRow key={row.id}>
                 <BoardRowHeader>{row.name}</BoardRowHeader>
                 <BoardCell>
-                  <div className="flex flex-wrap items-center gap-1.5">
+                  {/* One line per court: the times scroll sideways on a narrow phone; the cut-off cell shows there is more. */}
+                  <div className="flex snap-x scroll-px-1 items-center gap-1.5 overflow-x-auto py-0.5 pr-1 [scrollbar-width:thin] *:shrink-0 *:snap-start">
                     {cells.map((c, i) =>
                       c.kind === "mine" ? (
                         <FlapMine

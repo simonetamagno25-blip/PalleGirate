@@ -4,7 +4,7 @@ import { hourCells, type HourCell } from "@/lib/calendar/board";
 import { minutesToHHMM } from "@/lib/time/rome";
 import { cn } from "@/lib/utils";
 import type { BoardRow, DayBoard } from "@/server/availability";
-import { Board, BoardCell, BoardRowHeader, BoardTable, FlapLink, FlapMine, FlapTaken } from "@/components/board/board";
+import { Board, BoardCell, BoardRowHeader, BoardTable, FlapLink, FlapMine, FlapTaken, FlapUnavailable } from "@/components/board/board";
 import { SplitFlap } from "@/components/board/split-flap";
 
 const pad = (h: number) => String(h).padStart(2, "0");
@@ -45,13 +45,14 @@ export async function CalendarBoard({ board, title, note, bookable }: { board: D
       );
     }
     if (c.kind === "taken") return <FlapTaken label={tb("taken")} detail={c.memberName} className={compact ? "w-full min-w-0" : undefined} />;
-    // Past or too late to fit a slot: a visible dim dash on the grid (spoken as "non disponibile"), never an empty hole.
-    return compact ? <FlapTaken label={tb("unavailable")} className="w-full min-w-0" /> : <span className="sr-only">{tb("unavailable")}</span>;
+    // Past, too late to fit a slot, or outside the window: an empty dashed cell (its own legend entry), never the
+    // "Occupato" dash and never a silent hole.
+    return compact ? <FlapUnavailable label={tb("unavailableSpoken")} className="w-full min-w-0" /> : <span className="sr-only">{tb("unavailableSpoken")}</span>;
   };
 
   return (
     <Board id="day-board" title={title} meta={t("legend")}>
-      <Legend free={tb("free")} mine={tb("mine")} taken={tb("taken")} title={t("legendTitle")} />
+      <Legend free={tb("free")} mine={tb("mine")} taken={tb("taken")} unavailable={tb("unavailable")} title={t("legendTitle")} />
       {note && <p className="mb-3 border-t border-flap-seam pt-3 text-base text-flap-ink">{note}</p>}
 
       {/* Wide: courts × hours. */}
@@ -101,7 +102,7 @@ export async function CalendarBoard({ board, title, note, bookable }: { board: D
   );
 }
 
-function Legend({ free, mine, taken, title }: { free: string; mine: string; taken: string; title: string }) {
+function Legend({ free, mine, taken, unavailable, title }: { free: string; mine: string; taken: string; unavailable: string; title: string }) {
   const sample = "flap-face inline-flex h-7 items-center justify-center px-2 font-display text-base leading-none font-bold";
   return (
     <div className="mb-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.9375rem] text-flap-ink-muted">
@@ -112,6 +113,7 @@ function Legend({ free, mine, taken, title }: { free: string; mine: string; take
         {mine}
       </span>
       <span className="inline-flex items-center gap-2"><span aria-hidden className={cn(sample, "min-w-9 bg-flap/60 font-sans font-normal text-flap-ink-muted")}>{DASH}</span>{taken}</span>
+      <span className="inline-flex items-center gap-2"><span aria-hidden className="inline-block h-7 w-9 rounded-sm border border-dashed border-flap-ink-muted/50" />{unavailable}</span>
     </div>
   );
 }

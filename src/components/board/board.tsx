@@ -162,3 +162,15 @@ export function FlapTaken({ label, detail, className }: { label: string; detail?
     </span>
   );
 }
+
+/**
+ * Not available (past, too late to fit a slot, outside the booking window): an empty dashed seam outline with no
+ * glyph, so it never reads as "Occupato" (the dash). The reason is spoken.
+ */
+export function FlapUnavailable({ label, className }: { label: string; className?: string }) {
+  return (
+    <span className={cn("inline-flex h-11 min-w-12 shrink-0 items-center justify-center rounded-sm border border-dashed border-flap-ink-muted/50", className)}>
+      <span className="sr-only">{label}</span>
+    </span>
+  );
+}
