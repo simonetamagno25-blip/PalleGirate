@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 import { describe, expect, test } from 'vitest'
 import manifest from '@/app/manifest'
@@ -22,7 +22,7 @@ describe('manifest PWA', () => {
     expect(m.theme_color).toBeTruthy()
   })
 
-  test('ha icone 192 e 512 (any) e una 512 maskable, tutte PNG servite da /pwa-icon', () => {
+  test('ha icone 192 e 512 (any) e una 512 maskable: PNG del logo che esistono davvero in public/', () => {
     const icons = m.icons ?? []
     const find = (sizes: string, purpose: string) => icons.find((i) => i.sizes === sizes && (i.purpose ?? 'any') === purpose)
     expect(find('192x192', 'any')).toBeDefined()
@@ -30,7 +30,8 @@ describe('manifest PWA', () => {
     expect(find('512x512', 'maskable')).toBeDefined()
     for (const i of icons) {
       expect(i.type).toBe('image/png')
-      expect(i.src).toMatch(/^\/pwa-icon\/(192|512)/)
+      expect(i.src).toMatch(/^\/icons\/icon-(192|512|maskable-512)\.png$/)
+      expect(existsSync(path.join(import.meta.dirname, '..', 'public', i.src)), i.src).toBe(true)
     }
   })
 })
@@ -39,8 +40,9 @@ describe('proxy', () => {
   test('non intercetta service worker, manifest e icone', () => {
     expect(matches('/sw.js')).toBe(false)
     expect(matches('/manifest.webmanifest')).toBe(false)
-    expect(matches('/pwa-icon/192')).toBe(false)
-    expect(matches('/pwa-icon/512')).toBe(false)
+    expect(matches('/icons/icon-192.png')).toBe(false)
+    expect(matches('/logo.png')).toBe(false)
+    expect(matches('/icon.png')).toBe(false)
   })
 
   test('intercetta le pagine localizzate e la radice', () => {

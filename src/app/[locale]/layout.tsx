@@ -15,12 +15,11 @@ export async function generateMetadata({ params }: LayoutProps<'/[locale]'>): Pr
   const t = await getTranslations({ locale, namespace: 'common' })
   return {
     title: t('appName'),
-    icons: { apple: '/pwa-icon/192' },
     appleWebApp: { capable: true, title: t('appName'), statusBarStyle: 'default' },
   }
 }
 
-export const viewport: Viewport = { themeColor: '#111827' }
+export const viewport: Viewport = { themeColor: '#003826' }
 
 export default async function LocaleLayout({ children, params }: LayoutProps<'/[locale]'>) {
   const { locale } = await params

@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import { logoutAction } from '@/app/[locale]/actions-session'
 import { Button } from '@/components/ui/button'
 import { LocaleSwitcher } from '@/components/LocaleSwitcher'
+import { Logo } from '@/components/Logo'
 import { NotificationBell } from '@/components/NotificationBell'
 import { Link } from '@/i18n/routing'
 import type { SessionUser } from '@/lib/auth'
@@ -23,7 +24,10 @@ export async function AppShell({ user, children }: { user: SessionUser; children
     <div className="flex flex-1 flex-col">
       <header className="border-b">
         <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
-          <span className="mr-auto font-semibold tracking-tight md:mr-0">Palle Girate</span>
+          <Link href="/dashboard" className="mr-auto flex items-center gap-2.5 font-semibold tracking-tight md:mr-0">
+            <Logo height={36} priority />
+            <span>Palle Girate</span>
+          </Link>
           {/* Su telefono la navigazione va su una riga a parte, scorrevole in orizzontale. */}
           <nav className="order-last flex basis-full gap-1 overflow-x-auto text-sm md:order-none md:basis-auto md:flex-1">
             {links.map((l) => (

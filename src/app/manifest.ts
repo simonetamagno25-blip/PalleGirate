@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 
-const THEME_COLOR = '#111827'
+const THEME_COLOR = '#003826' // verde del logo
 
 /** Manifest PWA: rende l'app installabile ("Aggiungi a schermata Home") su iOS, Android e desktop. */
 export default function manifest(): MetadataRoute.Manifest {
@@ -11,12 +11,12 @@ export default function manifest(): MetadataRoute.Manifest {
     start_url: '/',
     scope: '/',
     display: 'standalone',
-    background_color: '#ffffff',
+    background_color: '#fbf6e6', // crema delle icone
     theme_color: THEME_COLOR,
     icons: [
-      { src: '/pwa-icon/192', sizes: '192x192', type: 'image/png', purpose: 'any' },
-      { src: '/pwa-icon/512', sizes: '512x512', type: 'image/png', purpose: 'any' },
-      { src: '/pwa-icon/512?maskable=1', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+      { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+      { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+      { src: '/icons/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
     ],
   }
 }

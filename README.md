@@ -90,7 +90,7 @@ All'avvio il container crea le tabelle (`prisma db push`) e carica il seed: stes
 - **Autorizzazione**: ogni pagina e azione riservata inizia con `requireMember()` o `requireAdmin()`, che rileggono il ruolo dal database. L'area `/admin` per un socio risponde 404.
 - **Sessioni**: JWT con una versione per utente; "reimposta accesso" la incrementa, quindi i vecchi token non valgono più nemmeno dopo la riattivazione.
 - **Lingua**: testi in `messages/it.json` e `messages/en.json`; i test verificano chiavi e segnaposto uguali nelle due lingue e che ogni chiave usata nel codice esista. La scelta si salva sul profilo.
-- **PWA**: `manifest.webmanifest`, icone generate da `/pwa-icon/<192|512>` e un service worker minimo (`public/sw.js`) che non mette nulla in cache: l'uso offline non è richiesto.
+- **PWA**: `manifest.webmanifest`, icone ricavate dal logo (`public/icons/`) e un service worker minimo (`public/sw.js`) che non mette nulla in cache: l'uso offline non è richiesto.
 
 ## Limiti noti e scelte da conoscere
 
