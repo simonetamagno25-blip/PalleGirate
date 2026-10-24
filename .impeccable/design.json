@@ -1,0 +1,512 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-24T20:19:16.523Z",
+  "title": "Design System: Palle Girate",
+  "extensions": {
+    "colorMeta": {
+      "board-frame": {
+        "role": "neutral",
+        "displayName": "Board Frame",
+        "canonical": "#1a1b1b",
+        "oklch": "oklch(22.1% 0.002 197)",
+        "tonalRamp": [
+          "#0a0b0b",
+          "#242525",
+          "#414242",
+          "#606161",
+          "#818282",
+          "#a4a5a5",
+          "#c8c9c9",
+          "#edefef"
+        ]
+      },
+      "flap-face": {
+        "role": "neutral",
+        "displayName": "Flap Face",
+        "canonical": "#0e0f0f",
+        "oklch": "oklch(16.7% 0.002 196)",
+        "tonalRamp": [
+          "#0a0b0b",
+          "#242525",
+          "#414242",
+          "#606161",
+          "#818383",
+          "#a4a5a5",
+          "#c8c9c9",
+          "#edefef"
+        ]
+      },
+      "flap-seam": {
+        "role": "neutral",
+        "displayName": "Flap Seam",
+        "canonical": "#2a2c2b",
+        "oklch": "oklch(29.1% 0.003 164)",
+        "tonalRamp": [
+          "#0a0c0b",
+          "#242625",
+          "#404241",
+          "#5f6261",
+          "#808382",
+          "#a3a6a4",
+          "#c7cac8",
+          "#ecefee"
+        ]
+      },
+      "flap-ink": {
+        "role": "neutral",
+        "displayName": "Flap Ink",
+        "canonical": "#f3f3ee",
+        "oklch": "oklch(96.3% 0.007 106)",
+        "tonalRamp": [
+          "#0b0b08",
+          "#252522",
+          "#42423e",
+          "#61615d",
+          "#83837e",
+          "#a5a5a1",
+          "#c9c9c5",
+          "#efefea"
+        ]
+      },
+      "flap-ink-muted": {
+        "role": "neutral",
+        "displayName": "Flap Ink Muted",
+        "canonical": "#b9b9b0",
+        "oklch": "oklch(78.3% 0.013 106)",
+        "tonalRamp": [
+          "#0c0c06",
+          "#26261f",
+          "#43433b",
+          "#62625a",
+          "#83837a",
+          "#a6a69d",
+          "#cacac1",
+          "#efefe6"
+        ]
+      },
+      "lamp-amber": {
+        "role": "primary",
+        "displayName": "Departure Lamp Amber",
+        "canonical": "#f5a524",
+        "oklch": "oklch(78.2% 0.158 72)",
+        "tonalRamp": [
+          "#140800",
+          "#352001",
+          "#5b3a03",
+          "#845606",
+          "#b0740c",
+          "#df9200",
+          "#ffba5d",
+          "#feebd5"
+        ]
+      },
+      "amber-ink": {
+        "role": "primary",
+        "displayName": "Lamp Ink Amber",
+        "canonical": "#a35c00",
+        "oklch": "oklch(54.5% 0.126 61)",
+        "tonalRamp": [
+          "#170600",
+          "#3a1c00",
+          "#623500",
+          "#8e5001",
+          "#b76e23",
+          "#dd914b",
+          "#ffb87a",
+          "#ffeada"
+        ]
+      },
+      "lamp-green": {
+        "role": "secondary",
+        "displayName": "Paid Green",
+        "canonical": "#3fb26b",
+        "oklch": "oklch(68.1% 0.147 152)",
+        "tonalRamp": [
+          "#001003",
+          "#002e13",
+          "#045028",
+          "#07753d",
+          "#1f9b55",
+          "#4ebf77",
+          "#75e59a",
+          "#c6ffd5"
+        ]
+      },
+      "lamp-green-deep": {
+        "role": "secondary",
+        "displayName": "Paid Green Deep",
+        "canonical": "#15803d",
+        "oklch": "oklch(52.7% 0.137 150)",
+        "tonalRamp": [
+          "#001003",
+          "#012e10",
+          "#025022",
+          "#057535",
+          "#379954",
+          "#5ebd76",
+          "#83e299",
+          "#c8ffd2"
+        ]
+      },
+      "lamp-red": {
+        "role": "secondary",
+        "displayName": "Blocked Red",
+        "canonical": "#ef5b52",
+        "oklch": "oklch(66.4% 0.184 26)",
+        "tonalRamp": [
+          "#200000",
+          "#4c0104",
+          "#80030c",
+          "#b21c1e",
+          "#db4841",
+          "#fe7469",
+          "#fdb4ab",
+          "#fee9e6"
+        ]
+      },
+      "lamp-red-deep": {
+        "role": "secondary",
+        "displayName": "Blocked Red Deep",
+        "canonical": "#b42318",
+        "oklch": "oklch(50.0% 0.182 29)",
+        "tonalRamp": [
+          "#210000",
+          "#4d0000",
+          "#810100",
+          "#b12015",
+          "#da4a3b",
+          "#ff7462",
+          "#ffb3a7",
+          "#fee9e6"
+        ]
+      },
+      "page-ground": {
+        "role": "neutral",
+        "displayName": "Page Ground",
+        "canonical": "#f3f3f1",
+        "oklch": "oklch(96.4% 0.003 106)",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#252524",
+          "#424240",
+          "#616160",
+          "#828281",
+          "#a5a5a3",
+          "#c9c9c7",
+          "#eeeeec"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#141414",
+        "oklch": "oklch(19.1% 0.000 89)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "Card",
+        "canonical": "#ffffff",
+        "oklch": "oklch(100.0% 0.000 89)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "muted-ink": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "#55554f",
+        "oklch": "oklch(44.8% 0.010 106)",
+        "tonalRamp": [
+          "#0c0b07",
+          "#252520",
+          "#42423d",
+          "#62625b",
+          "#83837c",
+          "#a5a59f",
+          "#cacac3",
+          "#efefe8"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#d9d9d4",
+        "oklch": "oklch(88.4% 0.007 106)",
+        "tonalRamp": [
+          "#0b0b08",
+          "#252522",
+          "#42423e",
+          "#61615d",
+          "#83837e",
+          "#a5a5a1",
+          "#c9c9c4",
+          "#efefea"
+        ]
+      },
+      "input-edge": {
+        "role": "neutral",
+        "displayName": "Input Edge",
+        "canonical": "#8a8a83",
+        "oklch": "oklch(63.1% 0.010 106)",
+        "tonalRamp": [
+          "#0c0b07",
+          "#252520",
+          "#42423c",
+          "#62625b",
+          "#83837c",
+          "#a5a69e",
+          "#cacac2",
+          "#efefe7"
+        ]
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "Graphite",
+        "canonical": "#66665f",
+        "oklch": "oklch(50.8% 0.011 106)",
+        "tonalRamp": [
+          "#0c0b07",
+          "#26251f",
+          "#42423c",
+          "#62625b",
+          "#83837c",
+          "#a6a69e",
+          "#cacac2",
+          "#efefe7"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "flap-numeral": {
+        "displayName": "Flap numeral",
+        "purpose": "Times in split-flap tiles (44px in a 56px tile, 36px, 22px)."
+      },
+      "page-title": {
+        "displayName": "Page title",
+        "purpose": "The h1 of each page, Barlow Condensed, sentence case (36px from md)."
+      },
+      "board-title": {
+        "displayName": "Board title",
+        "purpose": "Board headers, app name in the top bar, the booking CTA; uppercase."
+      },
+      "court-name": {
+        "displayName": "Court name",
+        "purpose": "Row headers on boards and booking cards; uppercase, 24px for the next game."
+      },
+      "column-header": {
+        "displayName": "Column header",
+        "purpose": "Table headers on boards and office tables; uppercase, muted."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All running text, 16px minimum for content."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Controls, captions and tags, 14px at 500."
+      }
+    },
+    "shadows": [
+      {
+        "name": "floating-layer",
+        "value": "0 12px 32px -12px rgb(0 0 0 / 0.35)",
+        "purpose": "Dialog and dropdown menu only, with a 1px hairline ring. Boards, cards and tiles have no shadow."
+      }
+    ],
+    "motion": [
+      {
+        "name": "flap-fold",
+        "value": "110ms ease-in (top half folds), 110ms cubic-bezier(0.25, 1, 0.5, 1) (bottom half drops), 50ms stagger per character",
+        "purpose": "Split-flap change of a time; first paint never animates."
+      },
+      {
+        "name": "flap-fade",
+        "value": "120ms ease-out opacity",
+        "purpose": "Reduced-motion replacement for the flip."
+      },
+      {
+        "name": "state-transition",
+        "value": "150ms on background-color, color, border-color, opacity",
+        "purpose": "Hover and press on buttons, cells and nav rows."
+      },
+      {
+        "name": "ease-out-quart",
+        "value": "cubic-bezier(0.25, 1, 0.5, 1)",
+        "purpose": "Default easing for entering motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one amber action on a screen: book, confirm, save.",
+      "html": "<button class=\"ds-btn-primary\">Prenota</button>",
+      "css": ".ds-btn-primary{background:var(--primary, #f5a524);color:#111111;height:44px;padding:0 16px;border:1px solid transparent;border-radius:6px;font:600 16px/1 Barlow,sans-serif;cursor:pointer;transition:background-color 150ms,opacity 150ms}.ds-btn-primary:hover{background:color-mix(in oklch,#f5a524,#000 10%)}.ds-btn-primary:active{opacity:.85}.ds-btn-primary:focus-visible{outline:2px solid #a35c00;outline-offset:2px}"
+    },
+    {
+      "name": "Booking CTA",
+      "kind": "button",
+      "refersTo": "button-primary-cta",
+      "description": "Full-width primary action in the board voice, 60px tall, under the next-game board.",
+      "html": "<button class=\"ds-cta\">PRENOTA UN CAMPO</button>",
+      "css": ".ds-cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:60px;border:0;border-radius:6px;background:#f5a524;color:#111111;font:700 24px/1 'Barlow Condensed',sans-serif;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;transition:background-color 150ms}.ds-cta:hover{background:color-mix(in oklch,#f5a524,#000 10%)}.ds-cta:focus-visible{outline:2px solid #a35c00;outline-offset:2px}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action on the page ground: card fill with an input-edge border.",
+      "html": "<button class=\"ds-btn-outline\">Modifica</button>",
+      "css": ".ds-btn-outline{height:44px;padding:0 16px;border:1px solid var(--input, #8a8a83);border-radius:6px;background:var(--card, #fff);color:var(--foreground, #141414);font:500 16px/1 Barlow,sans-serif;cursor:pointer;transition:background-color 150ms}.ds-btn-outline:hover{background:var(--muted, #e9e9e5)}.ds-btn-outline:focus-visible{outline:2px solid #a35c00;outline-offset:2px}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "44px field with a 3:1 edge; focus is the shared 2px outline.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Email\">",
+      "css": ".ds-input{box-sizing:border-box;width:100%;height:44px;padding:4px 12px;border:1px solid var(--input, #8a8a83);border-radius:6px;background:transparent;color:var(--foreground, #141414);font:400 16px/1.5 Barlow,sans-serif}.ds-input::placeholder{color:#55554f}.ds-input:focus-visible{border-color:#a35c00;outline:2px solid #a35c00;outline-offset:1px}"
+    },
+    {
+      "name": "Nav Item",
+      "kind": "nav",
+      "refersTo": "nav-item-active",
+      "description": "Side navigation row: active is board black with an amber icon, never a side stripe.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-item ds-active\" href=\"#\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 10.5 12 3l9 7.5V21H3z\"/></svg>Home</a><a class=\"ds-nav-item\" href=\"#\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"17\" rx=\"2\"/><path d=\"M8 2v4M16 2v4M3 10h18\"/></svg>Calendario</a></nav>",
+      "css": ".ds-nav{display:flex;flex-direction:column;gap:4px;width:220px}.ds-nav-item{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 12px;border-radius:6px;color:#141414;font:500 16px Barlow,sans-serif;text-decoration:none;transition:background-color 150ms}.ds-nav-item svg{color:#55554f}.ds-nav-item:hover{background:#ebebe7}.ds-nav-item.ds-active{background:#1a1b1b;color:#f3f3ee}.ds-nav-item.ds-active svg{color:#f5a524}.ds-nav-item:focus-visible{outline:2px solid #a35c00;outline-offset:2px}"
+    },
+    {
+      "name": "Free Time Cell",
+      "kind": "custom",
+      "refersTo": "flap-cell",
+      "description": "A free start time on a board: a flap-face link that turns amber on hover.",
+      "html": "<div class=\"ds-board\"><a class=\"ds-flap\" href=\"#\">18:00</a><a class=\"ds-flap\" href=\"#\">19:00</a></div>",
+      "css": ".ds-board{background:#1a1b1b;padding:16px;border-radius:6px;box-shadow:inset 0 0 0 1px #2a2c2b;display:flex;gap:6px}.ds-flap{display:inline-flex;align-items:center;justify-content:center;height:44px;min-width:64px;padding:0 10px;border-radius:4px;background:#0e0f0f;color:#f3f3ee;font:700 22px/1 'Barlow Condensed',sans-serif;text-decoration:none;transition:background-color 150ms,color 150ms}.ds-flap:hover{background:#262828;color:#f5a524}.ds-flap:focus-visible{outline:2px solid #f5a524;outline-offset:2px}"
+    },
+    {
+      "name": "Cell States",
+      "kind": "custom",
+      "refersTo": "flap-cell-mine",
+      "description": "Yours (amber with check and word), occupied (dimmed dash), not available (empty dashed outline).",
+      "html": "<div class=\"ds-board\"><span class=\"ds-mine\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"/></svg>18:00<small>Tua</small></span><span class=\"ds-taken\">&mdash;</span><span class=\"ds-na\"></span></div>",
+      "css": ".ds-board{background:#1a1b1b;padding:16px;border-radius:6px;box-shadow:inset 0 0 0 1px #2a2c2b;display:flex;align-items:center;gap:6px}.ds-mine{display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 10px;border-radius:4px;background:#f5a524;color:#111;font:700 22px/1 'Barlow Condensed',sans-serif}.ds-mine small{font:600 14px Barlow,sans-serif}.ds-taken{display:inline-flex;align-items:center;justify-content:center;height:44px;min-width:48px;border-radius:4px;background:rgba(14,15,15,.6);color:#b9b9b0;font:400 16px Barlow,sans-serif}.ds-na{display:inline-block;height:44px;min-width:48px;border-radius:4px;border:1px dashed rgba(185,185,176,.5)}"
+    },
+    {
+      "name": "Split-Flap Time",
+      "kind": "custom",
+      "refersTo": "flap-numeral",
+      "description": "The next game: a time in 56px flap tiles with the hinge seam behind the glyphs.",
+      "html": "<div class=\"ds-board\"><div class=\"ds-time\"><span>1</span><span>8</span><i>:</i><span>3</span><span>0</span></div><p class=\"ds-court\">CALCIO A 5</p></div>",
+      "css": ".ds-board{background:#1a1b1b;padding:16px;border-radius:6px;box-shadow:inset 0 0 0 1px #2a2c2b;color:#f3f3ee}.ds-time{display:inline-flex;align-items:center;gap:4px;font:700 44px/1 'Barlow Condensed',sans-serif}.ds-time span{position:relative;isolation:isolate;display:inline-grid;place-items:center;height:56px;min-width:36px;padding:0 4px;border-radius:4px;background:#0e0f0f}.ds-time span::after{content:'';position:absolute;inset-inline:0;top:50%;height:1px;background:#1a1b1b;opacity:.85;z-index:-1}.ds-time i{font-style:normal;padding:0 1px}.ds-court{margin:12px 0 0;font:700 24px/1.25 'Barlow Condensed',sans-serif;letter-spacing:.03em}"
+    },
+    {
+      "name": "Day Tile",
+      "kind": "chip",
+      "refersTo": "day-tile",
+      "description": "Flap-style date tile in the day strip; selected is amber ink with an inset amber outline.",
+      "html": "<div class=\"ds-strip\"><button class=\"ds-day\"><span>Oggi</span><b>24</b></button><button class=\"ds-day ds-sel\"><span>dom</span><b>25</b></button></div>",
+      "css": ".ds-strip{display:flex;gap:8px}.ds-day{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:56px;height:64px;border:0;border-radius:4px;background:#0e0f0f;color:#f3f3ee;box-shadow:inset 0 0 0 1px #2a2c2b;cursor:pointer;transition:background-color 150ms}.ds-day span{font:400 14px/1 Barlow,sans-serif;color:#b9b9b0}.ds-day b{font:700 24px/1 'Barlow Condensed',sans-serif}.ds-day:hover{background:#262828}.ds-day.ds-sel{color:#f5a524;box-shadow:inset 0 0 0 2px #f5a524}.ds-day.ds-sel span{color:#f5a524}.ds-day:focus-visible{outline:2px solid #f5a524;outline-offset:2px}"
+    },
+    {
+      "name": "Status Lamp",
+      "kind": "chip",
+      "refersTo": "card",
+      "description": "A 10px dot plus the state in words; the text carries the meaning.",
+      "html": "<span class=\"ds-lamp\"><i class=\"ds-dot ds-green\"></i>Pagato</span> <span class=\"ds-lamp\"><i class=\"ds-dot ds-red\"></i>Non pagato</span> <span class=\"ds-lamp\"><i class=\"ds-dot ds-amber\"></i>Da registrare</span>",
+      "css": ".ds-lamp{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;font:400 16px Barlow,sans-serif;color:#141414}.ds-dot{width:10px;height:10px;border-radius:9999px}.ds-green{background:#15803d}.ds-red{background:#b42318}.ds-amber{background:#a35c00}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Departures Board",
+    "overview": "Every court is a row, every free time is the next departure, and your own game is the only thing lit amber. The app is a quiet neutral shell (office-grey in light, board-black in dark) around black board panels that stay black in both themes. Inside a panel, type is condensed and tabular, rows are separated by 1px seams rather than shadows, and times are split-flap tiles that flip when the value changes. Outside a panel, it is ordinary web UI: Barlow, sentence case, standard controls at 44px.\n\nThe mood is sporty and energetic in the details (the flap, the lamp, condensed numerals) and calm in the task: booking never competes with decoration. Members see only free, taken and yours, readable without a legend. The office reads the same grammar as dense tables with status lamps. The system refuses the startup look: no gradients, glass, glow or soft halos, and no white cards with pastel time chips.",
+    "keyCharacteristics": [
+      "Black board panels (board-frame) in both themes; neutral true-grey ground around them (chroma 0).",
+      "One lamp: amber means yours, the primary action, or live. It is never decoration and never a data series for counts.",
+      "State is a word plus a mark (check, dash, dashed outline, lamp dot), never color alone.",
+      "Hairline seams (flap-seam) and 1px rings instead of shadows; floating layers alone carry a soft shadow.",
+      "Two faces: Barlow Condensed for the board voice, Barlow for everything readable."
+    ],
+    "rules": [
+      {
+        "name": "The One Lamp Rule",
+        "body": "Amber marks yours, the primary action, or live state and nothing else. Disabled primary is a neutral fill with muted ink, never dim amber.",
+        "section": "colors"
+      },
+      {
+        "name": "The Lamp Ink Rule",
+        "body": "On light grounds amber text, links, rings and chart marks use amber-ink; the bright amber is for fills with #111111 ink and for black surfaces.",
+        "section": "colors"
+      },
+      {
+        "name": "The Board Stays Black Rule",
+        "body": "Board panels are #1a1b1b with #0e0f0f faces in both themes; only the shell around them changes.",
+        "section": "colors"
+      },
+      {
+        "name": "The Board Voice Rule",
+        "body": "Uppercase condensed lives on the board: board titles, court names, column headers, flap text and the primary booking button. Page titles, nav, card headings, buttons and body stay sentence case. No eyebrows or kickers.",
+        "section": "typography"
+      },
+      {
+        "name": "The Seam Rule",
+        "body": "Inside a board, separation is a 1px seam. Shadows belong to things that float above the page.",
+        "section": "elevation"
+      },
+      {
+        "name": "The One Focus Rule",
+        "body": "Focus is a 2px outline in the ring color (amber-ink on light, amber on dark and on boards) with a 2px offset (1px on text fields), everywhere.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep board panels #1a1b1b with #0e0f0f faces and #2a2c2b seams in both themes.",
+      "Do use amber only for yours, the primary action and live state, and amber-ink (#a35c00) for amber text, links and focus on light grounds.",
+      "Do pair every state with a word or mark: check for yours, dash for occupied, dashed empty cell for not available, dot plus text for payment.",
+      "Do keep 44px targets, 16px body and 2px amber focus outlines with a 2px offset.",
+      "Do flip times as split-flap characters when the value changes, and honor reduced motion with the 120ms crossfade.",
+      "Do keep condensed uppercase to the board (titles, court names, column headers, flap text, the booking CTA) and sentence case elsewhere."
+    ],
+    "donts": [
+      "Don't use gradients, glass, glow, soft focus halos or startup-style decoration.",
+      "Don't add a blue lamp or color a neutral count series amber, green or red.",
+      "Don't show \"not available\" as a dash; the dash means occupied.",
+      "Don't put a hinge seam on 28px cells or legend samples (it reads as cancelled).",
+      "Don't replace the board with white cards and pastel time chips, and don't reveal who booked a court to a member.",
+      "Don't add shadows to boards, cards or tiles; shadows are for floating layers only.",
+      "Don't use dim amber for disabled primary buttons."
+    ]
+  }
+}

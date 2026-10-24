@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=390">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:390px;height:844px;overflow:hidden;background:#f2f2f0;font-family:'Hanken Grotesk',sans-serif;color:#111111}
+.top{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;background:#111;color:#fff}
+.club{font-weight:800;font-size:21px}
+.bell{width:44px;height:44px;border-radius:8px;background:#2b2b2b;display:grid;place-items:center}
+.band{background:#ffd200;padding:16px 20px 18px}
+.band p{font-size:16px;font-weight:700}
+.big{display:flex;align-items:flex-end;gap:12px;margin-top:4px}
+.big b{font-size:72px;font-weight:800;line-height:.9;letter-spacing:-.02em}
+.big span{font-size:20px;font-weight:700;padding-bottom:8px}
+.band small{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:16px;font-weight:700}
+.band small i{width:28px;height:28px;background:#111;border-radius:4px;display:grid;place-items:center}
+.step{margin:18px 16px 0}
+.step h2{font-size:15px;font-weight:700;color:#2b2b2b;margin-bottom:8px}
+.days{display:flex;gap:6px}
+.d{flex:1;height:64px;background:#fff;border:2px solid #111;border-radius:8px;text-align:center;padding-top:8px;font-size:14px;font-weight:700}
+.d b{display:block;font-size:24px;font-weight:800}
+.d.on{background:#111;color:#ffd200}
+.list{margin:0;display:flex;flex-direction:column;gap:8px}
+.c{height:60px;background:#fff;border-radius:8px;display:flex;align-items:center;padding:0 14px;gap:12px;font-size:18px;font-weight:800}
+.c i{width:36px;height:36px;background:#111;border-radius:6px;display:grid;place-items:center}
+.c em{margin-left:auto;font-style:normal;font-size:15px;font-weight:700;color:#2b2b2b}
+.c svg.arr{margin-left:8px}
+.tab{position:absolute;left:0;right:0;bottom:0;height:74px;background:#111;color:#e5e5e5;display:flex;justify-content:space-around;align-items:center;font-size:13px;font-weight:700}
+.tab .a{color:#ffd200}
+.tab div{display:flex;flex-direction:column;align-items:center;gap:4px}
+.tab i{width:24px;height:24px;border-radius:5px;border:2.5px solid currentColor}
+</style></head><body>
+<div class="top"><div class="club">Palle Girate</div><div class="bell"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/></svg></div></div>
+<div class="band"><p>La tua prossima partita · Sabato 26</p><div class="big"><b>18:00</b><span>Tennis 1</span></div><small><i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 7v5l3 2"/><circle cx="12" cy="12" r="9"/></svg></i>Modificabile fino alle 16:00</small></div>
+<div class="step"><h2>1 · Scegli il giorno</h2><div class="days"><div class="d on">Ven<b>25</b></div><div class="d">Sab<b>26</b></div><div class="d">Dom<b>27</b></div><div class="d">Lun<b>28</b></div><div class="d">Mar<b>29</b></div></div></div>
+<div class="step"><h2>2 · Scegli il campo</h2><div class="list">
+<div class="c"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><circle cx="12" cy="12" r="8"/></svg></i>Calcio<em>3 orari liberi</em><svg class="arr" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="3"><path d="M9 6l6 6-6 6"/></svg></div>
+<div class="c"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><ellipse cx="10" cy="9" rx="6" ry="6"/></svg></i>Tennis 1<em>4 orari liberi</em><svg class="arr" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="3"><path d="M9 6l6 6-6 6"/></svg></div>
+<div class="c"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><ellipse cx="10" cy="9" rx="6" ry="6"/></svg></i>Tennis 2<em>5 orari liberi</em><svg class="arr" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="3"><path d="M9 6l6 6-6 6"/></svg></div>
+<div class="c"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><circle cx="12" cy="12" r="8"/><path d="M4 12h16"/></svg></i>Basket<em>2 orari liberi</em><svg class="arr" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="3"><path d="M9 6l6 6-6 6"/></svg></div>
+</div></div>
+<div class="tab"><div class="a"><i></i>Home</div><div><i></i>Calendario</div><div><i></i>Prenota</div><div><i></i>Le mie</div></div>
+</body></html>

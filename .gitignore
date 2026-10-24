@@ -7,3 +7,6 @@ next-env.d.ts
 coverage
 .superpowers/
 tsconfig.tsbuildinfo
+# Impeccable: screenshot di revisione e cache locali
+.impeccable/review/
+.impeccable/hook.cache.json

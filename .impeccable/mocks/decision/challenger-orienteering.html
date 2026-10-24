@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=390">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@500;700&family=Roboto+Flex:opsz,wght@8..144,400;8..144,600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:390px;height:844px;overflow:hidden;background:#ffffff;font-family:'Roboto Flex',sans-serif;color:#1c1c1c}
+.top{padding:18px 20px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #b0703a}
+.club{font-family:'Roboto Condensed';font-weight:700;font-size:22px}
+.club b{color:#c0187a}
+.bell{width:44px;height:44px;border-radius:50%;background:#f7d774;display:grid;place-items:center}
+.course{margin:16px;display:flex;gap:12px;align-items:center}
+.ring{width:56px;height:56px;border-radius:50%;border:4px solid #c0187a;display:grid;place-items:center;font-family:'Roboto Condensed';font-weight:700;font-size:24px;color:#c0187a;flex:none}
+.course p{font-size:15px;color:#555}
+.course b{display:block;font-family:'Roboto Condensed';font-size:26px;color:#1c1c1c}
+.legend{margin:0 16px;display:grid;grid-template-columns:repeat(3,1fr);border:1.5px solid #1c1c1c;border-radius:8px;overflow:hidden;font-size:14px;font-weight:600}
+.legend div{padding:10px 8px;display:flex;gap:8px;align-items:center}
+.legend i{width:18px;height:18px;border-radius:3px;border:1.5px solid #1c1c1c}
+.cta{margin:14px 16px 0;height:56px;border-radius:10px;background:#c0187a;color:#fff;display:grid;place-items:center;font-family:'Roboto Condensed';font-weight:700;font-size:21px;text-transform:uppercase}
+.days{display:flex;margin:18px 16px 0;border-bottom:1.5px solid #ddd}
+.d{flex:1;text-align:center;padding:6px 0 10px;font-size:13px;color:#555}
+.d b{display:block;font-family:'Roboto Condensed';font-size:22px;color:#1c1c1c}
+.d.on{border-bottom:4px solid #c0187a;margin-bottom:-1.5px}
+.map{margin:14px 16px 0;position:relative}
+.hrs{display:grid;grid-template-columns:78px repeat(5,1fr);font-family:'Roboto Condensed';font-size:13px;color:#7a4a22;font-weight:700;margin-bottom:4px}
+.r{display:grid;grid-template-columns:78px repeat(5,1fr);height:48px;border-top:1px solid #e3d2c0}
+.r .n{font-weight:600;font-size:15px;display:flex;align-items:center}
+.r div.c{border-left:1px solid #e3d2c0;display:grid;place-items:center;font-family:'Roboto Condensed';font-size:15px;font-weight:500}
+.c.x{background:#b9c48a;color:#33381a}
+.c.me{position:relative}
+.c.me:after{content:"1";position:absolute;width:34px;height:34px;border-radius:50%;border:3px solid #c0187a;color:#c0187a;display:grid;place-items:center;font-weight:700;background:#fff}
+.tab{position:absolute;left:0;right:0;bottom:0;height:74px;border-top:3px solid #b0703a;display:flex;justify-content:space-around;align-items:center;font-size:13px;font-weight:600;color:#666}
+.tab .a{color:#c0187a}
+.tab div{display:flex;flex-direction:column;align-items:center;gap:4px}
+.tab i{width:24px;height:24px;border-radius:50%;border:2.5px solid currentColor}
+</style></head><body>
+<div class="top"><div class="club">Palle <b>Girate</b></div><div class="bell"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1c1c1c" stroke-width="2"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/></svg></div></div>
+<div class="course"><div class="ring">1</div><p>Prossima tappa · Sab 26 ott<b>Tennis 1 · 18:00–19:00</b></p></div>
+<div class="legend"><div><i></i>Libero</div><div><i style="background:#b9c48a"></i>Occupato</div><div><i style="border:3px solid #c0187a;border-radius:50%"></i>Tuo</div></div>
+<div class="cta">Prenota un campo</div>
+<div class="days"><div class="d on">Ven<b>25</b></div><div class="d">Sab<b>26</b></div><div class="d">Dom<b>27</b></div><div class="d">Lun<b>28</b></div><div class="d">Mar<b>29</b></div></div>
+<div class="map">
+<div class="hrs"><span></span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span></div>
+<div class="r"><div class="n">Calcio</div><div class="c x">—</div><div class="c">18:30</div><div class="c x">—</div><div class="c">20:00</div><div class="c">21:30</div></div>
+<div class="r"><div class="n">Tennis 1</div><div class="c">17:00</div><div class="c me"></div><div class="c x">—</div><div class="c">20:00</div><div class="c">21:00</div></div>
+<div class="r"><div class="n">Tennis 2</div><div class="c">17:00</div><div class="c">18:00</div><div class="c">19:00</div><div class="c x">—</div><div class="c">21:00</div></div>
+<div class="r"><div class="n">Basket</div><div class="c x">—</div><div class="c x">—</div><div class="c">19:00</div><div class="c">20:00</div><div class="c">21:00</div></div>
+<div class="r"><div class="n">Bocce</div><div class="c">17:00</div><div class="c">18:00</div><div class="c">19:00</div><div class="c">20:00</div><div class="c x">—</div></div>
+</div>
+<div class="tab"><div class="a"><i></i>Home</div><div><i></i>Mappa</div><div><i></i>Prenota</div><div><i></i>Percorso</div></div>
+</body></html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=390">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:390px;height:844px;overflow:hidden;background:#f8fafc;font-family:Inter,sans-serif;color:#0f172a}
+.top{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;background:#fff;border-bottom:1px solid #e2e8f0}
+.club{font-weight:700;font-size:20px}
+.bell{width:44px;height:44px;border-radius:50%;background:#f1f5f9;display:grid;place-items:center}
+h1{font-size:24px;font-weight:700;margin:20px 20px 4px}
+.sub{margin:0 20px;color:#475569;font-size:15px}
+.days{display:flex;gap:8px;padding:16px 16px 0}
+.d{flex:1;height:64px;border-radius:12px;background:#fff;border:1px solid #e2e8f0;text-align:center;padding-top:9px}
+.d small{display:block;font-size:13px;color:#64748b}
+.d b{font-size:20px}
+.d.on{background:#2563eb;border-color:#2563eb;color:#fff}.d.on small{color:#fff}
+.card{margin:12px 16px 0;background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:14px}
+.ch{display:flex;justify-content:space-between;font-weight:600;font-size:16px}
+.ch span{color:#64748b;font-weight:500;font-size:14px}
+.slots{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.s{height:44px;padding:0 14px;border-radius:999px;border:1px solid #cbd5e1;display:grid;place-items:center;font-weight:600;font-size:15px}
+.s.x{color:#475569;background:#f1f5f9;border-color:#f1f5f9;text-decoration:line-through}
+.s.me{background:#15803d;border-color:#15803d;color:#fff}
+.tab{position:absolute;left:0;right:0;bottom:0;height:74px;background:#fff;border-top:1px solid #e2e8f0;display:flex;justify-content:space-around;align-items:center;font-size:12px;font-weight:600;color:#64748b}
+.tab .a{color:#2563eb}
+.tab div{display:flex;flex-direction:column;align-items:center;gap:4px}
+.tab i{width:24px;height:24px;border-radius:7px;border:2px solid currentColor}
+</style></head><body>
+<div class="top"><div class="club">Palle Girate</div><div class="bell"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/></svg></div></div>
+<h1>Prenota un campo</h1><p class="sub">Hai 2 prenotazioni attive su 3</p>
+<div class="days"><div class="d on"><small>Ven</small><b>25</b></div><div class="d"><small>Sab</small><b>26</b></div><div class="d"><small>Dom</small><b>27</b></div><div class="d"><small>Lun</small><b>28</b></div><div class="d"><small>Mar</small><b>29</b></div></div>
+<div class="card"><div class="ch">Calcio <span>90 min · 60 €</span></div><div class="slots"><div class="s x">17:00</div><div class="s">18:30</div><div class="s">20:00</div><div class="s">21:30</div></div></div>
+<div class="card"><div class="ch">Tennis 1 <span>60 min · 18 €</span></div><div class="slots"><div class="s">17:00</div><div class="s me">18:00 ✓</div><div class="s x">19:00</div><div class="s">20:00</div><div class="s">21:00</div></div></div>
+<div class="card"><div class="ch">Tennis 2 <span>60 min · 18 €</span></div><div class="slots"><div class="s">17:00</div><div class="s">18:00</div><div class="s">19:00</div><div class="s x">20:00</div></div></div>
+<div class="card"><div class="ch">Basket <span>60 min · 25 €</span></div><div class="slots"><div class="s x">17:00</div><div class="s x">18:00</div><div class="s">19:00</div><div class="s">20:00</div></div></div>
+<div class="tab"><div class="a"><i></i>Home</div><div><i></i>Prenota</div><div><i></i>Prenotazioni</div><div><i></i>Profilo</div></div>
+</body></html>

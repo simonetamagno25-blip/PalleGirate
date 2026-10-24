@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=390">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:390px;height:844px;overflow:hidden;background:#111111;font-family:'Barlow Condensed',sans-serif;color:#f5f5f0}
+.top{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #2b2b2b}
+.club{font-weight:700;font-size:24px;text-transform:uppercase;letter-spacing:.06em}
+.bell{width:44px;height:44px;border-radius:8px;background:#2b2b2b;display:grid;place-items:center}
+.next{margin:16px;background:#1d1d1d;border-radius:10px;padding:14px 16px;border:1px solid #f5a623}
+.next p{font-size:16px;color:#f5a623;text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.flaps{display:flex;gap:4px;margin-top:8px}
+.f{width:40px;height:56px;background:#000;border-radius:5px;display:grid;place-items:center;font-size:40px;font-weight:700;position:relative}
+.f:after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:#2b2b2b}
+.next small{display:block;margin-top:8px;font-size:17px;color:#d7d7cf}
+.cta{margin:0 16px;height:58px;border-radius:10px;background:#f5a623;color:#111;display:grid;place-items:center;font-weight:700;font-size:23px;text-transform:uppercase;letter-spacing:.04em}
+.board{margin:18px 16px 0;border-radius:10px;overflow:hidden;background:#1d1d1d}
+.hd{display:grid;grid-template-columns:96px 1fr 1fr 1fr;padding:10px 12px;font-size:14px;color:#d7d7cf;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid #2b2b2b}
+.r{display:grid;grid-template-columns:96px 1fr 1fr 1fr;padding:0 12px;height:52px;align-items:center;border-bottom:1px solid #2b2b2b;font-size:22px;font-weight:600}
+.r .n{text-transform:uppercase;font-size:18px;letter-spacing:.04em}
+.r .x{color:#e57368;font-size:17px}
+.r .me{color:#111;background:#f5a623;border-radius:4px;text-align:center;margin-right:8px}
+.days{display:flex;gap:6px;margin:16px 16px 0}
+.d{flex:1;height:52px;border-radius:8px;background:#1d1d1d;text-align:center;padding-top:5px;font-size:13px;color:#d7d7cf;text-transform:uppercase}
+.d b{display:block;font-size:22px;color:#f5f5f0}
+.d.on{background:#f5f5f0;color:#111}.d.on b{color:#111}
+.tab{position:absolute;left:0;right:0;bottom:0;height:74px;border-top:1px solid #2b2b2b;display:flex;justify-content:space-around;align-items:center;font-size:15px;font-weight:600;color:#d7d7cf;text-transform:uppercase}
+.tab .a{color:#f5a623}
+.tab div{display:flex;flex-direction:column;align-items:center;gap:4px}
+.tab i{width:24px;height:24px;border-radius:5px;border:2px solid currentColor}
+</style></head><body>
+<div class="top"><div class="club">Palle Girate</div><div class="bell"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f5f5f0" stroke-width="2"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/></svg></div></div>
+<div class="next"><p>La tua prossima partita</p><div class="flaps"><div class="f">1</div><div class="f">8</div><div class="f">:</div><div class="f">0</div><div class="f">0</div></div><small>Sabato 26 ottobre · Tennis 1 · modificabile fino alle 16:00</small></div>
+<div class="cta">Prenota un campo</div>
+<div class="days"><div class="d on">Ven<b>25</b></div><div class="d">Sab<b>26</b></div><div class="d">Dom<b>27</b></div><div class="d">Lun<b>28</b></div><div class="d">Mar<b>29</b></div></div>
+<div class="board">
+<div class="hd"><span>Campo</span><span>Libero</span><span>Poi</span><span>Poi</span></div>
+<div class="r"><span class="n">Calcio</span><span>18:30</span><span>20:00</span><span>21:30</span></div>
+<div class="r"><span class="n">Tennis 1</span><span>17:00</span><span class="me">18:00</span><span>20:00</span></div>
+<div class="r"><span class="n">Tennis 2</span><span>17:00</span><span>18:00</span><span>19:00</span></div>
+<div class="r"><span class="n">Basket</span><span>19:00</span><span>20:00</span><span>21:00</span></div>
+<div class="r"><span class="n">Bocce</span><span class="x">Pieno</span><span></span><span></span></div>
+</div>
+<div class="tab"><div class="a"><i></i>Home</div><div><i></i>Orari</div><div><i></i>Prenota</div><div><i></i>Le mie</div></div>
+</body></html>

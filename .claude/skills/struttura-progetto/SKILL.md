@@ -5,7 +5,7 @@ description: Mappa delle cartelle di Palle Girate e regole per tenerle in ordine
 
 # Struttura di Palle Girate
 
-Ogni file ha un posto preciso. Prima di creare un file, scegli la cartella da questa mappa; se nessuna va bene, chiedi invece di inventarne una nuova.
+Ogni file ha un posto preciso. Prima di creare un file, scegli la cartella da questa mappa; se nessuna va bene, chiedi invece di inventarne una nuova. Prima di toccare l'interfaccia leggi `DESIGN.md` (lo stile "Tabellone delle partenze") e riusa i componenti in `src/components/board/`.
 
 ## Mappa
 
@@ -25,8 +25,9 @@ Ogni file ha un posto preciso. Prima di creare un file, scegli la cartella da qu
 | `tests/` | Setup e helper condivisi dei test, test trasversali | I test di un modulo stanno accanto al modulo, non qui. |
 | `public/` | File statici: icone, `sw.js` | |
 | `scripts/` | Script da riga di comando (es. `npm run icons`) | |
-| `docs/` | Requisiti, appunti del cliente, spec e piani (`docs/superpowers/`) | Nessun documento nella cartella principale tranne `README.md`. |
-| cartella principale | Solo configurazione degli strumenti e `README.md` | `package.json`, `tsconfig.json`, `next.config.ts`, `eslint.config.mjs`, `vitest.config.ts`, `postcss.config.mjs`, `components.json`, `.env.example`, `.gitignore`. Gli strumenti li cercano qui: non spostarli. |
+| `docs/` | Requisiti, appunti del cliente, spec e piani (`docs/superpowers/`), ricerca di design (`docs/design/`) | Nessun altro documento nella cartella principale oltre a quelli elencati sotto. |
+| `.impeccable/` | Stato della skill impeccable: `config.json`, `design.json` (token), `surfaces/` (contratto di direzione), `mocks/decision/` (bozze della scelta dello stile) | `review/` e `hook.cache.json` sono locali e ignorati da git. Non modificare a mano `design.json`: si rigenera con `/impeccable document`. |
+| cartella principale | Configurazione degli strumenti, `README.md`, `PRODUCT.md` e `DESIGN.md` | `package.json`, `tsconfig.json`, `next.config.ts`, `eslint.config.mjs`, `vitest.config.ts`, `postcss.config.mjs`, `components.json`, `.env.example`, `.gitignore`. `PRODUCT.md` (chi usa l'app e perché) e `DESIGN.md` (regole grafiche: colori, caratteri, tabellone) stanno qui per convenzione di impeccable. Gli strumenti li cercano qui: non spostarli. |
 
 ## Cose generate: non spostarle e non committarle
 

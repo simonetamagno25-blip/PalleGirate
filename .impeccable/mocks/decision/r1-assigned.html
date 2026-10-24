@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=390">
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:390px;height:844px;overflow:hidden;background:#f4f6f4;font-family:'Atkinson Hyperlegible',sans-serif;color:#111814}
+.top{background:#14532d;color:#fff;padding:16px 20px 22px}
+.bar{display:flex;justify-content:space-between;align-items:center}
+.club{font-family:'Saira Condensed';font-weight:800;font-size:24px;text-transform:uppercase;letter-spacing:.02em}
+.club span{color:#ffd23f}
+.bell{width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,.5);display:grid;place-items:center;position:relative}
+.bell i{position:absolute;top:-2px;right:-2px;min-width:20px;height:20px;border-radius:10px;background:#ffd23f;color:#111814;font-style:normal;font-size:12px;font-weight:700;display:grid;place-items:center}
+.row1{display:flex;gap:16px;align-items:center;margin-top:16px}
+.stk{width:132px;flex:none;background:#c8102e;border:5px solid #fff;border-radius:12px;padding:10px 10px 12px;transform:rotate(-3deg);box-shadow:0 6px 14px rgba(0,0,0,.28);color:#fff}
+.stk .no{font-family:'Saira Condensed';font-weight:700;font-size:14px;opacity:.95}
+.stk .t{font-family:'Saira Condensed';font-weight:800;font-size:44px;line-height:.9;margin-top:6px}
+.stk .c{font-family:'Saira Condensed';font-weight:700;font-size:18px;text-transform:uppercase;margin-top:4px}
+.when p{font-size:16px;opacity:.95}
+.when b{display:block;font-family:'Saira Condensed';font-size:28px;line-height:1.05;margin:2px 0 6px}
+.when small{font-size:15px;color:#ffd23f;font-weight:700}
+.cta{margin:18px 16px 0;height:60px;border-radius:14px;background:#ffd23f;display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Saira Condensed';font-weight:800;font-size:24px;text-transform:uppercase}
+.head{display:flex;justify-content:space-between;align-items:baseline;margin:22px 20px 10px}
+.head h2{font-family:'Saira Condensed';font-weight:800;font-size:24px;text-transform:uppercase}
+.head span{font-size:15px;color:#3f4b44}
+.days{display:flex;gap:6px;padding:0 16px}
+.d{flex:1;height:62px;border-radius:12px;border:2px solid #cfd8d2;background:#fff;text-align:center;padding-top:7px;font-size:13px;color:#3f4b44}
+.d b{display:block;font-family:'Saira Condensed';font-size:24px;color:#111814}
+.d.on{border-color:#111814;background:#111814;color:#e7ece9}.d.on b{color:#fff}
+.page{margin:12px 16px 0;background:#fff;border-radius:14px;padding:12px}
+.court{display:flex;align-items:center;gap:8px;font-weight:700;font-size:17px;margin:4px 0 8px}
+.court i{width:14px;height:14px;border-radius:3px}
+.court em{margin-left:auto;font-style:normal;font-weight:400;font-size:14px;color:#3f4b44}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.s{height:52px;border-radius:8px;border:2px solid #9aa89f;display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:'Saira Condensed';font-weight:700;font-size:20px;line-height:1}
+.s small{font-family:'Atkinson Hyperlegible';font-weight:400;font-size:11px;color:#3f4b44;margin-top:3px}
+.s.x{border-color:#dfe5e1;background:#eef2ef;color:#4c5a51;text-decoration:line-through}
+.s.me{background:#c8102e;border:3px solid #fff;outline:2px solid #c8102e;color:#fff}
+.s.me small{color:#fff}
+.tab{position:absolute;left:0;right:0;bottom:0;height:74px;background:#fff;border-top:1px solid #cfd8d2;display:flex;justify-content:space-around;align-items:center;font-size:13px;font-weight:700;color:#3f4b44}
+.tab .a{color:#14532d}
+.tab div{display:flex;flex-direction:column;align-items:center;gap:4px}
+.tab i{width:24px;height:24px;border-radius:6px;border:2.5px solid currentColor}
+</style></head><body>
+<div class="top">
+  <div class="bar"><div class="club">Palle <span>Girate</span></div><div class="bell"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21h4"/></svg><i>2</i></div></div>
+  <div class="row1">
+    <div class="stk"><p class="no">N. 27</p><p class="t">18:00</p><p class="c">Tennis 1</p></div>
+    <div class="when"><p>Ciao Giulia, la prossima:</p><b>Sabato 26 ottobre</b><small>Modificabile fino alle 16:00</small></div>
+  </div>
+</div>
+<div class="cta">Prenota un campo</div>
+<div class="head"><h2>La pagina di oggi</h2><span>2 attive su 3</span></div>
+<div class="days"><div class="d on">Ven<b>25</b></div><div class="d">Sab<b>26</b></div><div class="d">Dom<b>27</b></div><div class="d">Lun<b>28</b></div><div class="d">Mar<b>29</b></div></div>
+<div class="page">
+  <div class="court"><i style="background:#1d4ed8"></i>Calcio<em>90 min · 60 €</em></div>
+  <div class="slots"><div class="s x">17:00<small>occupato</small></div><div class="s">18:30<small>libero</small></div><div class="s">20:00<small>libero</small></div><div class="s">21:30<small>libero</small></div></div>
+  <div class="court"><i style="background:#c8102e"></i>Tennis 1<em>60 min · 18 €</em></div>
+  <div class="slots"><div class="s">17:00<small>libero</small></div><div class="s me">18:00<small>tua</small></div><div class="s x">19:00<small>occupato</small></div><div class="s">20:00<small>libero</small></div></div>
+</div>
+<div class="tab"><div class="a"><i></i>Home</div><div><i></i>Calendario</div><div><i></i>Prenota</div><div><i></i>Le mie</div></div>
+</body></html>

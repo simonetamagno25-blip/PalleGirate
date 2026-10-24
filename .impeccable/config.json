@@ -1,0 +1,53 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-10-24T18:47:46.843Z",
+        "reason": "Claude: canon card deliberately reproduces the category-standard look (Inter) as the comparison baseline; decision sketch only"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-orienteering.html"
+        ],
+        "createdAt": "2026-10-24T18:47:46.947Z",
+        "reason": "Claude: decision-page sketch; grid cells are map-style table cells, not product UI"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r1-assigned.html"
+        ],
+        "createdAt": "2026-10-24T18:52:12.925Z",
+        "reason": "Claude: throwaway decision-page sketch (first viewport preview), not shipped UI; padding is tuned in the real build"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r1-flap.html"
+        ],
+        "createdAt": "2026-10-24T18:52:13.024Z",
+        "reason": "Claude: throwaway decision-page sketch (first viewport preview), not shipped UI; padding is tuned in the real build"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/r1-airport.html"
+        ],
+        "createdAt": "2026-10-24T18:52:13.158Z",
+        "reason": "Claude: throwaway decision-page sketch (first viewport preview), not shipped UI; padding is tuned in the real build"
+      }
+    ]
+  }
+}
