@@ -2,6 +2,8 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { LocaleSwitcher } from "@/components/layout/locale-switcher";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { ClockBoard } from "@/components/board/clock-board";
+import { minutesToHHMM, romeMinutesOfDay } from "@/lib/time/rome";
 
 /** Login and activation: the black logo bar on top, then one narrow centered column on the page ground. */
 export default async function AuthLayout({ children }: { children: React.ReactNode }) {
@@ -18,7 +20,11 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
           <ThemeToggle />
         </div>
       </header>
-      <main className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center px-4 py-10 sm:py-16">{children}</main>
+      <main className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center px-4 py-10 sm:py-16">
+        {/* The board on the way in: club name and the club's time in flap tiles, above a standard form. */}
+        <ClockBoard name={t("name")} initial={minutesToHHMM(romeMinutesOfDay(new Date()))} />
+        <div className="mt-8">{children}</div>
+      </main>
     </div>
   );
 }
