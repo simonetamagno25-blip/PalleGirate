@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 import { beforeEach, describe, expect, test } from 'vitest'
-import { prisma } from '@/lib/db'
-import { verifyCredentials } from '@/lib/members'
+import { prisma } from '@backend/lib/db'
+import { verifyCredentials } from '@backend/lib/members'
 import { makeMember, resetDb } from './helpers'
 
 beforeEach(resetDb)

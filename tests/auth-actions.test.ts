@@ -22,9 +22,9 @@ vi.mock('next/headers', () => ({
 }))
 
 import { AuthError, CredentialsSignin } from 'next-auth'
-import { activateAction, loginAction } from '@/app/[locale]/(auth)/actions'
-import { prisma } from '@/lib/db'
-import { resetRateLimits } from '@/lib/rate-limit'
+import { activateAction, loginAction } from '@backend/actions/auth'
+import { prisma } from '@backend/lib/db'
+import { resetRateLimits } from '@backend/lib/rate-limit'
 import { makeMember, resetDb } from './helpers'
 
 const form = (o: Record<string, string>) => {

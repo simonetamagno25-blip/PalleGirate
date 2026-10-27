@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
-import { BOOKING_ERROR_CODES } from '@/lib/booking-service'
-import en from '../messages/en.json'
-import it from '../messages/it.json'
+import { BOOKING_ERROR_CODES } from '@backend/lib/booking-service'
+import en from '../frontend/messages/en.json'
+import it from '../frontend/messages/it.json'
 
 function flatten(obj: unknown, prefix = ''): Record<string, string> {
   const out: Record<string, string> = {}

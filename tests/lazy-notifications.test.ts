@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, test } from 'vitest'
-import { prisma } from '@/lib/db'
-import { runLazyNotifications } from '@/lib/lazy-notifications'
-import { renewMembership } from '@/lib/members'
-import { fromRome } from '@/lib/time'
+import { prisma } from '@backend/lib/db'
+import { runLazyNotifications } from '@backend/lib/lazy-notifications'
+import { renewMembership } from '@backend/lib/members'
+import { fromRome } from '@backend/lib/time'
 import { makeBooking, makeField, makeMember, NOW, resetDb } from './helpers'
 
 const notesOf = (userId: string, type: string) =>

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test } from 'vitest'
-import { clientIp } from '@/lib/client-ip'
-import { checkRateLimit, rateLimitSize, resetRateLimits } from '@/lib/rate-limit'
+import { clientIp } from '@backend/lib/client-ip'
+import { checkRateLimit, rateLimitSize, resetRateLimits } from '@backend/lib/rate-limit'
 
 beforeEach(resetRateLimits)
 

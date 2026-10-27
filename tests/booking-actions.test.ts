@@ -16,9 +16,9 @@ import {
   createBookingAction,
   previewPriceAction,
   updateBookingAction,
-} from '@/app/[locale]/(app)/actions'
-import { prisma } from '@/lib/db'
-import { addDays, romeDay } from '@/lib/time'
+} from '@backend/actions/bookings'
+import { prisma } from '@backend/lib/db'
+import { addDays, romeDay } from '@backend/lib/time'
 import { makeField, makeMember, resetDb } from './helpers'
 
 // Le azioni usano l'orologio reale: le date di prova sono relative a oggi.

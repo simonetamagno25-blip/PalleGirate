@@ -21,12 +21,10 @@ ENV NODE_ENV=production \
     PORT=3000
 # Si tiene l'intero node_modules: servono il CLI di Prisma (crea le tabelle) e tsx (seed) oltre a Next.
 COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/.next ./.next
-COPY --from=build /app/public ./public
-COPY --from=build /app/prisma ./prisma
-COPY --from=build /app/messages ./messages
-COPY --from=build /app/src ./src
-COPY --from=build /app/package.json /app/next.config.ts /app/tsconfig.json ./
+# frontend/ comprende la build (.next); backend/ la logica e lo schema Prisma.
+COPY --from=build /app/frontend ./frontend
+COPY --from=build /app/backend ./backend
+COPY --from=build /app/package.json /app/tsconfig.json ./
 # Il database vive nel volume /data; l'app gira come utente non privilegiato.
 RUN mkdir -p /data && chown -R node:node /data /app
 USER node
@@ -35,4 +33,4 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
   CMD node -e "fetch('http://127.0.0.1:3000/it/login').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 # All'avvio: crea/aggiorna le tabelle, carica il seed (idempotente; SEED=false per saltarlo), avvia il server.
-CMD ["sh", "-c", "npx prisma db push --skip-generate && if [ \"$SEED\" != \"false\" ]; then npx tsx prisma/seed.ts; fi && exec npx next start -H 0.0.0.0 -p 3000"]
+CMD ["sh", "-c", "npx prisma db push --skip-generate && if [ \"$SEED\" != \"false\" ]; then npx tsx backend/prisma/seed.ts; fi && cd frontend && exec npx next start -H 0.0.0.0 -p 3000"]

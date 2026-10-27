@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { homeTarget } from '@/lib/home-target'
+import { homeTarget } from '@backend/lib/home-target'
 
 describe('homeTarget', () => {
   test('senza sessione: login nella lingua dell\'URL', () => {

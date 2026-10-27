@@ -8,8 +8,8 @@ import {
   quarterStarts,
   ruleParams,
   type RuleContext,
-} from '@/lib/booking-rules'
-import { fromRome } from '@/lib/time'
+} from '@backend/lib/booking-rules'
+import { fromRome } from '@backend/lib/time'
 
 const NOW = fromRome('2026-10-13', '12:00')
 

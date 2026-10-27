@@ -1,10 +1,10 @@
 import { beforeEach, describe, expect, test } from 'vitest'
-import { DEFAULT_SETTINGS, type Settings } from '@/lib/booking-rules'
-import { createField, setFieldActive, updateField, updateSettings } from '@/lib/admin-config'
-import { BookingError, createBooking, type Actor } from '@/lib/booking-service'
-import { prisma } from '@/lib/db'
-import { getSettings } from '@/lib/settings'
-import { fromRome } from '@/lib/time'
+import { DEFAULT_SETTINGS, type Settings } from '@backend/lib/booking-rules'
+import { createField, setFieldActive, updateField, updateSettings } from '@backend/lib/admin-config'
+import { BookingError, createBooking, type Actor } from '@backend/lib/booking-service'
+import { prisma } from '@backend/lib/db'
+import { getSettings } from '@backend/lib/settings'
+import { fromRome } from '@backend/lib/time'
 import { makeBooking, makeField, makeMember, NOW, resetDb } from './helpers'
 
 const asActor = (u: { id: string; isAdmin: boolean }): Actor => ({ id: u.id, isAdmin: u.isAdmin })

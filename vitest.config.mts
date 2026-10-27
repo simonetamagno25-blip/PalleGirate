@@ -12,6 +12,9 @@ export default defineConfig({
     testTimeout: 20000,
   },
   resolve: {
-    alias: { '@': path.resolve(import.meta.dirname, 'src') },
+    alias: {
+      '@': path.resolve(import.meta.dirname, 'frontend'),
+      '@backend': path.resolve(import.meta.dirname, 'backend'),
+    },
   },
 })

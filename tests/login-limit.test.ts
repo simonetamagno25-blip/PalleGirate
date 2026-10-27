@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs'
 import { beforeEach, describe, expect, test } from 'vitest'
-import { prisma } from '@/lib/db'
-import { authorizeCredentials, TooManyAttemptsError } from '@/lib/login'
-import { resetRateLimits } from '@/lib/rate-limit'
+import { prisma } from '@backend/lib/db'
+import { authorizeCredentials, TooManyAttemptsError } from '@backend/lib/login'
+import { resetRateLimits } from '@backend/lib/rate-limit'
 import { makeMember, resetDb } from './helpers'
 
 // `authorizeCredentials` è ciò che Auth.js esegue per ogni login con credenziali: la pagina di login

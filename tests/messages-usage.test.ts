@@ -1,15 +1,15 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import path from 'node:path'
 import { describe, expect, test } from 'vitest'
-import en from '../messages/en.json'
-import it from '../messages/it.json'
+import en from '../frontend/messages/en.json'
+import it from '../frontend/messages/it.json'
 
-const SRC = path.join(import.meta.dirname, '..', 'src')
+const SOURCE_DIRS = ['frontend', 'backend'].map((dir) => path.join(import.meta.dirname, '..', dir))
 
 function sourceFiles(dir: string): string[] {
   return readdirSync(dir).flatMap((name) => {
     const full = path.join(dir, name)
-    if (statSync(full).isDirectory()) return sourceFiles(full)
+    if (statSync(full).isDirectory()) return name.startsWith('.') || name === 'node_modules' ? [] : sourceFiles(full)
     return /\.(ts|tsx)$/.test(name) ? [full] : []
   })
 }
@@ -37,13 +37,13 @@ function namespacesOf(source: string): string[] {
 const CALL = /\b(?:t|tb|tc|te|tAll)\(\s*'([A-Za-z0-9_.]+)'/g
 
 describe('uso dei messaggi', () => {
-  const files = sourceFiles(SRC).filter((f) => /useTranslations|getTranslations/.test(readFileSync(f, 'utf8')))
+  const files = SOURCE_DIRS.flatMap(sourceFiles).filter((f) => /useTranslations|getTranslations/.test(readFileSync(f, 'utf8')))
 
   test('trova i file che usano le traduzioni', () => {
     expect(files.length).toBeGreaterThan(10)
   })
 
-  test.each(files.map((f) => [path.relative(SRC, f), f]))('%s: ogni chiave letterale esiste in IT ed EN', (_rel, file) => {
+  test.each(files.map((f) => [path.relative(path.join(import.meta.dirname, '..'), f), f]))('%s: ogni chiave letterale esiste in IT ed EN', (_rel, file) => {
     const source = readFileSync(file, 'utf8')
     const namespaces = namespacesOf(source)
     for (const [, key] of source.matchAll(CALL)) {

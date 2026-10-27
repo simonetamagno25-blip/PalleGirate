@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test } from 'vitest'
-import { prisma } from '@/lib/db'
+import { prisma } from '@backend/lib/db'
 import {
   activateAccount,
   createMember,
@@ -8,8 +8,8 @@ import {
   resetAccess,
   setAdmin,
   updateMember,
-} from '@/lib/members'
-import { fromRome } from '@/lib/time'
+} from '@backend/lib/members'
+import { fromRome } from '@backend/lib/time'
 import { makeMember, NOW, resetDb } from './helpers'
 
 beforeEach(resetDb)

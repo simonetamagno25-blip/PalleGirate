@@ -3,13 +3,13 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "next start",
+        "dev": "cd frontend && next dev",
+        "build": "cd frontend && next build",
+        "start": "cd frontend && next start",
         "lint": "eslint",
         "test": "vitest run",
         "db:push": "prisma db push",
-        "db:seed": "tsx --env-file=.env prisma/seed.ts",
+        "db:seed": "tsx --env-file=.env backend/prisma/seed.ts",
         "setup": "prisma db push && npm run db:seed"
     },
     "dependencies": {
@@ -44,5 +44,8 @@
         "tsx": "^4.23.15",
         "typescript": "^5",
         "vitest": "^4.1.11"
+    },
+    "prisma": {
+        "schema": "backend/prisma/schema.prisma"
     }
 }

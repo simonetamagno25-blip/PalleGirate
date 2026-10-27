@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, test } from 'vitest'
-import { prisma } from '@/lib/db'
-import { BookingError } from '@/lib/booking-service'
-import { getAdminDashboard } from '@/lib/stats-admin'
-import { getMemberDashboard } from '@/lib/stats-member'
-import { fromRome } from '@/lib/time'
+import { prisma } from '@backend/lib/db'
+import { BookingError } from '@backend/lib/booking-service'
+import { getAdminDashboard } from '@backend/lib/stats-admin'
+import { getMemberDashboard } from '@backend/lib/stats-member'
+import { fromRome } from '@backend/lib/time'
 import { makeBooking, makeField, makeMember, NOW, resetDb } from './helpers'
 
 beforeEach(resetDb)

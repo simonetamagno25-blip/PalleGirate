@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { addDays, daysBetween, fromRome, hhmm, romeDay, romeMinutesOfDay } from '@/lib/time'
+import { addDays, daysBetween, fromRome, hhmm, romeDay, romeMinutesOfDay } from '@backend/lib/time'
 
 describe('time (Europe/Rome)', () => {
   test('romeDay usa il giorno di calendario locale, non UTC', () => {

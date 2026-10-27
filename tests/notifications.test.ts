@@ -1,12 +1,12 @@
 import { beforeEach, describe, expect, test } from 'vitest'
-import { prisma } from '@/lib/db'
+import { prisma } from '@backend/lib/db'
 import {
   listNotifications,
   markAllRead,
   markRead,
   notify,
   unreadCount,
-} from '@/lib/notifications'
+} from '@backend/lib/notifications'
 import { makeMember, resetDb } from './helpers'
 
 beforeEach(resetDb)

@@ -5,7 +5,7 @@ import manifest from '@/app/manifest'
 
 // Il proxy non si importa nei test (next-intl/middleware vuole l'ambiente Next): si legge il matcher dal sorgente.
 // Come in Next, il matcher è un'espressione regolare ancorata sul percorso intero.
-const proxySource = readFileSync(path.join(import.meta.dirname, '..', 'src', 'proxy.ts'), 'utf8')
+const proxySource = readFileSync(path.join(import.meta.dirname, '..', 'frontend', 'proxy.ts'), 'utf8')
 const literal = /matcher:\s*\[\s*('(?:[^'\\]|\\.)*')/.exec(proxySource)![1]
 const matcher: string = new Function(`return ${literal}`)()
 const matches = (pathname: string) => new RegExp(`^${matcher}$`).test(pathname)
@@ -31,7 +31,7 @@ describe('manifest PWA', () => {
     for (const i of icons) {
       expect(i.type).toBe('image/png')
       expect(i.src).toMatch(/^\/icons\/icon-(192|512|maskable-512)\.png$/)
-      expect(existsSync(path.join(import.meta.dirname, '..', 'public', i.src)), i.src).toBe(true)
+      expect(existsSync(path.join(import.meta.dirname, '..', 'frontend', 'public', i.src)), i.src).toBe(true)
     }
   })
 })
@@ -53,7 +53,7 @@ describe('proxy', () => {
 })
 
 describe('service worker', () => {
-  const sw = readFileSync(path.join(import.meta.dirname, '..', 'public', 'sw.js'), 'utf8')
+  const sw = readFileSync(path.join(import.meta.dirname, '..', 'frontend', 'public', 'sw.js'), 'utf8')
 
   test.each(['install', 'activate', 'fetch'])('ascolta l\'evento %s', (event) => {
     expect(sw).toContain(`addEventListener('${event}'`)

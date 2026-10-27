@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, test } from 'vitest'
-import { prisma } from '@/lib/db'
-import { BookingError, cancelBooking, createBooking, updateBooking, type Actor } from '@/lib/booking-service'
-import { fromRome } from '@/lib/time'
+import { prisma } from '@backend/lib/db'
+import { BookingError, cancelBooking, createBooking, updateBooking, type Actor } from '@backend/lib/booking-service'
+import { fromRome } from '@backend/lib/time'
 import { makeField, makeMember, NOW, resetDb } from './helpers'
 
 const DAY = '2026-10-20'

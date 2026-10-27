@@ -14,7 +14,7 @@
 /coverage
 
 # next.js
-/.next/
+.next/
 /out/
 
 # production
@@ -44,5 +44,5 @@ next-env.d.ts
 # scratch / worktree
 /.superpowers
 /.claude/worktrees
-/prisma/*.db
-/prisma/*.db-journal
+/backend/prisma/*.db
+/backend/prisma/*.db-journal

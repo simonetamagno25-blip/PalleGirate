@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test } from 'vitest'
-import { prisma } from '@/lib/db'
-import { setUserLocale } from '@/lib/members'
+import { prisma } from '@backend/lib/db'
+import { setUserLocale } from '@backend/lib/members'
 import { makeMember, resetDb } from './helpers'
 
 beforeEach(resetDb)

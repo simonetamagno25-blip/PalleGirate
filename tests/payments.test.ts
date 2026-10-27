@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, test } from 'vitest'
-import { prisma } from '@/lib/db'
-import { isBlocked } from '@/lib/booking-rules'
-import { BookingError, createBooking, type Actor } from '@/lib/booking-service'
-import { getMemberLedger, getStandingsByUser, listPendingPayments, registerPayment, setNoShow } from '@/lib/payments'
-import { fromRome } from '@/lib/time'
+import { prisma } from '@backend/lib/db'
+import { isBlocked } from '@backend/lib/booking-rules'
+import { BookingError, createBooking, type Actor } from '@backend/lib/booking-service'
+import { getMemberLedger, getStandingsByUser, listPendingPayments, registerPayment, setNoShow } from '@backend/lib/payments'
+import { fromRome } from '@backend/lib/time'
 import { makeBooking, makeField, makeMember, NOW, resetDb } from './helpers'
 
 const asActor = (u: { id: string; isAdmin: boolean }): Actor => ({ id: u.id, isAdmin: u.isAdmin })

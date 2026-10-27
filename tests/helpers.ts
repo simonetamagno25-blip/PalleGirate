@@ -1,7 +1,7 @@
 import type { PaymentStatus } from '@prisma/client'
-import { quarterStarts } from '@/lib/booking-rules'
-import { prisma } from '@/lib/db'
-import { fromRome } from '@/lib/time'
+import { quarterStarts } from '@backend/lib/booking-rules'
+import { prisma } from '@backend/lib/db'
+import { fromRome } from '@backend/lib/time'
 
 export const NOW = fromRome('2026-10-13', '12:00')
 

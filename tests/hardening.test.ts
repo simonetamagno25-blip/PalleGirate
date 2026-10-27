@@ -14,12 +14,12 @@ import {
   adminUpdateBookingAction,
   cancelBookingAction,
   updateBookingAction,
-} from '@/app/[locale]/(app)/actions'
-import { BookingError, cancelBooking, createBooking } from '@/lib/booking-service'
-import { prisma } from '@/lib/db'
-import { activateAccount, resetAccess, verifyCredentials } from '@/lib/members'
-import { isSessionCurrent } from '@/lib/session-version'
-import { fromRome, isValidDay } from '@/lib/time'
+} from '@backend/actions/bookings'
+import { BookingError, cancelBooking, createBooking } from '@backend/lib/booking-service'
+import { prisma } from '@backend/lib/db'
+import { activateAccount, resetAccess, verifyCredentials } from '@backend/lib/members'
+import { isSessionCurrent } from '@backend/lib/session-version'
+import { fromRome, isValidDay } from '@backend/lib/time'
 import { makeField, makeMember, NOW, resetDb } from './helpers'
 
 beforeEach(async () => {
